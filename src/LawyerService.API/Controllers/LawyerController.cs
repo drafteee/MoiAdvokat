@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LawyerService.BL.Interfaces;
 using LawyerService.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LawyerService.API.Controllers
 {
@@ -19,6 +20,7 @@ namespace LawyerService.API.Controllers
             this._lawyerManager = lawyerManager;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public Task<ICollection<LawyerVM>> GetAll()
         {
