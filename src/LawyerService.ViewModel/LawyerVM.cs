@@ -6,6 +6,6 @@ namespace LawyerService.ViewModel
 {
     public class LawyerVM
     {
-        public int LawyerId { get; set; }
+        public long Id { get; set; }
     }
 }
