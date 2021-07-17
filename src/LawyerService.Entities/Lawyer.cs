@@ -6,7 +6,6 @@ namespace LawyerService.Entities
 {
     public class Lawyer : BaseEntity
     {
-        [Key]
-        public int LawyerId { get; set; }
+
     }
 }

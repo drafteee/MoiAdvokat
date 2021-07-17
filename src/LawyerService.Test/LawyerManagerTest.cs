@@ -81,7 +81,7 @@ namespace LawyerService.Test
         {
             return Enumerable.Range(1, 5).Select(i => new Lawyer
             {
-                LawyerId = i,
+                Id = i,
 
             }).ToList().AsQueryable();
         }

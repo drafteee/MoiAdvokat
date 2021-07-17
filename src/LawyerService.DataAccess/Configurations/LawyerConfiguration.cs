@@ -8,7 +8,7 @@ namespace LawyerService.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Lawyer> builder)
         {
-            builder.HasKey(e => e.LawyerId);
+            builder.HasKey(e => e.Id);
         }
     }
 }

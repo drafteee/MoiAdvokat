@@ -35,7 +35,7 @@ namespace LawyerService.BL
 
         public async Task<LawyerVM> GetByIDAsync(int lawyerId)
         {
-            var data = await _uow.Lawyer.GetQueryable().Where(x => x.LawyerId == lawyerId).FirstOrDefaultAsync();
+            var data = await _uow.Lawyer.GetQueryable().Where(x => x.Id == lawyerId).FirstOrDefaultAsync();
             return _mapper.Map<LawyerVM>(data);
         }
 
