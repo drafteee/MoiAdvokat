@@ -34,8 +34,13 @@ namespace LawyerService.API
                 typeof(BL.Validators.BaseValidator<>).Assembly
             });
 
-            services.AddDbContext<LawyerDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+            //services.AddDbContext<LawyerDbContext>(
+            //    options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+
+            services.AddDbContext<LawyerDbContext>(opt =>
+            {
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("LawyerService.API")).EnableSensitiveDataLogging(); //логи в output убрать потом
+            });
 
             services.AddScoped<IUow, Uow>();
             services.AddSingleton<IMemoryCacheManager, MemoryCacheManager>();
