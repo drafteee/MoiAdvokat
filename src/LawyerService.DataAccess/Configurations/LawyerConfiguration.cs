@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using LawyerService.Entities;
+using LawyerService.Entities.Lawyer;
 
 namespace LawyerService.DataAccess.Configurations
 {

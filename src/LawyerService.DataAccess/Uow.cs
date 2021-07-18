@@ -1,6 +1,6 @@
 ﻿using LawyerService.DataAccess.DataAccess;
 using LawyerService.DataAccess.Interfaces;
-using LawyerService.Entities;
+using LawyerService.Entities.Lawyer;
 
 namespace LawyerService.DataAccess
 {

@@ -10,7 +10,7 @@ using LawyerService.BL.Interfaces;
 using LawyerService.DataAccess.Interfaces;
 using Xunit;
 using LawyerService.Test.Extensions;
-using LawyerService.Entities;
+using LawyerService.Entities.Lawyer;
 using MockQueryable.Moq;
 using System.Threading;
 

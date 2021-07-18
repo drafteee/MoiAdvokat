@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LawyerService.Entities;
+using LawyerService.Entities.Lawyer;
 
 namespace LawyerService.DataAccess
 {
