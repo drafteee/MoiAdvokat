@@ -15,6 +15,15 @@ using NLog.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.Extensions.Hosting;
+using LawyerService.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using LawyerService.BL.Helpers;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace LawyerService.API
 {
@@ -45,9 +54,53 @@ namespace LawyerService.API
             services.AddScoped<IUow, Uow>();
             services.AddSingleton<IMemoryCacheManager, MemoryCacheManager>();
             services.AddScoped<ILocalisationManager, LocalisationManager>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             services.AddScoped<ILawyerManager, LawyerManager>();
             services.AddAutoMapperProfiles();
+
+            services.AddDataProtection().SetDefaultKeyLifetime(TimeSpan.FromDays(365));
+            var builder = services.AddIdentityCore<User>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<LawyerDbContext>()
+                            .AddDefaultTokenProviders();
+
+            identityBuilder.AddSignInManager<SignInManager<User>>();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Tokens")["TokenKey"]));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                    opt.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                            {
+                                context.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RegisterByUser", policy =>
+                    policy.Requirements.Add(new RegisterByUserRequirement()));
+            });
+            services.AddScoped<IAuthorizationHandler, RegisterByUserHandler>();
+            services.AddScoped<JwtGenerator>();
 
             services.AddLogging(loggingBuilder =>
             {
@@ -120,6 +173,7 @@ namespace LawyerService.API
             });
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseCors("AllowAll");
 

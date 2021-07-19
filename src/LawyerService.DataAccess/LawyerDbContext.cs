@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using LawyerService.Entities.Lawyer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using LawyerService.Entities.Identity;
 
 namespace LawyerService.DataAccess
 {
-    public class LawyerDbContext : DbContext
+    public class LawyerDbContext : IdentityDbContext<User>
     {
         public static string SchemaName = "dbo";
 
@@ -14,8 +16,8 @@ namespace LawyerService.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(SchemaName);
-
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
