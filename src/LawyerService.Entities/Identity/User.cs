@@ -10,5 +10,7 @@ namespace LawyerService.Entities.Identity
     public class User : IdentityUser
     {
         public string Surname { get; set; }
+
+        public UserBalance  Balance { get; set; }
     }
 }
