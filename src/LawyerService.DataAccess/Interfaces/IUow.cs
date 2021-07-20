@@ -1,4 +1,5 @@
-﻿using LawyerService.Entities.Lawyer;
+﻿using LawyerService.Entities.Identity;
+using LawyerService.Entities.Lawyer;
 
 namespace LawyerService.DataAccess.Interfaces
 {

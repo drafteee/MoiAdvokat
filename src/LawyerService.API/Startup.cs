@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using LawyerService.BL.Helpers;
 using Microsoft.AspNetCore.DataProtection;
+using LawyerService.BL.Interfaces.Account;
 
 namespace LawyerService.API
 {
@@ -57,11 +58,16 @@ namespace LawyerService.API
             services.AddScoped<IUserAccessor, UserAccessor>();
 
             services.AddScoped<ILawyerManager, LawyerManager>();
-            services.AddAutoMapperProfiles();
+            services.AddScoped<IUserManager, BL.Account.UserManager>();
 
+            services.AddAutoMapperProfiles();
+            services.AddHttpContextAccessor();
             services.AddDataProtection().SetDefaultKeyLifetime(TimeSpan.FromDays(365));
+
             var builder = services.AddIdentityCore<User>();
+
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddRoles<Role>();
             identityBuilder.AddEntityFrameworkStores<LawyerDbContext>()
                             .AddDefaultTokenProviders();
 
@@ -101,7 +107,8 @@ namespace LawyerService.API
             });
             services.AddScoped<IAuthorizationHandler, RegisterByUserHandler>();
             services.AddScoped<JwtGenerator>();
-
+            services.AddScoped<PasswordHasher<User>>();
+            
             services.AddLogging(loggingBuilder =>
             {
                 _ = loggingBuilder.ClearProviders();
@@ -172,8 +179,8 @@ namespace LawyerService.API
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors("AllowAll");
 

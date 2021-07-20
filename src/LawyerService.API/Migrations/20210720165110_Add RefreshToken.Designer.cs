@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210720165110_Add RefreshToken")]
+    partial class AddRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,111 +21,6 @@ namespace LawyerService.API.Migrations
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.8");
-
-            modelBuilder.Entity("LawyerService.Entities.Address.Address", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<long>("AdministrativeTerritoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CountryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("House")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Notice")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Office")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Postcode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdministrativeTerritoryId");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Address.AdministrativeTerritory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<long>("AdministrativeTerritoryTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdministrativeTerritoryTypeId");
-
-                    b.ToTable("AdministrativeTerritories");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Address.AdministrativeTerritoryType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRus")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRusShort")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameShortKaz")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AdministrativeTerritoryTypes");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Address.Country", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRus")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRusShort")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameShortKaz")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-                });
 
             modelBuilder.Entity("LawyerService.Entities.Identity.RefreshToken", b =>
                 {
@@ -391,36 +288,6 @@ namespace LawyerService.API.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Address.Address", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Address.AdministrativeTerritory", "AdministrativeTerritory")
-                        .WithMany()
-                        .HasForeignKey("AdministrativeTerritoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Address.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AdministrativeTerritory");
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Address.AdministrativeTerritory", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Address.AdministrativeTerritoryType", "Type")
-                        .WithMany()
-                        .HasForeignKey("AdministrativeTerritoryTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("LawyerService.Entities.Identity.RefreshToken", b =>

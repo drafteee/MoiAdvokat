@@ -6,7 +6,7 @@ using LawyerService.Entities.Address;
 
 namespace LawyerService.DataAccess
 {
-    public class LawyerDbContext : IdentityDbContext<User>
+    public class LawyerDbContext : IdentityDbContext<User, Role, string>
     {
         public static string SchemaName = "dbo";
 
@@ -15,6 +15,7 @@ namespace LawyerService.DataAccess
         }
 
         public virtual DbSet<Lawyer> Lawyers { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<AdministrativeTerritoryType> AdministrativeTerritoryTypes { get; set; }
         public virtual DbSet<AdministrativeTerritory> AdministrativeTerritories { get; set; }

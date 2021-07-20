@@ -10,6 +10,7 @@ using LawyerService.Entities;
 using LawyerService.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using LawyerService.Entities.Identity;
+using LawyerService.BL.Interfaces.Account;
 
 namespace LawyerService.BL
 {
@@ -34,7 +35,7 @@ namespace LawyerService.BL
 
         public async Task<ICollection<LawyerVM>> GetAllAsync()
         {
-            var user = _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+            var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
             var result = await  _uow.Lawyer.GetQueryable()
                .ToListAsync();
             return _mapper.Map<ICollection<LawyerVM>>(result);

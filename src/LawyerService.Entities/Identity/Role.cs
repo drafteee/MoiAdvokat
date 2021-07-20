@@ -7,8 +7,7 @@ namespace LawyerService.Entities.Identity
     /// <summary>
     /// Модель пользователя
     /// </summary>
-    public class UserRole : IdentityRole<int>
+    public class Role : IdentityRole
     {
-        public ICollection<UserRole> UserRoles { get; set; }
     }
 }
