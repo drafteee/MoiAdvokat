@@ -1,4 +1,5 @@
 ﻿using LawyerService.BL.Interfaces;
+using LawyerService.BL.Interfaces.Account;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
