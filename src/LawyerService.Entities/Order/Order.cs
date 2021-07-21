@@ -1,46 +1,76 @@
-﻿using System;
+﻿using LawyerService.Entities.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LawyerService.Entities.Order
 {
-    //Заказ клиент - адвокат
+    /// <summary>
+    /// Заказ клиент - адвокат
+    /// </summary>
     public class Order : BaseEntity
     {
-        //Заголовок заказа
+        /// <summary>
+        /// Заголовок заказа
+        /// </summary>
         public string Header { get; set; }
 
-        //Описание заказа
+        /// <summary>
+        /// Описание заказа
+        /// </summary>
         public string Description { get; set; }
 
-        //Если клиент не хочет указывать настояещее имя
+        /// <summary>
+        /// Если клиент не хочет указывать настояещее имя
+        /// </summary>
         public string NameClient { get; set; }
 
-        //Телефон клиента
+        /// <summary>
+        /// Телефон клиента
+        /// </summary>
         public string PhoneNumber { get; set; }
 
-        //Крайний срок исполнения заказа
+        /// <summary>
+        /// Крайний срок исполнения заказа
+        /// </summary>
         public DateTimeOffset EndDueDate { get; set; }
 
-        //FK на Lawyers
+        /// <summary>
+        /// FK на Lawyers
+        /// </summary>
         public long? LawyerId { get; set; }
+        public Lawyer.Lawyer Lawyer { get; set; }
 
-        //Итоговая цена на заказ
+        /// <summary>
+        /// Итоговая цена на заказ
+        /// </summary>
         public double Price { get; set; }
 
-        //Дата начала исполнения заказа
+        /// <summary>
+        /// Дата начала исполнения заказа
+        /// </summary>
         public DateTimeOffset StartDate { get; set; }
 
-        //Дата исполнения заказа
+        /// <summary>
+        /// Дата исполнения заказа
+        /// </summary>
         public DateTimeOffset FinishDate { get; set; }
-        
-        //FK на Statuses(состояние заказа)
-        public long StatusId { get; set; }
-        
-        //FK на User(клиент)
-        public long UserId { get; set; }
 
-        //Процент адвокату
+        /// <summary>
+        /// FK на Statuses(состояние заказа)
+        /// </summary>
+        public long StatusId { get; set; }
+        public OrderStatus Status { get; set; }
+
+        /// <summary>
+        /// FK на User(клиент)
+        /// </summary>
+        public long UserId { get; set; }
+        public User User { get; set; }
+
+        /// <summary>
+        /// Процент адвокату
+        /// </summary>
         private sbyte _procent;
         public sbyte Procent 
         {

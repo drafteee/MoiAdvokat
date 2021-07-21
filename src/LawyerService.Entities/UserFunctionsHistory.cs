@@ -1,25 +1,40 @@
-﻿using System;
+﻿using LawyerService.Entities.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LawyerService.Entities
 {
-    //Аудит действий пользователя
+    /// <summary>
+    /// Аудит действий пользователя
+    /// </summary>
     public class UserFunctionsHistory : BaseEntity
     {
-        //FK на User
+        /// <summary>
+        /// FK на User
+        /// </summary>
         public long UserId { get; set; }
+        public User User { get; set; }
 
-        //FK на Functions
+        /// <summary>
+        /// FK на Functions
+        /// </summary>
         public long FunctionId { get; set; }
+        //public Function Function { get; set; }
 
-        //Время, когда было произведено действие пользователем
+        /// <summary>
+        /// Время, когда было произведено действие пользователем
+        /// </summary>
         public DateTimeOffset ActionDate { get; set; }
 
-        //Параметры, которые были при вызове функции
+        /// <summary>
+        /// Параметры, которые были при вызове функции
+        /// </summary>
         public string ParamsBefore { get; set; }
 
-        //Успешно ли прошла функция(без ошибок)
+        /// <summary>
+        /// Успешно ли прошла функция(без ошибок)
+        /// </summary>
         public bool IsSuccess { get; set; }
     }
 }

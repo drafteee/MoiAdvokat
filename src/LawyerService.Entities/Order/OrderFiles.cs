@@ -4,13 +4,21 @@ using System.Text;
 
 namespace LawyerService.Entities.Order
 {
-    //Файлы заказа
+    /// <summary>
+    /// Файлы заказа
+    /// </summary>
     public class OrderFiles
     {
-        //FL on Order
+        /// <summary>
+        /// FK on Order
+        /// </summary>
         public long OrderId { get; set; }
-        
-        //FK on File
+        public Order Order { get; set; }
+
+        /// <summary>
+        /// FK on File
+        /// </summary>
         public long FileId { get; set; }
+        public File File { get; set; }
     }
 }

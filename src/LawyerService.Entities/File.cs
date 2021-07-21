@@ -4,22 +4,34 @@ using System.Text;
 
 namespace LawyerService.Entities
 {
-    //Объект файла
+    /// <summary>
+    /// Объект файла
+    /// </summary>
     public class File : BaseEntity
     {
-        //Имя файла
+        /// <summary>
+        /// Имя файла
+        /// </summary>
         public string FileName { get; set; }
 
-        //Расширения файла
+        /// <summary>
+        /// Расширения файла
+        /// </summary>
         public string FileExtension { get; set; }
 
-        //содержимое файла
+        /// <summary>
+        /// Содержимое файла
+        /// </summary>
         public byte[] Content { get; set; }
 
-        //Размер файла
+        /// <summary>
+        /// Размер файла
+        /// </summary>
         public long FileLength { get; set; }
 
-        //Дата загрузки файла
+        /// <summary>
+        /// Дата загрузки файла
+        /// </summary>
         public DateTimeOffset DateLoad { get; set; }
     }
 }

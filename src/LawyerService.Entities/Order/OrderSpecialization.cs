@@ -1,16 +1,25 @@
-﻿using System;
+﻿using LawyerService.Entities.Lawyer;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LawyerService.Entities.Order
 {
-    // Специализация заказа
+    /// <summary>
+    /// Специализация заказа
+    /// </summary>
     public class OrderSpecialization
     {
-        //FK on Order
+        /// <summary>
+        /// FK on Order
+        /// </summary>
         public long OrderId { get; set; }
+        public Order Order { get; set; }
 
-        //FK on Specialization
+        /// <summary>
+        /// FK on Specialization
+        /// </summary>
         public long SpecializationId { get; set; }
+        public Specialization Specialization { get; set; }
     }
 }

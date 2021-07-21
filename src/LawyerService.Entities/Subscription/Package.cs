@@ -4,13 +4,19 @@ using System.Text;
 
 namespace LawyerService.Entities.Subscription
 {
-    //Пакет функций
+    /// <summary>
+    /// Пакет функций
+    /// </summary>
     public class Package : BaseEntity
     {
-        //Имя пакета
+        /// <summary>
+        /// Имя пакета
+        /// </summary>
         public string Name { get; set; }
 
-        //Стоимость пакета
+        /// <summary>
+        /// Стоимость пакета
+        /// </summary>
         public double Cost { get; set; }
     }
 }

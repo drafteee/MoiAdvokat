@@ -4,16 +4,24 @@ using System.Text;
 
 namespace LawyerService.Entities.Order
 {
-    //Статус Заказа
+    /// <summary>
+    /// Статус Заказа
+    /// </summary>
     public class OrderStatus : BaseEntity
     {
-        //Имя на русском
+        /// <summary>
+        /// Имя на русском
+        /// </summary>
         public string NameRus { get; set; }
 
-        //Имя на казахском
+        /// <summary>
+        /// Имя на казахском
+        /// </summary>
         public string NameKaz { get; set; }
 
-        // Код статуса
+        /// <summary>
+        /// Код статуса
+        /// </summary>
         public string Code { get; set; }
     }
 }
