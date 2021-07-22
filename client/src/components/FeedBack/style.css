@@ -1,0 +1,44 @@
+.contact_info{
+  font-size: 112%;
+  font-family: "Nanum Gothic";
+  color:#95a5a6;
+}
+
+.contact_info .anticon{
+  font-size: 150%;
+  color: #3498db;
+}
+
+.contact_info a{
+  color: #2980b9;
+}
+
+.contact_info a:hover{
+  color: #479cd4;
+  border-bottom: 1px solid #479cd4;
+}
+
+.feedback_form{
+  height: 250px;
+}
+
+#feedback{
+  width: 400px;
+}
+
+#feedback input{
+  border-radius: 10px;
+}
+
+.feedback_submit{
+  height: 100%;
+  border-radius: 6px;
+  background-color: #7f8c8d;
+  border: none;
+  font-size: 125%;
+}
+
+.feedback_submit:hover{
+  background-color: #a5b6b8;
+  color: #d35400;
+}

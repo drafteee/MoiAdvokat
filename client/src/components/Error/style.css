@@ -1,0 +1,43 @@
+.error{
+  text-align: center;
+  background: linear-gradient(-45deg,rgba(216, 69, 69, 0.6) 45%, rgba(255,255,255,0) 50%, rgba(216, 69, 69,0.6) 55%);
+  animation: gradient 8s ease infinite;
+  background-size: 300% 300%;
+  height: 0;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.error.active{
+  height: 30px;
+  padding: 3px;
+  transition: height 0.25s ease-in;
+}
+
+.error:not(.active){
+  height: 0;
+  padding: 0px;
+  transition: height 0.25s ease-in;
+}
+
+.error div > ion-icon{
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.error div > ion-icon:hover{
+  --ionicon-stroke-width: 60px;
+  transition: --ionicon-stroke-width 0.25s ease-in;
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}

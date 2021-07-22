@@ -1,0 +1,171 @@
+$randomNumber: random(5);
+
+.loader-data{
+    position: relative;
+    width: 126px;
+    height: 137px;
+    margin: 20px 0 20px 0px;
+    left: 50%;
+    top: 50%;
+  }
+  
+  .loader-back{
+      /* Rectangle 126 */
+  
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(4px);
+      /* Note: backdrop-filter has minimal browser support */
+      
+
+  }
+  
+
+
+  .loader-rect{
+    height: 100%;
+    width:100%;
+    background: rgba(80, 207, 201, 0.5);
+    border-radius: 4px;
+    transform: rotate(-20deg);
+
+    animation: rotate-back 3s linear infinite; 
+
+  }
+
+  @keyframes rotate-back{
+    50% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(-20deg);
+    }
+  }
+  
+  .loader-lines-hor{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: wrap;
+  }
+  
+  .loader-lines-hor > div{
+      border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+    width:100%;
+  }
+
+  .loader-lines-hor > div:nth-last-child(1){
+    position:relative;
+      border-bottom: none;
+    width:100%;
+  }
+  
+  .loader-lines-ver{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top:0%;
+  }
+  
+  .loader-lines-ver > div{
+    position:relative;
+    border-right: 2px solid rgba(255, 255, 255, 0.7);
+    width:100%;
+  }
+
+  .loader-lines-ver > div:nth-last-child(1){
+    position:relative;
+    border-right: none;
+    width:100%;
+  }
+  
+  .loader-white{
+    position: absolute;
+    width: 100px;
+    height: 140px;
+    left: 15px;
+    top: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgb(0 0 0 / 20%);
+    border-radius: 4px;
+    padding: 2px 13px 40px 13px;
+  }
+
+  .loader-white-lines{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+
+  @for $i from 1 through 5 {
+    .loader-white-lines > div:nth-of-type(#{$i}) {
+      width: 0%;
+      height: 3px;
+      background-color: #EDEDED;
+      animation: width-line ease-in infinite; 
+      animation-delay: random(2) + s;
+      animation-duration: random(3) + 1 + s;
+    }
+ }
+
+
+
+
+  @keyframes width-line{
+    100% {
+      width:100%;
+    }
+  }
+
+
+  .loader-svg{
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    width: 70px;
+    transform: rotate(0deg) translate(40px) rotate(-105deg);
+    animation: circle 4.5s  linear infinite; 
+  }
+
+  @keyframes circle{
+    100% {
+        transform:rotate(360deg) translate(40px) rotate(-465deg);
+      }
+  }
+
+
+
+.local-loading {
+    border: 16px solid lightgrey;
+    border-radius: 50%;
+    border-top: 16px solid var(--black-text-color);
+    border-bottom: 16px solid var(--black-text-color);
+    width: 220px;
+    height: 220px;
+    -webkit-animation: spin 2.5s linear infinite;
+    animation: spin 2.5s linear infinite;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
