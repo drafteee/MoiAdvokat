@@ -9,6 +9,6 @@ namespace LawyerService.DataAccess.Interfaces
     public interface IBaseUow : IDisposable
     {
         Task<IDbContextTransaction> BeginTransationAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default);
-        Task SaveAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -1,37 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace LawyerService.Entities.Lawyer
 {
-    //Адвокат(реестр)
+    /// <summary>
+    /// Адвокат (реестр)
+    /// </summary>
     public class Lawyer : BaseEntity
     {
-        // Имя
+        /// <summary>
+        /// Имя
+        /// </summary>
         public string FirstName { get; set; }
 
-        // Отчество
+        /// <summary>
+        /// Отчество
+        /// </summary>
         public string MiddleName { get; set; }
 
-        // Фамилия
+        /// <summary>
+        /// Фамилия
+        /// </summary>
         public string LastName { get; set; }
 
-        //Номер лицензии
+        /// <summary>
+        /// Номер лицензии
+        /// </summary>
         public string LicenseNumber { get; set; }
 
-        //Дата выдачи лицензии
-        public DateTimeOffset DateOfIssue { get; set; } 
+        /// <summary>
+        /// Дата выдачи лицензии
+        /// </summary>
+        public DateTimeOffset DateOfIssue { get; set; }
 
-        //FK на Files(копия удостоверения)
+        /// <summary>
+        /// FK на Files(копия удостоверения)
+        /// </summary>
         public long FileCopyId { get; set; }
 
-        //FK на Address(Адрес адвоката)
+        /// <summary>
+        /// FK на Address(Адрес адвоката)
+        /// </summary>
         public long AddressId { get; set; }
-        
-        //FK на User
+
+        /// <summary>
+        /// FK на User
+        /// </summary>
         public long UserId { get; set; }
 
-        //Верифицирован ли адвокат в системе
+        /// <summary>
+        /// Верифицирован ли адвокат в системе
+        /// </summary>
         public bool IsVerified { get; set; }
     }
 }

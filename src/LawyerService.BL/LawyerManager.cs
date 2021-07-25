@@ -11,6 +11,7 @@ using LawyerService.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using LawyerService.Entities.Identity;
 using LawyerService.BL.Interfaces.Account;
+using LawyerService.Entities.Lawyer;
 
 namespace LawyerService.BL
 {
@@ -47,5 +48,16 @@ namespace LawyerService.BL
             return _mapper.Map<LawyerVM>(data);
         }
 
+        public async Task<bool> CreateOrUpdate(LawyerVM lawyerVM)
+        {
+            var lawyer = _mapper.Map<Lawyer>(lawyerVM);
+            
+            if (lawyer.Id != 0)
+                _uow.Lawyer.Update(lawyer);
+            else
+                _uow.Lawyer.Add(lawyer);
+
+            return await _uow.SaveAsync() > 0;
+        }
     }
 }

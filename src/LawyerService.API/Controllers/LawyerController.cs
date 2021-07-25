@@ -33,5 +33,9 @@ namespace LawyerService.API.Controllers
             return _lawyerManager.GetByIDAsync(lawyerId);
         }
 
+        public Task<bool> CreateOrUpdate([FromBody] LawyerVM lawyer)
+        {
+            return _lawyerManager.CreateOrUpdate(lawyer);
+        }
     }
 }

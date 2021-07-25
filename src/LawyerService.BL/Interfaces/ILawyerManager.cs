@@ -8,5 +8,6 @@ namespace LawyerService.BL.Interfaces
     {
         Task<ICollection<LawyerVM>> GetAllAsync();
         Task<LawyerVM> GetByIDAsync(int representativeId);
+        Task<bool> CreateOrUpdate(LawyerVM lawyer);
     }
 }
