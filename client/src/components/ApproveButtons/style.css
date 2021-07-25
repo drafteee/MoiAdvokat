@@ -1,0 +1,21 @@
+.button_Ok, .button_Ok button{
+  background-color: rgb(58, 184, 58);
+  width: inherit;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.button_None, .button_None button{
+  width: inherit;
+  background-color: rgb(236, 77, 77);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.ant-btn-group.approve_buttons_group{
+  margin-left: 0px;
+}
+
+.approve_buttons_group ion-icon {
+  font-size: 1.5em;
+}

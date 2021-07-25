@@ -1,0 +1,8 @@
+
+.dont-read{
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #FDB11C;
+  border-radius: 100px;
+}

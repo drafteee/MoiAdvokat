@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LawyerService.Entities.Identity;
+using System;
 
 namespace LawyerService.Entities.Lawyer
 {
@@ -36,16 +37,19 @@ namespace LawyerService.Entities.Lawyer
         /// FK на Files(копия удостоверения)
         /// </summary>
         public long FileCopyId { get; set; }
+        public File FileCopy { get; set; }
 
         /// <summary>
         /// FK на Address(Адрес адвоката)
         /// </summary>
         public long AddressId { get; set; }
+        public Address.Address Address { get; set; }
 
         /// <summary>
         /// FK на User
         /// </summary>
         public long UserId { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Верифицирован ли адвокат в системе

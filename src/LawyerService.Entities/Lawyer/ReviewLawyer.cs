@@ -1,22 +1,35 @@
-﻿using System;
+﻿using LawyerService.Entities.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LawyerService.Entities.Lawyer
 {
-    //Оценка адвокату
+    /// <summary>
+    /// Оценка адвокату
+    /// </summary>
     public class ReviewLawyer : BaseEntity
     {
-        //FK on Lawyer
+        /// <summary>
+        /// FK on Lawyer
+        /// </summary>
         public long LawyerId { get; set; }
+        public Lawyer Lawyer { get; set; }
 
-        //FK on User
+        /// <summary>
+        /// FK on User
+        /// </summary>
         public long ClientId { get; set; }
+        public User Client { get; set; }
 
-        //Отзыв
+        /// <summary>
+        /// Отзыв
+        /// </summary>
         public string Description { get; set; }
 
-        //Оценка
+        /// <summary>
+        /// Оценка
+        /// </summary>
         public byte Assesment { get; set; }
     }
 }

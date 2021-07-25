@@ -1,0 +1,88 @@
+.header_part {
+  height: 400px;
+  background: url("../../../public/background_header.jpg");
+  background-size: cover;
+  background-position-y: -200px;
+  padding: 0px;
+  color: white;
+  border-bottom: 2px solid black;
+}
+
+.short_functions {
+  height: 300px;
+  border: 2px solid rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.short_functions > .ant-row {
+  height: 50%;
+}
+
+.short_functions > .ant-row > button {
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  /* font-family: "Nanum Gothic"; */
+  opacity: 0.9;
+  border: none;
+  border-radius: 0px;
+}
+
+.short_functions > .ant-row > button:hover {
+  opacity: 1;
+  color: initial;
+}
+
+.short_functions > .ant-row > button:focus {
+  opacity: 1;
+  color: initial;
+  background-color: rgb(130, 161, 137);
+}
+
+.short_functions > .ant-row > button:active {
+  opacity: 1;
+  color: initial;
+  background-color: rgb(99, 122, 104);
+}
+
+.home_part {
+  height: 600px;
+  padding: 40px 40px;
+  border-bottom: 1px solid rgba(190, 190, 190, 0.76);
+  position: relative;
+  transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.help {
+  /* background-color: #cee2de; */
+  text-align: center;
+}
+
+.contact {
+  background-color: #ffeee3;
+  height: 450px;
+}
+
+.news:hover {
+  background-color: #f5eaea;
+}
+
+.contact:hover {
+  background-color: #ffe5d3;
+}
+
+.help:hover {
+  background-color: #ecfffb;
+}
+
+.questions {
+  width: 40%;
+}
+
+.questions span {
+  transform: none;
+}
+
+/* .ymaps-2-1-77-inner-panes{
+  border: 1px solid gray;
+} */

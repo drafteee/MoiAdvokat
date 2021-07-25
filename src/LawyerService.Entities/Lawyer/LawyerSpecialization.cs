@@ -4,14 +4,22 @@ using System.Text;
 
 namespace LawyerService.Entities.Lawyer
 {
-    // Специализация адвоката
+    /// <summary>
+    /// Специализация адвоката
+    /// </summary>
     public class LawyerSpecialization
     {
-        //FK on Specialization
+        /// <summary>
+        /// FK on Specialization
+        /// </summary>
         public long SpecializationId { get; set; }
+        public Specialization Specialization { get; set; }
 
-        //FK on Lawyer
+        /// <summary>
+        /// FK on Lawyer
+        /// </summary>
         public long LawyerId { get; set; }
+        public Lawyer Lawyer { get; set; }
 
     }
 }
