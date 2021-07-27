@@ -44,7 +44,7 @@ namespace LawyerService.Entities.Order
         /// <summary>
         /// Итоговая цена на заказ
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Дата начала исполнения заказа
@@ -65,8 +65,13 @@ namespace LawyerService.Entities.Order
         /// <summary>
         /// FK на User(клиент)
         /// </summary>
-        public long UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
+
+        /// <summary>
+        /// Специализации заказа
+        /// </summary>
+        public ICollection<OrderSpecialization> OrderSpecializations { get; set; }
 
         /// <summary>
         /// Процент адвокату

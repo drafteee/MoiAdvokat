@@ -50,7 +50,7 @@ namespace LawyerService.Entities.Lawyer
         /// <summary>
         /// FK на User
         /// </summary>
-        public long UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
         /// <summary>

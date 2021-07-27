@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210727201236_addTransactions_Orders_Specializations")]
+    partial class addTransactions_Orders_Specializations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -409,7 +411,7 @@ namespace LawyerService.API.Migrations
 
                     b.HasIndex("SpecializationId");
 
-                    b.ToTable("OrderSpecializations");
+                    b.ToTable("OrderSpecialization");
                 });
 
             modelBuilder.Entity("LawyerService.Entities.Order.OrderStatus", b =>
