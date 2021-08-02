@@ -33,6 +33,7 @@ namespace LawyerService.DataAccess
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -66,7 +67,6 @@ namespace LawyerService.DataAccess
                 .HasForeignKey(aur => aur.SpecializationId);
 
             SpecifyUniqueIndicesForLawyers(modelBuilder);
-            SpecifyTypesForDates(modelBuilder);
         }
 
         /// <summary>
@@ -78,19 +78,6 @@ namespace LawyerService.DataAccess
             builder.Entity<Lawyer>()
                 .HasIndex(x => x.LicenseNumber)
                 .IsUnique();
-        }
-
-        /// <summary>
-        /// Определяет тип дат в сущностях, наследуемых от <see cref="BaseEntity"/>
-        /// </summary>
-        /// <param name="builder"></param>
-        private void SpecifyTypesForDates(ModelBuilder builder)
-        {
-            foreach(var type in typeof(BaseEntity).Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(BaseEntity))).ToList())
-            {
-                builder.Entity(type).Property("CreatedOn").HasColumnType("timestamp with time zone");
-                builder.Entity(type).Property("DeletedOn").HasColumnType("timestamp with time zone");
-            }
         }
     }
 }

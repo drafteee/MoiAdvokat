@@ -273,23 +273,23 @@ namespace LawyerService.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Lawyers_AddressId",
-                schema: "dbo",
-                table: "Lawyers",
-                column: "AddressId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Lawyers_AddressId",
+            //    schema: "dbo",
+            //    table: "Lawyers",
+            //    column: "AddressId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Lawyers_FileCopyId",
-                schema: "dbo",
-                table: "Lawyers",
-                column: "FileCopyId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Lawyers_FileCopyId",
+            //    schema: "dbo",
+            //    table: "Lawyers",
+            //    column: "FileCopyId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Lawyers_UserId",
-                schema: "dbo",
-                table: "Lawyers",
-                column: "UserId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Lawyers_UserId",
+            //    schema: "dbo",
+            //    table: "Lawyers",
+            //    column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HistoryTransactions_StatusId",
@@ -352,25 +352,25 @@ namespace LawyerService.API.Migrations
                 column: "UserId",
                 unique: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Lawyers_Addresses_AddressId",
-                schema: "dbo",
-                table: "Lawyers",
-                column: "AddressId",
-                principalSchema: "dbo",
-                principalTable: "Addresses",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Lawyers_Addresses_AddressId",
+            //    schema: "dbo",
+            //    table: "Lawyers",
+            //    column: "AddressId",
+            //    principalSchema: "dbo",
+            //    principalTable: "Addresses",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Lawyers_AspNetUsers_UserId",
-                schema: "dbo",
-                table: "Lawyers",
-                column: "UserId",
-                principalSchema: "dbo",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Lawyers_AspNetUsers_UserId",
+            //    schema: "dbo",
+            //    table: "Lawyers",
+            //    column: "UserId",
+            //    principalSchema: "dbo",
+            //    principalTable: "AspNetUsers",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Lawyers_File_FileCopyId",

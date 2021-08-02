@@ -14,7 +14,8 @@ namespace LawyerService.Entities
         /// <summary>
         /// Дата и время создания записи
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Удалена ли запись
@@ -24,6 +25,7 @@ namespace LawyerService.Entities
         /// <summary>
         /// Дата и время удаления записи
         /// </summary>
+        [Column(TypeName = "timestamp with time zone")]
         public DateTime? DeletedOn { get; set; }
     }
 }
