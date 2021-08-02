@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725142412_MadeFileCopyIdAndUserIdInLawyerNullable")]
+    partial class MadeFileCopyIdAndUserIdInLawyerNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,9 +336,6 @@ namespace LawyerService.API.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("FileCopyId");
-
-                    b.HasIndex("LicenseNumber")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 

@@ -43,7 +43,7 @@ namespace LawyerService.Test
 
             services.AddScoped<IUow, Uow>();
             services.AddScoped<IAppContext, AppContextMock>();
-            services.AddScoped<ILocalisationManager, LocalisationManager>();
+            services.AddScoped<ILocalizationManager, LocalizationManager>();
             services.AddSingleton<IMemoryCacheManager, MemoryCacheManager>();
             services.AddScoped<ILawyerManager, LawyerManager>();
             services.AddLogging(loggingBuilder =>

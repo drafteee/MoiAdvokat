@@ -36,7 +36,7 @@ namespace LawyerService.Entities.Lawyer
         /// <summary>
         /// FK на Files(копия удостоверения)
         /// </summary>
-        public long FileCopyId { get; set; }
+        public long? FileCopyId { get; set; }
         public File FileCopy { get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace LawyerService.Entities.Lawyer
         /// <summary>
         /// FK на User
         /// </summary>
-        public long UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
         /// <summary>

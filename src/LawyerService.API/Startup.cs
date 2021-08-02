@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Authorization;
 using LawyerService.BL.Helpers;
 using Microsoft.AspNetCore.DataProtection;
 using LawyerService.BL.Interfaces.Account;
+using LawyerService.BL.Interfaces.Addresses;
+using LawyerService.BL.Addresses;
 
 namespace LawyerService.API
 {
@@ -54,10 +56,11 @@ namespace LawyerService.API
 
             services.AddScoped<IUow, Uow>();
             services.AddSingleton<IMemoryCacheManager, MemoryCacheManager>();
-            services.AddScoped<ILocalisationManager, LocalisationManager>();
+            services.AddScoped<ILocalizationManager, LocalizationManager>();
             services.AddScoped<IUserAccessor, UserAccessor>();
 
             services.AddScoped<ILawyerManager, LawyerManager>();
+            services.AddScoped<IAddressManager, AddressManager>();
             services.AddScoped<IUserManager, BL.Account.UserManager>();
 
             services.AddAutoMapperProfiles();

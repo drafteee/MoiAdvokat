@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LawyerService.BL.Interfaces
 {
-    public interface ILocalisationManager
+    public interface ILocalizationManager
     {
         string GetCountryCode();
         string GetLanguageCode();

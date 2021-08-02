@@ -1,6 +1,8 @@
-﻿namespace LawyerService.ViewModel.Address
+﻿using LawyerService.ViewModel.Base;
+
+namespace LawyerService.ViewModel.Address
 {
-    public class AddressVM
+    public class AddressVM : BaseVM
     {
         /// <summary>
         /// Почтовый индекс

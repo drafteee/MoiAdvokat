@@ -1,14 +1,11 @@
 ﻿using LawyerService.ViewModel.Address;
+using LawyerService.ViewModel.Base;
+using System;
 
 namespace LawyerService.ViewModel
 {
-    public class LawyerVM
+    public class LawyerVM : BaseVM
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public long Id { get; set; }
-
         /// <summary>
         /// Имя
         /// </summary>
@@ -29,6 +26,14 @@ namespace LawyerService.ViewModel
         /// </summary>
         public string LicenseNumber { get; set; }
 
+        /// <summary>
+        /// Дата выдачи лицензии
+        /// </summary>
+        public DateTimeOffset DateOfIssue { get; set; }
+
+        /// <summary>
+        /// Адрес
+        /// </summary>
         public AddressVM Address { get; set; }
     }
 }

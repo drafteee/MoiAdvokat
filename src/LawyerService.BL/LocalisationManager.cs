@@ -7,7 +7,7 @@ using System;
 
 namespace LawyerService.BL
 {
-    public class LocalisationManager : ILocalisationManager
+    public class LocalizationManager : ILocalizationManager
     { 
     private readonly IMemoryCacheManager _memoryCacheManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -20,7 +20,7 @@ namespace LawyerService.BL
     private readonly string _countryCode;
     private readonly string _languageCode;
 
-    public LocalisationManager(IMemoryCacheManager memoryCacheManager, IHttpContextAccessor httpContextAccessor, ILogger<LocalisationManager> logger)
+    public LocalizationManager(IMemoryCacheManager memoryCacheManager, IHttpContextAccessor httpContextAccessor, ILogger<LocalizationManager> logger)
     {
         _memoryCacheManager = memoryCacheManager;
         _httpContextAccessor = httpContextAccessor;
@@ -127,7 +127,7 @@ namespace LawyerService.BL
     private JObject GetOrAddJsonObject(string fileName)
     {
 
-        return _memoryCacheManager.GetOrAdd(_memoryCacheManager.GetCacheKey(nameof(LocalisationManager), fileName),
+        return _memoryCacheManager.GetOrAdd(_memoryCacheManager.GetCacheKey(nameof(LocalizationManager), fileName),
          () =>
          {
              string assemblyName;
