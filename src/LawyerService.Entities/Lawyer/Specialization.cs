@@ -1,6 +1,5 @@
-﻿using System;
+﻿using LawyerService.Entities.Order;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LawyerService.Entities.Lawyer
 {
@@ -23,5 +22,10 @@ namespace LawyerService.Entities.Lawyer
         /// Код специализации
         /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// Специализации заказа
+        /// </summary>
+        public ICollection<OrderSpecialization> OrderSpecializations { get; set; }
     }
 }

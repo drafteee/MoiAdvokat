@@ -3,6 +3,8 @@ using LawyerService.Entities.Lawyer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Address;
+using LawyerService.Entities.Transactions;
+using LawyerService.Entities.Order;
 using System;
 using LawyerService.Entities;
 using System.Linq;
@@ -23,7 +25,14 @@ namespace LawyerService.DataAccess
         public virtual DbSet<AdministrativeTerritory> AdministrativeTerritories { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<UserBalance> UserBalances { get; set; }
-        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+        public virtual DbSet<TransactionStatus> TransactionStatuses { get; set; }
+        public virtual DbSet<TransactionReason> TransactionReasons { get; set; }
+        public virtual DbSet<HistoryTransactions> HistoryTransactions { get; set; }
+        public virtual DbSet<HistoryUserTransactions> HistoryUserTransactions { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+        public virtual DbSet<Specialization> Specializations { get; set; }
+        public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,6 +44,26 @@ namespace LawyerService.DataAccess
             modelBuilder.HasDefaultSchema(SchemaName);
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<OrderSpecialization>()
+                .HasKey(r => new { r.OrderId, r.SpecializationId });
+
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.OrderSpecializations)
+                .WithOne()
+                .HasForeignKey(e => e.OrderId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrderSpecialization>()
+                .HasOne(aur => aur.Order)
+                .WithMany(aur => aur.OrderSpecializations)
+                .HasForeignKey(aur => aur.OrderId);
+
+            modelBuilder.Entity<OrderSpecialization>()
+                .HasOne(aur => aur.Specialization)
+                .WithMany(aur => aur.OrderSpecializations)
+                .HasForeignKey(aur => aur.SpecializationId);
 
             SpecifyUniqueIndicesForLawyers(modelBuilder);
             SpecifyTypesForDates(modelBuilder);
