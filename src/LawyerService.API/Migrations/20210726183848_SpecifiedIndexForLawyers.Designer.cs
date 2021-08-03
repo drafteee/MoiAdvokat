@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210726183848_SpecifiedIndexForLawyers")]
+    partial class SpecifiedIndexForLawyers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,17 +35,8 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("CountryId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("House")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Notice")
                         .HasColumnType("text");
@@ -76,15 +69,6 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("AdministrativeTerritoryTypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -101,15 +85,6 @@ namespace LawyerService.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("NameKaz")
                         .HasColumnType("text");
@@ -134,15 +109,6 @@ namespace LawyerService.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("NameKaz")
                         .HasColumnType("text");
@@ -171,13 +137,7 @@ namespace LawyerService.API.Migrations
                     b.Property<byte[]>("Content")
                         .HasColumnType("bytea");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTimeOffset>("DateLoad")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FileExtension")
@@ -188,9 +148,6 @@ namespace LawyerService.API.Migrations
 
                     b.Property<string>("FileName")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -204,20 +161,11 @@ namespace LawyerService.API.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("IP")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("UserAgent")
                         .HasColumnType("text");
@@ -328,6 +276,27 @@ namespace LawyerService.API.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("LawyerService.Entities.Identity.UserBalance", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserBalances");
+                });
+
             modelBuilder.Entity("LawyerService.Entities.Lawyer.Lawyer", b =>
                 {
                     b.Property<long>("Id")
@@ -338,13 +307,7 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTimeOffset>("DateOfIssue")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long?>("FileCopyId")
@@ -352,9 +315,6 @@ namespace LawyerService.API.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("boolean");
@@ -383,340 +343,6 @@ namespace LawyerService.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Lawyers");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Lawyer.Specialization", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specializations");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.Order", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("EndDueDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("FinishDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Header")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<long?>("LawyerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("NameClient")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<short>("Procent")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTimeOffset>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("StatusId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LawyerId");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.OrderSpecialization", b =>
-                {
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SpecializationId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("OrderId", "SpecializationId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("OrderSpecializations");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.OrderStatus", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRus")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderStatuses");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.HistoryTransactions", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsInService")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("StatusId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("HistoryTransactions");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.HistoryUserTransactions", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("CurrentBalanceAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("PreviousBalanceAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<long>("TransactionReasonId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserBalanceId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("TransactionReasonId");
-
-                    b.HasIndex("UserBalanceId");
-
-                    b.ToTable("HistoryUserTransactions");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.TransactionReason", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DescriptionKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DescriptionRus")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRus")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionReasons");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.TransactionStatus", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DescriptionKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DescriptionRus")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("NameKaz")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameRus")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionStatuses");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.UserBalance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<byte>("ProcentIn")
-                        .HasColumnType("smallint");
-
-                    b.Property<byte>("ProcentOut")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserBalances");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -862,6 +488,15 @@ namespace LawyerService.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LawyerService.Entities.Identity.UserBalance", b =>
+                {
+                    b.HasOne("LawyerService.Entities.Identity.User", "User")
+                        .WithOne("Balance")
+                        .HasForeignKey("LawyerService.Entities.Identity.UserBalance", "UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LawyerService.Entities.Lawyer.Lawyer", b =>
                 {
                     b.HasOne("LawyerService.Entities.Address.Address", "Address")
@@ -881,99 +516,6 @@ namespace LawyerService.API.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("FileCopy");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.Order", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Lawyer.Lawyer", "Lawyer")
-                        .WithMany()
-                        .HasForeignKey("LawyerId");
-
-                    b.HasOne("LawyerService.Entities.Order.OrderStatus", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Lawyer");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.OrderSpecialization", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Order.Order", "Order")
-                        .WithMany("OrderSpecializations")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Lawyer.Specialization", "Specialization")
-                        .WithMany("OrderSpecializations")
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.HistoryTransactions", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Transactions.TransactionStatus", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.HistoryUserTransactions", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Order.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("LawyerService.Entities.Transactions.TransactionReason", "Reason")
-                        .WithMany()
-                        .HasForeignKey("TransactionReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Transactions.UserBalance", "UserBalance")
-                        .WithMany()
-                        .HasForeignKey("UserBalanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Reason");
-
-                    b.Navigation("UserBalance");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Transactions.UserBalance", b =>
-                {
-                    b.HasOne("LawyerService.Entities.Identity.User", "User")
-                        .WithOne("Balance")
-                        .HasForeignKey("LawyerService.Entities.Transactions.UserBalance", "UserId");
 
                     b.Navigation("User");
                 });
@@ -1032,16 +574,6 @@ namespace LawyerService.API.Migrations
             modelBuilder.Entity("LawyerService.Entities.Identity.User", b =>
                 {
                     b.Navigation("Balance");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Lawyer.Specialization", b =>
-                {
-                    b.Navigation("OrderSpecializations");
-                });
-
-            modelBuilder.Entity("LawyerService.Entities.Order.Order", b =>
-                {
-                    b.Navigation("OrderSpecializations");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,6 +5,9 @@ using LawyerService.Entities.Identity;
 using LawyerService.Entities.Address;
 using LawyerService.Entities.Transactions;
 using LawyerService.Entities.Order;
+using System;
+using LawyerService.Entities;
+using System.Linq;
 
 namespace LawyerService.DataAccess
 {
@@ -17,7 +20,6 @@ namespace LawyerService.DataAccess
         }
 
         public virtual DbSet<Lawyer> Lawyers { get; set; }
-        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<AdministrativeTerritoryType> AdministrativeTerritoryTypes { get; set; }
         public virtual DbSet<AdministrativeTerritory> AdministrativeTerritories { get; set; }
@@ -31,6 +33,7 @@ namespace LawyerService.DataAccess
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -67,6 +70,19 @@ namespace LawyerService.DataAccess
                 .HasIndex(ub => ub.UserId)
                 .IsUnique();
 
+
+            SpecifyUniqueIndicesForLawyers(modelBuilder);
+        }
+
+        /// <summary>
+        /// Определяет уникальность столбцов для сущности Lawyers
+        /// </summary>
+        /// <param name="builder"></param>
+        private void SpecifyUniqueIndicesForLawyers(ModelBuilder builder)
+        {
+            builder.Entity<Lawyer>()
+                .HasIndex(x => x.LicenseNumber)
+                .IsUnique();
         }
     }
 }

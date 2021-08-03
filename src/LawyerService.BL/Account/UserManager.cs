@@ -1,32 +1,32 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using LawyerService.BL.Helpers;
 using LawyerService.BL.Interfaces;
-using LawyerService.DataAccess.Interfaces;
-using LawyerService.Entities;
-using LawyerService.ViewModel;
-using Microsoft.AspNetCore.Identity;
-using LawyerService.Entities.Identity;
 using LawyerService.BL.Interfaces.Account;
-using LawyerService.ViewModel.Common;
+using LawyerService.DataAccess;
+using LawyerService.Entities.Identity;
+using LawyerService.Resources;
+using LawyerService.ViewModel;
 using LawyerService.ViewModel.Account;
+using LawyerService.ViewModel.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using LawyerService.Resources;
 using LawyerService.DataAccess;
 using LawyerService.BL.Helpers;
 using LawyerService.Entities.Transactions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LawyerService.BL.Account
 {
-    public class UserManager : BaseManager, IUserManager
+    public class UserManager : IUserManager
     {
         private readonly LawyerDbContext _context;
         private readonly IMapper _mapper;
         private readonly IValidator<LawyerVM> _validator;
-        private readonly ILocalisationManager _localisationManager; 
+        private readonly ILocalizationManager _localisationManager; 
         private readonly IUserAccessor _userAccessor; 
         private readonly UserManager<User> _userManager;
         private readonly PasswordHasher<User> _passwordHasher;
@@ -174,7 +174,6 @@ namespace LawyerService.BL.Account
             }
             return result;
         }
-
 
         #region Private Methods
 

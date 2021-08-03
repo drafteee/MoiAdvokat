@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using LawyerService.BL.Interfaces;
+﻿using LawyerService.BL.Interfaces;
 using LawyerService.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LawyerService.API.Controllers
 {
@@ -17,12 +15,12 @@ namespace LawyerService.API.Controllers
 
         public LawyerController(ILawyerManager lawyerManager)
         {
-            this._lawyerManager = lawyerManager;
+            _lawyerManager = lawyerManager;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public Task<ICollection<LawyerVM>> GetAll()
+        public Task<List<LawyerVM>> GetAll()
         {
             return _lawyerManager.GetAllAsync();
         }
@@ -30,8 +28,21 @@ namespace LawyerService.API.Controllers
         [HttpGet]
         public Task<LawyerVM> GetByID([FromQuery] int lawyerId)
         {
-            return _lawyerManager.GetByIDAsync(lawyerId);
+            return _lawyerManager.GetByIdAsync(lawyerId);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public Task<bool> CreateOrUpdate([FromBody] LawyerVM lawyer)
+        {
+            return _lawyerManager.CreateOrUpdateAsync(lawyer);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public Task<bool> CreateOrUpdateMany([FromBody] List<LawyerVM> lawyers)
+        {
+            return _lawyerManager.CreateOrUpdateManyAsync(lawyers);
+        }
     }
 }

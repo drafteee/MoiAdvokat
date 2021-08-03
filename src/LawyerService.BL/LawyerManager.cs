@@ -1,51 +1,76 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
+using LawyerService.BL.Interfaces;
+using LawyerService.BL.Interfaces.Account;
+using LawyerService.BL.Interfaces.Addresses;
+using LawyerService.DataAccess.Interfaces;
+using LawyerService.Entities.Identity;
+using LawyerService.Entities.Lawyer;
+using LawyerService.ViewModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LawyerService.BL.Interfaces;
-using LawyerService.DataAccess.Interfaces;
-using LawyerService.Entities;
-using LawyerService.ViewModel;
-using Microsoft.AspNetCore.Identity;
-using LawyerService.Entities.Identity;
-using LawyerService.BL.Interfaces.Account;
 
 namespace LawyerService.BL
 {
-    public class LawyerManager : BaseManager, ILawyerManager
+    public class LawyerManager : BaseManager<Lawyer, LawyerVM>, ILawyerManager
     {
-        private readonly IUow _uow;
-        private readonly IMapper _mapper;
-        private readonly IValidator<LawyerVM> _validator;
-        private readonly ILocalisationManager _localisationManager; 
-        private readonly IUserAccessor _userAccessor; 
-        private readonly UserManager<User> _userManager;
-
-        public LawyerManager(IUow uow, IMapper mapper, IValidator<LawyerVM> validator, ILocalisationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager)
+        public LawyerManager(IUow uow, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, IServiceProvider serviceProvider)
+            : base(uow, mapper, validator, localisationManager, userAccessor, userManager, serviceProvider)
         {
-            _uow = uow;
-            _mapper = mapper;
-            _validator = validator;
-            _localisationManager = localisationManager;
-            _userAccessor = userAccessor;
-            _userManager = userManager;
         }
 
-        public async Task<ICollection<LawyerVM>> GetAllAsync()
+        public override async Task<bool> CreateOrUpdateAsync(LawyerVM lawyerVM)
         {
-            var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
-            var result = await  _uow.Lawyer.GetQueryable()
-               .ToListAsync();
-            return _mapper.Map<ICollection<LawyerVM>>(result);
+            var lawyer = _mapper.Map<Lawyer>(lawyerVM);
+            IdentifyAddress(lawyer);
+
+            if (lawyer.Id != 0)
+                _uow.Lawyer.Update(lawyer);
+            else
+                _uow.Lawyer.Add(lawyer);
+
+            return await _uow.SaveAsync() > 0;
         }
 
-        public async Task<LawyerVM> GetByIDAsync(int lawyerId)
+        public override async Task<bool> CreateOrUpdateManyAsync(List<LawyerVM> lawyerVMs)
         {
-            var data = await _uow.Lawyer.GetQueryable().Where(x => x.Id == lawyerId).FirstOrDefaultAsync();
-            return _mapper.Map<LawyerVM>(data);
+            var lawyers = _mapper.Map<List<Lawyer>>(lawyerVMs);
+            IdentifyAddress(lawyers);
+
+            var toCreate = lawyers.Where(x => x.Id == 0).ToList();
+            var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
+
+            _uow.Lawyer.AddRange(toCreate);
+            _uow.Lawyer.UpdateRange(toUpdate);
+
+            return await _uow.SaveAsync() > 0;
         }
 
+        #region Private methods
+
+        private void IdentifyAddress(Lawyer lawyer) => IdentifyAddress(new List<Lawyer>() { lawyer });
+
+        private void IdentifyAddress(List<Lawyer> lawyers)
+        {
+            var newAddresses = _serviceProvider.GetRequiredService<IAddressManager>().GetExistingAddresses(lawyers.Select(x => x.Address).ToList());
+
+            lawyers.ForEach(a =>
+            {
+                var address = newAddresses.Where(x => a.Address.AdministrativeTerritoryId == x.AdministrativeTerritoryId
+                    && a.Address.CountryId == x.CountryId
+                    && a.Address.Street == x.Street
+                    && a.Address.House == x.House
+                    && a.Address.Office == x.Office).FirstOrDefault();
+
+                a.Address = address;
+                a.AddressId = address.Id;
+            });
+        }
+
+        #endregion
     }
 }

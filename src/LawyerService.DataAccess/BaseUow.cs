@@ -18,7 +18,7 @@ namespace LawyerService.DataAccess.DataAccess
             this._context = context;
         }
 
-        public Task SaveAsync(CancellationToken cancellationToken = default)
+        public Task<int> SaveAsync(CancellationToken cancellationToken = default)
         {
             return _context.SaveChangesAsync(cancellationToken);
         }

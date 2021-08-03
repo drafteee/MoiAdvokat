@@ -1,12 +1,10 @@
 ﻿using LawyerService.Entities.Identity;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace LawyerService.Entities.Lawyer
 {
     /// <summary>
-    /// Адвокат(реестр)
+    /// Адвокат (реестр)
     /// </summary>
     public class Lawyer : BaseEntity
     {
@@ -38,7 +36,7 @@ namespace LawyerService.Entities.Lawyer
         /// <summary>
         /// FK на Files(копия удостоверения)
         /// </summary>
-        public long FileCopyId { get; set; }
+        public long? FileCopyId { get; set; }
         public File FileCopy { get; set; }
 
         /// <summary>

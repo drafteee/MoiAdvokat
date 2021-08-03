@@ -20,6 +20,7 @@ namespace LawyerService.DataAccess.Interfaces
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void Update(T entity);
+        void UpdateRange(IEnumerable<T> entities);
         void Delete(T entity);
         void DeleteRange(IQueryable<T> entities);
         IQueryable<T> FromQueryRaw(string query, params object[] @params);

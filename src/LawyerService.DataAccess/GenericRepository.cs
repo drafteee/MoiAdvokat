@@ -84,6 +84,11 @@ namespace LawyerService.DataAccess
             _dataSet.Update(entity);
         }
 
+        public virtual void UpdateRange(IEnumerable<T> entities)
+        {
+            _dataSet.UpdateRange(entities);
+        }
+
         public virtual void Delete(T entity)
         {
             _dataSet.Remove(entity);
