@@ -38,9 +38,9 @@ namespace LawyerService.BL
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<List<TVM>> GetAllAsync() => _mapper.Map<List<TVM>>(await _uow.Set<T>().ToListAsync());
+        public async Task<List<TVM>> GetAllAsync() => _mapper.Map<List<TVM>>(await _uow.GetAll<T>());
 
-        public async Task<TVM> GetByIdAsync(long id) => _mapper.Map<TVM>(await _uow.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync());
+        public async Task<TVM> GetByIdAsync(long id) => _mapper.Map<TVM>(await _uow.GetById<T>(id));
 
         public virtual async Task<bool> CreateOrUpdateAsync(TVM viewModel)
         {
@@ -93,6 +93,39 @@ namespace LawyerService.BL
             set.Update(entity);
 
             return await _uow.SaveAsync() > 0;
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _uow.Set<T>().AddAsync(entity);
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _uow.SaveAsync() > 0;
+        }
+
+        protected void PopulateEntity(T entity)
+        {
+            var dbEntity = _uow.Set<T>().Where(t => t.Id == entity.Id && !t.IsDeleted).AsNoTracking().FirstOrDefault();
+
+            entity.CreatedOn = dbEntity.CreatedOn;
+            entity.IsDeleted = dbEntity.IsDeleted;
+            entity.DeletedOn = dbEntity.DeletedOn;
+        }
+
+        protected void PopulateEntities(List<T> entities)
+        {
+            var dbEntities = _uow.Set<T>().AsNoTracking().AsEnumerable().Where(t => entities.Any(e => e.Id == t.Id) && !t.IsDeleted).ToList();
+
+            entities.ForEach(e =>
+            {
+                var dbEntity = dbEntities.Where(t => t.Id == e.Id).FirstOrDefault();
+
+                e.CreatedOn = dbEntity.CreatedOn;
+                e.IsDeleted = dbEntity.IsDeleted;
+                e.DeletedOn = dbEntity.DeletedOn;
+            });
         }
     }
 }

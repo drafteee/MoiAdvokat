@@ -15,5 +15,7 @@ namespace LawyerService.BL.Interfaces
         Task<bool> RestoreByIdAsync(long id);
         Task<bool> CreateOrUpdateAsync(TVM viewModel);
         Task<bool> CreateOrUpdateManyAsync(List<TVM> viewModels);
+        Task AddAsync(T entity);
+        Task<bool> SaveChangesAsync();
     }
 }

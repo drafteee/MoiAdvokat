@@ -29,7 +29,10 @@ namespace LawyerService.BL
             IdentifyAddress(lawyer);
 
             if (lawyer.Id != 0)
+            {
+                PopulateEntity(lawyer);
                 _uow.Lawyer.Update(lawyer);
+            }
             else
                 _uow.Lawyer.Add(lawyer);
 
@@ -44,6 +47,8 @@ namespace LawyerService.BL
             var toCreate = lawyers.Where(x => x.Id == 0).ToList();
             var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
 
+            PopulateEntities(toUpdate);
+
             _uow.Lawyer.AddRange(toCreate);
             _uow.Lawyer.UpdateRange(toUpdate);
 
@@ -56,7 +61,8 @@ namespace LawyerService.BL
 
         private void IdentifyAddress(List<Lawyer> lawyers)
         {
-            var newAddresses = _serviceProvider.GetRequiredService<IAddressManager>().GetExistingAddresses(lawyers.Select(x => x.Address).ToList());
+            var addressManager = _serviceProvider.GetRequiredService<IAddressManager>();
+            var newAddresses = addressManager.GetExistingAddresses(lawyers.Select(x => x.Address).ToList());
 
             lawyers.ForEach(a =>
             {
@@ -66,8 +72,11 @@ namespace LawyerService.BL
                     && a.Address.House == x.House
                     && a.Address.Office == x.Office).FirstOrDefault();
 
-                a.Address = address;
-                a.AddressId = address.Id;
+                if (address.Id != 0)
+                {
+                    a.Address = null;
+                    a.AddressId = address.Id;
+                }
             });
         }
 

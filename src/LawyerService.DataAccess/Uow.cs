@@ -1,8 +1,12 @@
 ﻿using LawyerService.DataAccess.DataAccess;
 using LawyerService.DataAccess.Interfaces;
+using LawyerService.Entities;
 using LawyerService.Entities.Address;
 using LawyerService.Entities.Lawyer;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LawyerService.DataAccess
 {
@@ -19,6 +23,22 @@ namespace LawyerService.DataAccess
         public DbSet<T> Set<T>() where T : class
         {
             return _context.Set<T>();
+        }
+
+        /// <summary>
+        /// Возвращает запись из таблицы T, наследуемой от <see cref="BaseEntity"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<T> GetById<T>(long id) where T : BaseEntity
+        {
+            return _context.Set<T>().Where(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
+        }
+
+        public Task<List<T>> GetAll<T>() where T : BaseEntity
+        {
+            return _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
         }
 
         public IGenericRepository<Lawyer> Lawyer => _lawyerRepository ??= new GenericRepository<Lawyer>(_context);

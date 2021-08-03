@@ -57,7 +57,7 @@ namespace LawyerService.Test
 
             var service = GetService();
 
-            var result = await service.GetByIDAsync(3);
+            var result = await service.GetByIdAsync(3);
             Assert.NotNull(result);
         }
 

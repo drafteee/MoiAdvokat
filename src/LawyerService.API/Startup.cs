@@ -60,9 +60,17 @@ namespace LawyerService.API
             services.AddScoped<IUserAccessor, UserAccessor>();
 
             services.AddScoped<ILawyerManager, LawyerManager>();
-            services.AddScoped<IAddressManager, AddressManager>();
-            services.AddScoped<ICountryManager, CountryManager>();
+            
             services.AddScoped<IUserManager, BL.Account.UserManager>();
+
+            #region Address managers
+
+            services.AddScoped<IAddressManager, AddressManager>();
+            services.AddScoped<IAdministrativeTerritoryManager, AdministrativeTerritoryManager>();
+            services.AddScoped<IAdministrativeTerritoryTypeManager, AdministrativeTerritoryTypeManager>();
+            services.AddScoped<ICountryManager, CountryManager>();
+
+            #endregion
 
             services.AddAutoMapperProfiles();
             services.AddHttpContextAccessor();

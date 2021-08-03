@@ -2,7 +2,7 @@
 using LawyerService.Entities.Address;
 using LawyerService.ViewModel.Address;
 
-namespace LawyerService.API.Controllers.Address
+namespace LawyerService.API.Controllers.Addresses
 {
     public class CountryController : BaseController<ICountryManager, Country, CountryVM>
     {
