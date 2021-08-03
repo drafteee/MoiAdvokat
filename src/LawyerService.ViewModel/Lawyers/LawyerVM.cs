@@ -2,7 +2,7 @@
 using LawyerService.ViewModel.Base;
 using System;
 
-namespace LawyerService.ViewModel
+namespace LawyerService.ViewModel.Lawyers
 {
     public class LawyerVM : BaseVM
     {

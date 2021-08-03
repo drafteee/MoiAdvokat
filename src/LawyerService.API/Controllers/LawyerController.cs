@@ -1,6 +1,6 @@
 ﻿using LawyerService.BL.Interfaces;
 using LawyerService.Entities.Lawyer;
-using LawyerService.ViewModel;
+using LawyerService.ViewModel.Lawyers;
 
 namespace LawyerService.API.Controllers
 {

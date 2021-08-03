@@ -23,15 +23,30 @@ namespace LawyerService.API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public Task<List<TVM>> GetAll()
+        public Task<List<TVM>> GetAllCurrent()
         {
             return _manager.GetAllAsync();
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public Task<List<TVM>> GetAll()
+        {
+            return _manager.GetAllAsync(true);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public Task<TVM> GetByIdCurrent([FromQuery] long id)
+        {
+            return _manager.GetByIdAsync(id);
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public Task<TVM> GetById([FromQuery] long id)
         {
-            return _manager.GetByIdAsync(id);
+            return _manager.GetByIdAsync(id, true);
         }
 
         [AllowAnonymous]

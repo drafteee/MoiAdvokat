@@ -29,6 +29,8 @@ using LawyerService.BL.Interfaces.Addresses;
 using LawyerService.BL.Addresses;
 using LawyerService.BL.Interfaces.Transactions;
 using LawyerService.BL.Transactions;
+using LawyerService.BL.Orders;
+using LawyerService.BL.Interfaces.Orders;
 
 namespace LawyerService.API
 {
@@ -72,6 +74,13 @@ namespace LawyerService.API
             services.AddScoped<IAdministrativeTerritoryManager, AdministrativeTerritoryManager>();
             services.AddScoped<IAdministrativeTerritoryTypeManager, AdministrativeTerritoryTypeManager>();
             services.AddScoped<ICountryManager, CountryManager>();
+
+            #endregion
+
+            #region Orders managers
+
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IOrderStatusManager, OrderStatusManager>();
 
             #endregion
 

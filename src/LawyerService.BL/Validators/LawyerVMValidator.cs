@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using LawyerService.ViewModel;
+using LawyerService.ViewModel.Lawyers;
 
 namespace LawyerService.BL.Validators
 {

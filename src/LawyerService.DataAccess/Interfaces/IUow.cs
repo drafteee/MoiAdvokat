@@ -12,7 +12,7 @@ namespace LawyerService.DataAccess.Interfaces
         IGenericRepository<Lawyer> Lawyer { get; }
         IGenericRepository<Address> Address { get; }
         DbSet<T> Set<T>() where T : class;
-        Task<T> GetById<T>(long id) where T : BaseEntity;
-        Task<List<T>> GetAll<T>() where T : BaseEntity;
+        Task<T> GetById<T>(long id, bool withDeleted) where T : BaseEntity;
+        Task<List<T>> GetAll<T>(bool withDeleted) where T : BaseEntity;
     }
 }

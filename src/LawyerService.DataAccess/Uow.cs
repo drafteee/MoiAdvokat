@@ -31,14 +31,14 @@ namespace LawyerService.DataAccess
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<T> GetById<T>(long id) where T : BaseEntity
+        public Task<T> GetById<T>(long id, bool withDeleted) where T : BaseEntity
         {
             return _context.Set<T>().Where(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
         }
 
-        public Task<List<T>> GetAll<T>() where T : BaseEntity
+        public Task<List<T>> GetAll<T>(bool withDeleted) where T : BaseEntity
         {
-            return _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
+            return _context.Set<T>().Where(x => withDeleted || !x.IsDeleted).ToListAsync();
         }
 
         public IGenericRepository<Lawyer> Lawyer => _lawyerRepository ??= new GenericRepository<Lawyer>(_context);

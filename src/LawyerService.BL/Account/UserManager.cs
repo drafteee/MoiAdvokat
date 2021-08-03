@@ -5,17 +5,14 @@ using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.DataAccess;
 using LawyerService.Entities.Identity;
+using LawyerService.Entities.Transactions;
 using LawyerService.Resources;
-using LawyerService.ViewModel;
 using LawyerService.ViewModel.Account;
 using LawyerService.ViewModel.Common;
+using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using LawyerService.Resources;
-using LawyerService.DataAccess;
-using LawyerService.BL.Helpers;
-using LawyerService.Entities.Transactions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,12 +30,12 @@ namespace LawyerService.BL.Account
         private readonly JwtGenerator _jwtGenerator;
         private readonly RoleManager<Role> _roleManager;
 
-        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalisationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator, RoleManager<Role> roleManager)
+        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localizationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator, RoleManager<Role> roleManager)
         {
             _context = context;
             _mapper = mapper;
             _validator = validator;
-            _localisationManager = localisationManager;
+            _localisationManager = localizationManager;
             _userAccessor = userAccessor;
             _userManager = userManager;
             _passwordHasher = passwordHasher;

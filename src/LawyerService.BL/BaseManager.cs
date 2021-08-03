@@ -38,16 +38,19 @@ namespace LawyerService.BL
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<List<TVM>> GetAllAsync() => _mapper.Map<List<TVM>>(await _uow.GetAll<T>());
+        public async Task<List<TVM>> GetAllAsync(bool withDeleted = false) => _mapper.Map<List<TVM>>(await _uow.GetAll<T>(withDeleted));
 
-        public async Task<TVM> GetByIdAsync(long id) => _mapper.Map<TVM>(await _uow.GetById<T>(id));
+        public async Task<TVM> GetByIdAsync(long id, bool withDeleted = false) => _mapper.Map<TVM>(await _uow.GetById<T>(id, withDeleted));
 
         public virtual async Task<bool> CreateOrUpdateAsync(TVM viewModel)
         {
             var entity = _mapper.Map<T>(viewModel);
 
             if (entity.Id != 0)
+            {
+                PopulateEntity(entity);
                 _uow.Set<T>().Update(entity);
+            }
             else
                 _uow.Set<T>().Add(entity);
 
@@ -60,6 +63,8 @@ namespace LawyerService.BL
 
             var toCreate = entities.Where(x => x.Id == 0).ToList();
             var toUpdate = entities.Where(x => x.Id != 0).ToList();
+
+            PopulateEntities(toUpdate);
 
             _uow.Set<T>().AddRange(toCreate);
             _uow.Set<T>().UpdateRange(toUpdate);

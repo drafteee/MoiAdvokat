@@ -4,33 +4,29 @@ using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.BL.Interfaces.Transactions;
 using LawyerService.DataAccess;
-using LawyerService.Entities.Identity;
 using LawyerService.Entities.Transactions;
 using LawyerService.Resources;
 using LawyerService.ViewModel.Common;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LawyerService.BL.Transactions
 {
-    public class TransactionManager : BaseManager, ITransactionManager
+    public class TransactionManager : ITransactionManager
     {
 
         private readonly LawyerDbContext _context;
         private readonly IMapper _mapper;
-        private readonly ILocalisationManager _localisationManager;
+        private readonly ILocalizationManager _localizationManager;
         private readonly IUserAccessor _userAccessor;
 
-        public TransactionManager(LawyerDbContext context, IMapper mapper, ILocalisationManager localisationManager, IUserAccessor userAccessor)
+        public TransactionManager(LawyerDbContext context, IMapper mapper, ILocalizationManager localizationManager, IUserAccessor userAccessor)
         {
             _context = context;
             _mapper = mapper;
-            _localisationManager = localisationManager;
+            _localizationManager = localizationManager;
             _userAccessor = userAccessor;
         }
 
@@ -43,13 +39,13 @@ namespace LawyerService.BL.Transactions
             var isAnyTransactions = await _context.HistoryTransactions.AnyAsync(t => t.Status.Code == ((int)TransactionStatusEnum.InProgress).ToString());
             if (isAnyTransactions)
             {
-                request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "AnyTransactionsInProgress");
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "AnyTransactionsInProgress");
                 return request;
             }
             var statusId = await _context.TransactionStatuses.Where(s => s.Code == ((int)TransactionStatusEnum.InProgress).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
             if (statusId == 0)
             {
-                request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
                 return request;
             }
             var transactionAmount = decimal.Round((amount * (100 + user.Balance.ProcentIn)) / 100, 2);
@@ -74,19 +70,19 @@ namespace LawyerService.BL.Transactions
                 .FirstOrDefaultAsync();
             if (user.Balance.Amount < amount)
             {
-                request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "NotEnoughAmountInBalance");
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotEnoughAmountInBalance");
                 return request;
             }
             var isAnyTransactions = await _context.HistoryTransactions.AnyAsync(t => t.Status.Code == ((int)TransactionStatusEnum.InProgress).ToString());
             if (isAnyTransactions)
             {
-                request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "AnyTransactionsInProgress");
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "AnyTransactionsInProgress");
                 return request;
             }
             var statusId = await _context.TransactionStatuses.Where(s => s.Code == ((int)TransactionStatusEnum.InProgress).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
             if (statusId == 0)
             {
-                request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
                 return request;
             }
             var transactionAmount = decimal.Round((amount * (100 - user.Balance.ProcentOut)) / 100, 2);
@@ -112,7 +108,7 @@ namespace LawyerService.BL.Transactions
                 var statusId = await _context.TransactionStatuses.Where(s => s.Code == ((int)(isSuccessful ? TransactionStatusEnum.IsSuccessful : TransactionStatusEnum.IsUnsuccessful)).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
                 if (statusId == 0)
                 {
-                    request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
+                    request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundStatus");
                     return request;
                 }
                 transaction.StatusId = statusId; 
@@ -123,7 +119,7 @@ namespace LawyerService.BL.Transactions
                     var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)(transaction.IsInService ? TransactionReasonEnum.Input : TransactionReasonEnum.Output)).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
                     if (reasonId == 0)
                     {
-                        request.Message = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
+                        request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
                         return request;
                     }
                     if (transaction.IsInService)
@@ -162,7 +158,7 @@ namespace LawyerService.BL.Transactions
                 }
                 else
                 {
-                    request.Output = _localisationManager.GetString(LocalisationSections.HistoryTransactions, "UnsuccessfulTransction");
+                    request.Output = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "UnsuccessfulTransction");
                 }
             }
             return request;

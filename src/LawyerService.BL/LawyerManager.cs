@@ -6,7 +6,7 @@ using LawyerService.BL.Interfaces.Addresses;
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Lawyer;
-using LawyerService.ViewModel;
+using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;

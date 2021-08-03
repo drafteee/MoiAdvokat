@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LawyerService.Entities.Lawyer;
-using LawyerService.ViewModel;
+using LawyerService.ViewModel.Lawyers;
 
 namespace LawyerService.Bootstrapper.MapperProfiles
 {

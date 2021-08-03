@@ -9,8 +9,8 @@ namespace LawyerService.BL.Interfaces
         where T : BaseEntity
         where TVM : BaseVM
     {
-        Task<List<TVM>> GetAllAsync();
-        Task<TVM> GetByIdAsync(long id);
+        Task<List<TVM>> GetAllAsync(bool withDeleted = false);
+        Task<TVM> GetByIdAsync(long id, bool withDeleted = false);
         Task<bool> DeleteByIdAsync(long id);
         Task<bool> RestoreByIdAsync(long id);
         Task<bool> CreateOrUpdateAsync(TVM viewModel);
