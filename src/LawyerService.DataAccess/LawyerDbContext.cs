@@ -62,6 +62,11 @@ namespace LawyerService.DataAccess
                 .HasOne(aur => aur.Specialization)
                 .WithMany(aur => aur.OrderSpecializations)
                 .HasForeignKey(aur => aur.SpecializationId);
+
+            modelBuilder.Entity<UserBalance>()
+                .HasIndex(ub => ub.UserId)
+                .IsUnique();
+
         }
     }
 }

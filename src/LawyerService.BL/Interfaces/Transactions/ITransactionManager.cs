@@ -5,6 +5,8 @@ namespace LawyerService.BL.Interfaces.Transactions
 {
     public interface ITransactionManager
     {
-        Task<RequestResult> CreateTransactionInOutService(bool IsInService);
+        Task<RequestResult> CreateTransactionInService(decimal amount);
+        Task<RequestResult> CreateTransactionOutService(decimal amount);
+        Task<RequestResult> GetResultOfTransaction(bool isSuccessful, long transactionId);
     }
 }

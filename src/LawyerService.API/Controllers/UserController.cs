@@ -38,5 +38,19 @@ namespace LawyerService.API.Controllers
             string ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             return await _userManager.LoginAsync(userName, password, ip, userAgent);
         }
+
+        [HttpPost]
+        [Authorize(Roles ="admin")]
+        public async Task<RequestResult> CreateRole(string role)
+        {
+            return await _userManager.CreateRoleAsync(role);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<RequestResult> AssignRoleToUser(string userName, string role)
+        {
+            return await _userManager.AssignRoleToUserAsync(userName, role);
+        }
     }
 }
