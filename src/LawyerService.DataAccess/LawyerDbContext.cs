@@ -34,6 +34,7 @@ namespace LawyerService.DataAccess
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+        public virtual DbSet<Function> Functions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

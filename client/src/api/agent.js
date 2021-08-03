@@ -1,6 +1,6 @@
 import axios from 'axios'
-import notice from '../components/Notice'
-import message from '../components/SessionExpiration'
+// import notice from '../components/Notice'
+// import message from '../components/SessionExpiration'
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'development'
@@ -76,13 +76,13 @@ axios.interceptors.response.use(undefined, (error) => {
         .catch((err) => {
           return Promise.reject(err)
         })
-    } else if (!originalRequest.url.includes('refreshUserData')) message()
+    } else if (!originalRequest.url.includes('refreshUserData')) null;
   } else if (
     error.response.status == 403 &&
     error.response.data.errors == 'Invalid RefreshToken'
   ) {
     const jsonUser = window.localStorage.getItem('user')
-    if (jsonUser) message()
+    if (jsonUser) null
     // notice(
     //   "error",
     //   "Ошибка аутентификации",

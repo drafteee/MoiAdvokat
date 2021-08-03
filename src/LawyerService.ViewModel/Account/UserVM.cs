@@ -15,6 +15,10 @@ namespace LawyerService.ViewModel.Account
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
+        public long SessionId { get; set; }
+
         public IList<string> Roles { get; set; }
+        public IList<string> Functions { get; set; }
     }
 }

@@ -7,12 +7,12 @@ const LoadableHome = Loadable({
 	loading : () => <Loading />
 })
 
-const LoadableContact = Loadable({
-	loader  : () => import('../containers/Contacts'),
-	loading : () => <Loading />
-})
+// const LoadableContact = Loadable({
+// 	loader  : () => import('../containers/Contacts'),
+// 	loading : () => <Loading />
+// })
 
 export const homeLoadables = {
 	LoadableHome,
-	LoadableContact
+	// LoadableContact
 }

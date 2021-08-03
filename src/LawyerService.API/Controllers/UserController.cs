@@ -52,5 +52,49 @@ namespace LawyerService.API.Controllers
         {
             return await _userManager.AssignRoleToUserAsync(userName, role);
         }
+
+        [HttpGet]
+        public async Task<RequestResult> RefreshUserData()
+        {
+            return await _userManager.RefreshUserDataAsync();
+        }
+
+        [HttpPost]
+        public async Task<RequestResult> Logout(long SessionId)
+        {
+            return await _userManager.LogoutAsync(SessionId);
+        }
+
+        [HttpPost]
+        public async Task<RequestResult> Refresh(string token,  long sessionId)
+        {
+            string userAgent = Request.Headers["User-Agent"].ToString();
+            string ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            return await _userManager.RefreshAsync(token, ip, userAgent, sessionId);
+        }
+
+        [HttpGet]
+        public async Task<RequestResult> GetActiveSessions(string userId, long sessionId)
+        {
+            return await _userManager.GetActiveSessionsAsync(userId, sessionId);
+        }
+
+        [HttpPost]
+        public async Task<RequestResult> RemoveSession(long sessionId)
+        {
+            return await _userManager.RemoveSessionAsync(sessionId);
+        }
+
+        [HttpGet]
+        public async Task<RequestResult> GetUserFunctions(string userId)
+        {
+            return await _userManager.GetUserFunctionsAsync(userId);
+        }
+
+        [HttpGet]
+        public async Task<RequestResult> GetUserRoles(string userId)
+        {
+            return await _userManager.GetUserRolesAsync(userId);
+        }
     }
 }

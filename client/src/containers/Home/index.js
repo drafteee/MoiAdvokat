@@ -1,22 +1,11 @@
-import React, {
-	useCallback, useEffect
-} from 'react'
-import {
-	useSelector, shallowEqual, useDispatch
-} from 'react-redux'
-import {
-	homeActions
-} from './store/actions'
-import LazyComponent from '../../components/LazyComponent'
-import {
-	homeLoadables
-} from '../../loadables'
+import React, { useCallback, useEffect } from "react";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { homeActions } from "./store/actions";
+import LazyComponent from "../../components/LazyComponent";
+import { homeLoadables } from "../../loadables";
 
 const Home = () => {
-	return (
-		<>
-		</>
-	)
-}
+  return <></>;
+};
 
-export default Home
+export default Home;
