@@ -12,6 +12,10 @@ using LawyerService.ViewModel.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using LawyerService.Resources;
+using LawyerService.DataAccess;
+using LawyerService.BL.Helpers;
+using LawyerService.Entities.Transactions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,8 +31,9 @@ namespace LawyerService.BL.Account
         private readonly UserManager<User> _userManager;
         private readonly PasswordHasher<User> _passwordHasher;
         private readonly JwtGenerator _jwtGenerator;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator)
+        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalisationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator, RoleManager<Role> roleManager)
         {
             _context = context;
             _mapper = mapper;
@@ -38,6 +43,32 @@ namespace LawyerService.BL.Account
             _userManager = userManager;
             _passwordHasher = passwordHasher;
             _jwtGenerator = jwtGenerator;
+            _roleManager = roleManager;
+        }
+
+        public async Task<RequestResult> AssignRoleToUserAsync(string userName, string role)
+        {
+            var request = new RequestResult(false, string.Empty);
+            try
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                if (user == null)
+                    throw new Exception("Нет пользователя с данным именем");
+                var result = await _userManager.AddToRoleAsync(user, role);
+                request.Success = result.Succeeded;
+                request.Message = string.Join(", ", result.Errors?.Select(e => e.Description));
+            }
+            catch (Exception)
+            {
+                request.Message = string.Format(_localisationManager.GetString(LocalisationSections.User, "AssignRoleToUserNotFound"), userName);
+            }
+            return request;
+        }
+
+        public async Task<RequestResult> CreateRoleAsync(string role)
+        {
+            var result = await _roleManager.CreateAsync(new Role { Name = role });
+            return new RequestResult(result.Succeeded, string.Join(", ", result.Errors?.Select(e => e.Description)));
         }
 
         public async Task<RequestResult> CreateUserAsync(UserVM userVM, string password)
@@ -50,6 +81,15 @@ namespace LawyerService.BL.Account
                 
                 var res = await _userManager.CreateAsync(user);
 
+                var userBalance = new UserBalance()
+                {
+                    Amount = 0,
+                    User = user,
+                    ProcentIn = 0,
+                    ProcentOut = 0
+                };
+                _context.UserBalances.Add(userBalance);
+                await _context.SaveChangesAsync();
                 result.Output = res;
                 result.Success = true;
             }

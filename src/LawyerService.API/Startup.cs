@@ -27,6 +27,8 @@ using Microsoft.AspNetCore.DataProtection;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.BL.Interfaces.Addresses;
 using LawyerService.BL.Addresses;
+using LawyerService.BL.Interfaces.Transactions;
+using LawyerService.BL.Transactions;
 
 namespace LawyerService.API
 {
@@ -62,6 +64,7 @@ namespace LawyerService.API
             services.AddScoped<ILawyerManager, LawyerManager>();
             
             services.AddScoped<IUserManager, BL.Account.UserManager>();
+            services.AddScoped<ITransactionManager, TransactionManager>();
 
             #region Address managers
 

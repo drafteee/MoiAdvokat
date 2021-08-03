@@ -1,5 +1,4 @@
 ﻿using LawyerService.Entities.Identity;
-using System;
 
 namespace LawyerService.Entities.Transactions
 {
