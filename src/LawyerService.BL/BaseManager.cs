@@ -42,6 +42,31 @@ namespace LawyerService.BL
 
         public async Task<TVM> GetByIdAsync(long id) => _mapper.Map<TVM>(await _uow.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync());
 
+        public virtual async Task<bool> CreateOrUpdateAsync(TVM viewModel)
+        {
+            var entity = _mapper.Map<T>(viewModel);
+
+            if (entity.Id != 0)
+                _uow.Set<T>().Update(entity);
+            else
+                _uow.Set<T>().Add(entity);
+
+            return await _uow.SaveAsync() > 0;
+        }
+
+        public virtual async Task<bool> CreateOrUpdateManyAsync(List<TVM> viewModels)
+        {
+            var entities = _mapper.Map<List<T>>(viewModels);
+
+            var toCreate = entities.Where(x => x.Id == 0).ToList();
+            var toUpdate = entities.Where(x => x.Id != 0).ToList();
+
+            _uow.Set<T>().AddRange(toCreate);
+            _uow.Set<T>().UpdateRange(toUpdate);
+
+            return await _uow.SaveAsync() > 0;
+        }
+
         public async Task<bool> DeleteByIdAsync(long id)
         {
             DbSet<T> set = _uow.Set<T>();
@@ -66,31 +91,6 @@ namespace LawyerService.BL
             entity.DeletedOn = null;
 
             set.Update(entity);
-
-            return await _uow.SaveAsync() > 0;
-        }
-
-        public virtual async Task<bool> CreateOrUpdateAsync(TVM viewModel)
-        {
-            var entity = _mapper.Map<T>(viewModel);
-
-            if (entity.Id != 0)
-                _uow.Set<T>().Update(entity);
-            else
-                _uow.Set<T>().Add(entity);
-
-            return await _uow.SaveAsync() > 0;
-        }
-
-        public virtual async Task<bool> CreateOrUpdateManyAsync(List<TVM> viewModels)
-        {
-            var entities = _mapper.Map<List<T>>(viewModels);
-
-            var toCreate = entities.Where(x => x.Id == 0).ToList();
-            var toUpdate = entities.Where(x => x.Id != 0).ToList();
-
-            _uow.Set<T>().AddRange(toCreate);
-            _uow.Set<T>().UpdateRange(toUpdate);
 
             return await _uow.SaveAsync() > 0;
         }

@@ -61,6 +61,7 @@ namespace LawyerService.API
 
             services.AddScoped<ILawyerManager, LawyerManager>();
             services.AddScoped<IAddressManager, AddressManager>();
+            services.AddScoped<ICountryManager, CountryManager>();
             services.AddScoped<IUserManager, BL.Account.UserManager>();
 
             services.AddAutoMapperProfiles();
