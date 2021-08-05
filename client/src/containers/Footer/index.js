@@ -3,7 +3,7 @@ import { Menu } from "antd";
 
 import React from "react";
 import { Layout, Row, Col } from "antd";
-
+import './style.css'
 const { Footer } = Layout;
 
 export default () => {

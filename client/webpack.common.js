@@ -14,6 +14,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
 module.exports = {
 	devServer: {
+		// inline: false,
 		historyApiFallback : true,
 		headers            : {
 			'Cache-Control': 'max-age=31536000'
@@ -45,20 +46,25 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				test : /\.less$/,
-				use  : [
-					{
-						loader: 'style-loader'
-					},
-					{
-						loader: 'css-loader' // translates CSS into CommonJS
-					},
-					{
-						loader: 'less-loader' // compiles Less to CSS
-					}
-				]
-			},
+			// {
+			// 	test: /\.css$/,
+			// 	loader: 'style-loader!css-loader'
+			// },
+	
+			// {
+			// 	test : /\.less$/,
+			// 	use  : [
+			// 		{
+			// 			loader: 'style-loader'
+			// 		},
+			// 		{
+			// 			loader: 'css-loader' // translates CSS into CommonJS
+			// 		},
+			// 		// {
+			// 		// 	loader: 'less-loader' // compiles Less to CSS
+			// 		// }
+			// 	]
+			// },
 			{
 				test : /\.s[ac]ss$/i,
 				use  : [
@@ -70,7 +76,7 @@ module.exports = {
 					"css-loader",
 
 					// Compiles Sass to CSS
-					"sass-loader"
+					// "sass-loader"
 				]
 			},
 			{
@@ -142,25 +148,25 @@ module.exports = {
 		}),
 
 		//создание .gz файлов
-		new CompressionPlugin({
-			// filename: '[path].gz[query]',
-			// algorithm: 'gzip',
-			// // .js и .css файлы
-			// test: /\.js$|\.css$/,
-			// //минимальное соотношение размеров сжатого и исходного файлов
-			minRatio: 2,
+		// new CompressionPlugin({
+		// 	// filename: '[path].gz[query]',
+		// 	// algorithm: 'gzip',
+		// 	// // .js и .css файлы
+		// 	// test: /\.js$|\.css$/,
+		// 	// //минимальное соотношение размеров сжатого и исходного файлов
+		// 	minRatio: 2,
 
-			// //удаление исходных файлов
-			deleteOriginalAssets : true,
-			filename             : '[path].gz[query]',
-			algorithm            : 'gzip',
-			test                 : /\.(js|css|svg)$/
+		// 	// //удаление исходных файлов
+		// 	deleteOriginalAssets : true,
+		// 	filename             : '[path].gz[query]',
+		// 	algorithm            : 'gzip',
+		// 	test                 : /\.(js|css|svg)$/
 
-			/*
-			 * threshold: 8192,
-			 * minRatio: 0.8
-			 */
-		}),
+		// 	/*
+		// 	 * threshold: 8192,
+		// 	 * minRatio: 0.8
+		// 	 */
+		// }),
 
 		/*
 		 * new BrotliPlugin({ //brotli plugin

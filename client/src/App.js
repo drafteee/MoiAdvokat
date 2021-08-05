@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { hot, setConfig } from "react-hot-loader/root";
 import { Router, useRouteMatch } from "react-router-dom";
+import { Layout, Row, Col } from "antd";
+
 import Routes from "./routes";
 import history from "./helpers/history";
-import Layout from "antd/lib/layout/layout";
 import Navigation from "./containers/Menu";
 import Footer from "./containers/Footer";
-
+const { Content } = Layout
 const App = () => {
   return (
     <Router history={history}>
@@ -18,19 +18,20 @@ const App = () => {
         }}
       >
         <Navigation />
-        {/* <Layout>
+        <Layout>
           <Content
             style={{
               padding: "24px 24px 0px 24px",
             }}
           >
-            <Routes />
+            		2314567891321fsadsa1234512345
+
           </Content>
-        </Layout>*/}
+        </Layout>
         <Footer /> 
       </Layout>
     </Router>
   );
 };
 
-export default hot(App);
+export default App;

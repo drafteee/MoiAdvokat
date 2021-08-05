@@ -11,7 +11,8 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
+    // "react-hot-loader/babel",
+    "react-refresh/babel",
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-proposal-nullish-coalescing-operator"
   ]
