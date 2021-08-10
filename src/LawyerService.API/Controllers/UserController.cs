@@ -32,11 +32,11 @@ namespace LawyerService.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<RequestResult> Login(string password, string userName )
+        public async Task<RequestResult> Login([FromBody] LoginVM userVM)
         {
             string userAgent = Request.Headers["User-Agent"].ToString();
             string ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            return await _userManager.LoginAsync(userName, password, ip, userAgent);
+            return await _userManager.LoginAsync(userVM.UserName, userVM.Password, ip, userAgent);
         }
 
         [HttpPost]

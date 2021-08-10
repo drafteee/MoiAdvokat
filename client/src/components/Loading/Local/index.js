@@ -6,7 +6,6 @@ import {
 	useSelector
 }from "react-redux"
 import "./style.scss"
-import Loading from '../../../../public/monophy.gif'
 
 const LocalLoading = (props) => {
 	const { isGlobalLoadingVisible } = useSelector((state) => state.globalReducer)
@@ -48,12 +47,6 @@ const LocalLoading = (props) => {
         			<div />
         		</div>
         	</div>
-        	<img
-        		className="loader-svg"
-        		decoding="async"
-        		loading="lazy"
-        		src={ Loading }
-        	/>
         </div> }
 		</>
 	)

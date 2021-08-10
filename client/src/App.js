@@ -24,7 +24,7 @@ const App = () => {
               padding: "24px 24px 0px 24px",
             }}
           >
-            		2314567891321fsadsa1234512345
+            		<Routes/>
 
           </Content>
         </Layout>

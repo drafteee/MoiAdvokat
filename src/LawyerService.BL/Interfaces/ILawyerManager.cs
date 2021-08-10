@@ -8,5 +8,6 @@ namespace LawyerService.BL.Interfaces
 {
     public interface ILawyerManager : IBaseManager<Lawyer, LawyerVM>
     {
+
     }
 }

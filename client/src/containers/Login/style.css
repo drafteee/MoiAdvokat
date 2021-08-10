@@ -1,0 +1,82 @@
+.login-card {
+  background: transparent;
+}
+
+/* .login-card > .ant-card-actions{
+    width: 60%;
+    margin-left: 20%;
+} */
+
+/* .submit-button{
+    margin-top: 2%;
+    margin-left: 135%;
+} */
+
+.login-row {
+  width: 60%;
+}
+
+.login-row .ant-card-actions *{
+  overflow: hidden;
+}
+
+@media (max-width: 780px) {
+  .login-row {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1601px) {
+  .login-layuot {
+    width: 60%;
+    /* margin-right: 10%; */
+  }
+  .login-layuot .ant-form-item-label {
+    display: block;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 40.33333333%;
+    flex: 0 0 40.33333333%;
+    max-width: 40.33333333%;
+  }
+  .login-layuot {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 911px) and (max-width: 1600px) {
+  .login-layuot {
+    width: 80%;
+    /* margin-right: 20% ; */
+  }
+  .login-layuot .ant-form-item-label {
+    display: block;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 54.33333333%;
+    flex: 0 0 55.33333333%;
+    max-width: 54.33333333%;
+  }
+}
+
+@media (max-width: 910px) {
+  .login-layuot {
+    width: 80%;
+  }
+  .login-layuot .ant-form-item-control {
+    display: block;
+    -webkit-box-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .login-layuot {
+    margin: 0 auto;
+  }
+}
+
+.external-logins {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.no-cssall .login-row .ant-form-item-control {
+  flex: 1;
+}

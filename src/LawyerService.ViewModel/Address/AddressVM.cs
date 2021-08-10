@@ -12,10 +12,14 @@ namespace LawyerService.ViewModel.Address
         /// Страна
         /// </summary>
         public CountryVM Country { get; set; }
+        public long CountryId { get; set; }
+
         /// <summary>
         /// Административно-территориальная единица (город, деревня...)
         /// </summary>
         public AdministrativeTerritoryVM AdministrativeTerritory { get; set; }
+        public long AdministrativeTerritoryId { get; set; }
+
         /// <summary>
         /// Элемент улично-дорожной сети (улица, проспект...)
         /// </summary>
@@ -32,5 +36,7 @@ namespace LawyerService.ViewModel.Address
         /// Примечание к адресу
         /// </summary>
         public string Notice { get; set; }
+
+
     }
 }

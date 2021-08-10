@@ -150,7 +150,7 @@ export const requests = {
 }
 
 const User = {
-  login: (user) => requests.post('/account/login', user),
+  login: (user) => requests.post('/user/login', user),
   belpochtaLogin: (data) => requests.post('/externalLogin/belpochtaLogin', data),
   signlogin: (pki) => requests.post('/account/signlogin', pki),
   changeSign: (data) => requests.post('/account/changesign', data),
