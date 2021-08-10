@@ -28,6 +28,8 @@ const Routes = () => {
 				component={ accountLoadables.LoadableAccount }
 				path="/account"
 			/>
+
+			
 			<Route
 				exact
 				component={ BLLoadables.LoadableLawyersList }
