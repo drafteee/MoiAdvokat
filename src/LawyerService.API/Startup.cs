@@ -31,6 +31,7 @@ using LawyerService.BL.Interfaces.Transactions;
 using LawyerService.BL.Transactions;
 using LawyerService.BL.Orders;
 using LawyerService.BL.Interfaces.Orders;
+using LawyerService.API.Middleware;
 
 namespace LawyerService.API
 {
@@ -185,6 +186,8 @@ namespace LawyerService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCacheManager memoryCacheManager)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             memoryCacheManager.Put("LOCALIZATION", typeof(Resources.Resources).Assembly);
             if (env.IsDevelopment())
             {

@@ -6,6 +6,7 @@ using LawyerService.BL.Interfaces.Addresses;
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Lawyer;
+using LawyerService.ViewModel.Errors;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,18 +42,25 @@ namespace LawyerService.BL
 
         public override async Task<bool> CreateOrUpdateManyAsync(List<LawyerVM> lawyerVMs)
         {
-            var lawyers = _mapper.Map<List<Lawyer>>(lawyerVMs);
-            IdentifyAddress(lawyers);
+            try
+            {
+                var lawyers = _mapper.Map<List<Lawyer>>(lawyerVMs);
+                IdentifyAddress(lawyers);
 
-            var toCreate = lawyers.Where(x => x.Id == 0).ToList();
-            var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
+                var toCreate = lawyers.Where(x => x.Id == 0).ToList();
+                var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
 
-            PopulateEntities(toUpdate);
+                PopulateEntities(toUpdate);
 
-            _uow.Lawyer.AddRange(toCreate);
-            _uow.Lawyer.UpdateRange(toUpdate);
+                _uow.Lawyer.AddRange(toCreate);
+                _uow.Lawyer.UpdateRange(toUpdate);
 
-            return await _uow.SaveAsync() > 0;
+                return await _uow.SaveAsync() > 0;
+            }
+            catch (Exception e)
+            {
+                throw new RestException(System.Net.HttpStatusCode.BadRequest, new { e.Message, e.InnerException });
+            }
         }
 
         #region Private methods
