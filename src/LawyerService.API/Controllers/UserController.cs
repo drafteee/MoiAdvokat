@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.ViewModel.Common;
 using LawyerService.ViewModel.Account;
+using LawyerService.ViewModel.Address;
 
 namespace LawyerService.API.Controllers
 {

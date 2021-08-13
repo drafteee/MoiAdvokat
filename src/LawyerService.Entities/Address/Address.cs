@@ -10,11 +10,6 @@
         /// </summary>
         public string Postcode { get; set; }
         /// <summary>
-        /// Страна
-        /// </summary>
-        public long CountryId { get; set; }
-        public Country Country { get; set; }
-        /// <summary>
         /// Административно-территориальная единица (город, деревня...)
         /// </summary>
         public long AdministrativeTerritoryId { get; set; }

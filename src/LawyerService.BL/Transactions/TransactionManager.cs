@@ -51,7 +51,7 @@ namespace LawyerService.BL.Transactions
             var transactionAmount = decimal.Round((amount * (100 + user.Balance.ProcentIn)) / 100, 2);
             var transaction = new HistoryTransactions()
             {
-                Date = DateTimeOffset.Now,
+                Date = DateTime.Now,
                 UserId = user.Id,
                 IsInService = true,
                 Amount = transactionAmount,
@@ -88,7 +88,7 @@ namespace LawyerService.BL.Transactions
             var transactionAmount = decimal.Round((amount * (100 - user.Balance.ProcentOut)) / 100, 2);
             var transaction = new HistoryTransactions()
             {
-                Date = DateTimeOffset.Now,
+                Date = DateTime.Now,
                 UserId = user.Id,
                 IsInService = false,
                 Amount = transactionAmount,
@@ -114,7 +114,7 @@ namespace LawyerService.BL.Transactions
                 transaction.StatusId = statusId; 
                 if (isSuccessful)
                 {
-                    var userBalance = await _context.UserBalances.Where(u => u.UserId == transaction.UserId).FirstOrDefaultAsync();
+                    var userBalance = await _context.Users.Where(u => u.Id == transaction.UserId).Include(u => u.Balance).Select(u => u.Balance).FirstOrDefaultAsync();
                     HistoryUserTransactions historyUserTransaction = new();
                     var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)(transaction.IsInService ? TransactionReasonEnum.Input : TransactionReasonEnum.Output)).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
                     if (reasonId == 0)
@@ -127,12 +127,12 @@ namespace LawyerService.BL.Transactions
                         var amount = decimal.Round((transaction.Amount * 100) / (100 + userBalance.ProcentIn), 2);
                         historyUserTransaction = new HistoryUserTransactions()
                         {
-                            Date = DateTimeOffset.Now,
+                            Date = DateTime.Now,
                             Amount = amount,
                             PreviousBalanceAmount = userBalance.Amount,
                             CurrentBalanceAmount = userBalance.Amount + amount,
                             TransactionReasonId = reasonId,
-                            UserBalanceId = userBalance.Id
+                            UserId = transaction.UserId
                         };
                         userBalance.Amount += amount;
                     }
@@ -141,12 +141,12 @@ namespace LawyerService.BL.Transactions
                         var amount = decimal.Round((transaction.Amount * 100) / (100 - userBalance.ProcentOut), 2);
                         historyUserTransaction = new HistoryUserTransactions()
                         {
-                            Date = DateTimeOffset.Now,
+                            Date = DateTime.Now,
                             Amount = amount,
                             PreviousBalanceAmount = userBalance.Amount,
                             CurrentBalanceAmount = userBalance.Amount - amount,
                             TransactionReasonId = reasonId,
-                            UserBalanceId = userBalance.Id
+                            UserId = transaction.UserId
                         };
                         userBalance.Amount -= amount;
                         if (userBalance.Amount < 0)

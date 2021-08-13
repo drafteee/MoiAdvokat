@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810073541_addAddressUserBalanceInUser")]
+    partial class addAddressUserBalanceInUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +47,9 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("AdministrativeTerritoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
@@ -73,6 +78,8 @@ namespace LawyerService.API.Migrations
 
                     b.HasIndex("AdministrativeTerritoryId");
 
+                    b.HasIndex("CountryId");
+
                     b.ToTable("Addresses");
                 });
 
@@ -84,9 +91,6 @@ namespace LawyerService.API.Migrations
                         .UseIdentityByDefaultColumn();
 
                     b.Property<long>("AdministrativeTerritoryTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CountryId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedOn")
@@ -104,8 +108,6 @@ namespace LawyerService.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AdministrativeTerritoryTypeId");
-
-                    b.HasIndex("CountryId");
 
                     b.ToTable("AdministrativeTerritories");
                 });
@@ -656,8 +658,8 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("TransactionReasonId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<long>("UserBalanceId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -665,7 +667,7 @@ namespace LawyerService.API.Migrations
 
                     b.HasIndex("TransactionReasonId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserBalanceId");
 
                     b.ToTable("HistoryUserTransactions");
                 });
@@ -766,6 +768,9 @@ namespace LawyerService.API.Migrations
 
                     b.Property<byte>("ProcentOut")
                         .HasColumnType("smallint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -899,7 +904,15 @@ namespace LawyerService.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LawyerService.Entities.Address.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AdministrativeTerritory");
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("LawyerService.Entities.Address.AdministrativeTerritory", b =>
@@ -909,14 +922,6 @@ namespace LawyerService.API.Migrations
                         .HasForeignKey("AdministrativeTerritoryTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("LawyerService.Entities.Address.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
 
                     b.Navigation("Type");
                 });
@@ -937,8 +942,8 @@ namespace LawyerService.API.Migrations
                         .HasForeignKey("AddressId");
 
                     b.HasOne("LawyerService.Entities.Transactions.UserBalance", "Balance")
-                        .WithMany()
-                        .HasForeignKey("BalanceId")
+                        .WithOne("User")
+                        .HasForeignKey("LawyerService.Entities.Identity.User", "BalanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1041,15 +1046,17 @@ namespace LawyerService.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LawyerService.Entities.Identity.User", "User")
+                    b.HasOne("LawyerService.Entities.Transactions.UserBalance", "UserBalance")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserBalanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
                     b.Navigation("Reason");
 
-                    b.Navigation("User");
+                    b.Navigation("UserBalance");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1111,6 +1118,11 @@ namespace LawyerService.API.Migrations
             modelBuilder.Entity("LawyerService.Entities.Order.Order", b =>
                 {
                     b.Navigation("OrderSpecializations");
+                });
+
+            modelBuilder.Entity("LawyerService.Entities.Transactions.UserBalance", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

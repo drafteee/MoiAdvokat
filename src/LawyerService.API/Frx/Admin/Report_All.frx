@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/03/2021 16:09:44" ReportInfo.Modified="08/04/2021 13:04:02" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <Parameter Name="YearParameter" DataType="System.String"/>
+    <Total Name="TotalQuarterV01" Expression="MainTable.V01" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV02" Expression="MainTable.V02" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV03" Expression="MainTable.V03" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV04" Expression="MainTable.V04" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV05" Expression="MainTable.V05" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV06" Expression="MainTable.V06" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV07" Expression="MainTable.V07" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV08" Expression="MainTable.V08" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV09" Expression="MainTable.V09" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV10" Expression="MainTable.V10" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV11" Expression="MainTable.V11" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuarterV12" Expression="MainTable.V12" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalYearV01" Expression="MainTable.V01" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV02" Expression="MainTable.V02" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV03" Expression="MainTable.V03" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV04" Expression="MainTable.V04" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV05" Expression="MainTable.V05" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV06" Expression="MainTable.V06" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV07" Expression="MainTable.V07" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV08" Expression="MainTable.V08" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV09" Expression="MainTable.V09" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV10" Expression="MainTable.V10" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV11" Expression="MainTable.V11" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalYearV12" Expression="MainTable.V12" Evaluator="Data1" PrintOn="ReportSummary1"/>
+  </Dictionary>
+  <ReportPage Name="MainPage" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="47.25">
+      <TextObject Name="HeaderText" Left="122.85" Top="9.45" Width="774.9" Height="28.35" Text="Статистика обращений организаций и физических лиц к адвокатам Республики Беларусь, Российской Федерации и Республики Казахстан об оказании юридической помощи за [YearParameter] год" HorzAlign="Center" Font="Times New Roman, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="51.25" Width="1047.06" Height="75.6">
+      <TableObject Name="MainTable2" Left="9.45" Top="18.9" Width="1026.52" Height="56.7" Border.Lines="All">
+        <TableColumn Name="Column1" Width="98"/>
+        <TableColumn Name="Column2" Width="50.75"/>
+        <TableColumn Name="Column3" Width="50.75"/>
+        <TableColumn Name="Column4" Width="46.08"/>
+        <TableColumn Name="Column5" Width="50.75"/>
+        <TableColumn Name="Column6" Width="54.53"/>
+        <TableColumn Name="Column7" Width="55.53"/>
+        <TableColumn Name="Column8" Width="82.88"/>
+        <TableColumn Name="Column9" Width="111.23"/>
+        <TableColumn Name="Column10" Width="111.23"/>
+        <TableColumn Name="Column11" Width="92.33"/>
+        <TableColumn Name="Column12" Width="111.23"/>
+        <TableColumn Name="Column13" Width="111.23"/>
+        <TableRow Name="Row1" Height="37.8">
+          <TableCell Name="Cell1" Border.Lines="All" Text="Месяц" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt" RowSpan="2"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="Количество клиентов" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt" ColSpan="3"/>
+          <TableCell Name="Cell3" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell4" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="Количество обращений клиентов к адвокатам" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt" ColSpan="3"/>
+          <TableCell Name="Cell16" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell18" Border.Lines="All" Text="Сумма, оплаченная клиентами системе" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt" ColSpan="3"/>
+          <TableCell Name="Cell19" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell20" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell31" Border.Lines="All" Text="Сумма, оплаченная клиентами адвокатам" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt" ColSpan="3"/>
+          <TableCell Name="Cell32" Border.Lines="All" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell33" Border.Lines="All" VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Text="РБ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Text="РФ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Text="РК" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell43" Border.Lines="All" Text="РБ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell44" Border.Lines="All" Text="РФ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell45" Border.Lines="All" Text="РК" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell46" Border.Lines="All" Text="РБ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell47" Border.Lines="All" Text="РФ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell48" Border.Lines="All" Text="РК" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell49" Border.Lines="All" Text="РБ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell50" Border.Lines="All" Text="РФ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell51" Border.Lines="All" Text="РК" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader2" Top="130.85" Width="1047.06" Condition="MainTable.QuarterId">
+      <DataBand Name="Data1" Top="134.85" Width="1047.06" Height="28.35" CanGrow="true" CanShrink="true" CanBreak="true">
+        <TableObject Name="Table1" Left="9.45" Width="1026.52" Height="28.35" Border.Lines="Left, Right">
+          <TableColumn Name="Column14" Width="98"/>
+          <TableColumn Name="Column15" Width="50.75"/>
+          <TableColumn Name="Column16" Width="50.75"/>
+          <TableColumn Name="Column17" Width="46.08"/>
+          <TableColumn Name="Column18" Width="50.75"/>
+          <TableColumn Name="Column19" Width="54.53"/>
+          <TableColumn Name="Column20" Width="55.53"/>
+          <TableColumn Name="Column21" Width="82.88"/>
+          <TableColumn Name="Column22" Width="111.23"/>
+          <TableColumn Name="Column23" Width="111.23"/>
+          <TableColumn Name="Column24" Width="92.33"/>
+          <TableColumn Name="Column25" Width="111.23"/>
+          <TableColumn Name="Column26" Width="111.23"/>
+          <TableRow Name="Row3" Height="28.35">
+            <TableCell Name="Cell52" Border.Lines="Right, Top" Text="[MainTable.RefTableMonth.Name]" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell53" Border.Lines="Right, Top" Text="[MainTable.V01]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell54" Border.Lines="Right, Top" Text="[MainTable.V02]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell55" Border.Lines="Right, Top" Text="[MainTable.V03]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell56" Border.Lines="Right, Top" Text="[MainTable.V04]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell57" Border.Lines="Right, Top" Text="[MainTable.V05]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell58" Border.Lines="Right, Top" Text="[MainTable.V06]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell59" Border.Lines="Right, Top" Text="[MainTable.V07]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell60" Border.Lines="Right, Top" Text="[MainTable.V08]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell61" Border.Lines="Right, Top" Text="[MainTable.V09]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell62" Border.Lines="Right, Top" Text="[MainTable.V10]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell63" Border.Lines="Right, Top" Text="[MainTable.V11]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell64" Border.Lines="Right, Top" Text="[MainTable.V12]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter2" Top="167.2" Width="1047.06" Height="37.8" CanGrow="true" CanShrink="true" CanBreak="true" KeepWithData="true">
+        <TableObject Name="Table2" Left="9.45" Width="1026.52" Height="37.8" Border.Lines="All">
+          <TableColumn Name="Column27" Width="98"/>
+          <TableColumn Name="Column28" Width="50.75"/>
+          <TableColumn Name="Column29" Width="50.75"/>
+          <TableColumn Name="Column30" Width="46.08"/>
+          <TableColumn Name="Column31" Width="50.75"/>
+          <TableColumn Name="Column32" Width="54.53"/>
+          <TableColumn Name="Column33" Width="55.53"/>
+          <TableColumn Name="Column34" Width="82.88"/>
+          <TableColumn Name="Column35" Width="111.23"/>
+          <TableColumn Name="Column36" Width="111.23"/>
+          <TableColumn Name="Column37" Width="92.33"/>
+          <TableColumn Name="Column38" Width="111.23"/>
+          <TableColumn Name="Column39" Width="111.23"/>
+          <TableRow Name="Row4" Height="37.8">
+            <TableCell Name="Cell65" Border.Lines="Left, Right" Text="[MainTable.RefTableQuarter.Name]" VertAlign="Center" Font="Times New Roman, 10pt, style=Bold"/>
+            <TableCell Name="Cell66" Border.Lines="Left, Right" Text="[TotalQuarterV01]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell67" Border.Lines="Left, Right" Text="[TotalQuarterV02]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell68" Border.Lines="Left, Right" Text="[TotalQuarterV03]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell69" Border.Lines="Left, Right" Text="[TotalQuarterV04]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell70" Border.Lines="Left, Right" Text="[TotalQuarterV05]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell71" Border.Lines="Left, Right" Text="[TotalQuarterV06]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell72" Border.Lines="Left, Right" Text="[TotalQuarterV07]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell73" Border.Lines="Left, Right" Text="[TotalQuarterV08]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell74" Border.Lines="Left, Right" Text="[TotalQuarterV09]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell75" Border.Lines="Left, Right" Text="[TotalQuarterV10]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell76" Border.Lines="Left, Right" Text="[TotalQuarterV11]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+            <TableCell Name="Cell77" Border.Lines="Left, Right" Text="[TotalQuarterV12]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="209" Width="1047.06" Height="28.35" CanGrow="true" CanShrink="true" CanBreak="true" KeepWithData="true">
+      <TableObject Name="Table3" Left="9.45" Width="1026.52" Height="28.35" Border.Lines="All">
+        <TableColumn Name="Column40" Width="98"/>
+        <TableColumn Name="Column41" Width="50.75"/>
+        <TableColumn Name="Column42" Width="50.75"/>
+        <TableColumn Name="Column43" Width="46.08"/>
+        <TableColumn Name="Column44" Width="50.75"/>
+        <TableColumn Name="Column45" Width="54.53"/>
+        <TableColumn Name="Column46" Width="55.53"/>
+        <TableColumn Name="Column47" Width="82.88"/>
+        <TableColumn Name="Column48" Width="111.23"/>
+        <TableColumn Name="Column49" Width="111.23"/>
+        <TableColumn Name="Column50" Width="92.33"/>
+        <TableColumn Name="Column51" Width="111.23"/>
+        <TableColumn Name="Column52" Width="111.23"/>
+        <TableRow Name="Row5" Height="28.35">
+          <TableCell Name="Cell78" Border.Lines="All" Text="ИТОГО за год" VertAlign="Center" Font="Times New Roman, 10pt, style=Bold"/>
+          <TableCell Name="Cell79" Border.Lines="All" Text="[TotalYearV01]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell80" Border.Lines="All" Text="[TotalYearV02]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell81" Border.Lines="All" Text="[TotalYearV03]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell82" Border.Lines="All" Text="[TotalYearV04]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell83" Border.Lines="All" Text="[TotalYearV05]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell84" Border.Lines="All" Text="[TotalYearV06]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell85" Border.Lines="All" Text="[TotalYearV07]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell86" Border.Lines="All" Text="[TotalYearV08]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell87" Border.Lines="All" Text="[TotalYearV09]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell88" Border.Lines="All" Text="[TotalYearV10]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell89" Border.Lines="All" Text="[TotalYearV11]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell90" Border.Lines="All" Text="[TotalYearV12]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </ReportSummaryBand>
+  </ReportPage>
+</Report>

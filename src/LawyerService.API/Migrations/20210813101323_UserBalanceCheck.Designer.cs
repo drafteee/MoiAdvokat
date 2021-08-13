@@ -3,15 +3,17 @@ using System;
 using LawyerService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LawyerService.API.Migrations
 {
     [DbContext(typeof(LawyerDbContext))]
-    partial class LawyerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210813101323_UserBalanceCheck")]
+    partial class UserBalanceCheck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -656,8 +658,8 @@ namespace LawyerService.API.Migrations
                     b.Property<long>("TransactionReasonId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<long>("UserBalanceId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -665,7 +667,7 @@ namespace LawyerService.API.Migrations
 
                     b.HasIndex("TransactionReasonId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserBalanceId");
 
                     b.ToTable("HistoryUserTransactions");
                 });
@@ -1041,15 +1043,17 @@ namespace LawyerService.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LawyerService.Entities.Identity.User", "User")
+                    b.HasOne("LawyerService.Entities.Transactions.UserBalance", "UserBalance")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserBalanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
                     b.Navigation("Reason");
 
-                    b.Navigation("User");
+                    b.Navigation("UserBalance");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

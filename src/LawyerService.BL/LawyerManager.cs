@@ -75,7 +75,7 @@ namespace LawyerService.BL
             lawyers.ForEach(a =>
             {
                 var address = newAddresses.Where(x => a.Address.AdministrativeTerritoryId == x.AdministrativeTerritoryId
-                    && a.Address.CountryId == x.CountryId
+                    //&& a.Address.CountryId == x.CountryId
                     && a.Address.Street == x.Street
                     && a.Address.House == x.House
                     && a.Address.Office == x.Office).FirstOrDefault();
