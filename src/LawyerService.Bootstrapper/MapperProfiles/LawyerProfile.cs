@@ -11,8 +11,8 @@ namespace LawyerService.Bootstrapper.MapperProfiles
             CreateMap<Lawyer, LawyerVM>();
             CreateMap<LawyerVM, Lawyer>().AfterMap((src, dest) =>
             {
-                dest.Address.CountryId = src.Address.Country.Id;
-                dest.Address.Country = null;
+                //dest.Address.CountryId = src.Address.Country.Id;
+                //dest.Address.Country = null;
 
                 dest.Address.AdministrativeTerritoryId = src.Address.AdministrativeTerritory.Id;
                 dest.Address.AdministrativeTerritory = null;

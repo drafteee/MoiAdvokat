@@ -8,10 +8,10 @@ namespace LawyerService.ViewModel.Address
         /// Почтовый индекс
         /// </summary>
         public string Postcode { get; set; }
-        /// <summary>
-        /// Страна
-        /// </summary>
-        public CountryVM Country { get; set; }
+        ///// <summary>
+        ///// Страна
+        ///// </summary>
+        //public CountryVM Country { get; set; }
         /// <summary>
         /// Административно-территориальная единица (город, деревня...)
         /// </summary>

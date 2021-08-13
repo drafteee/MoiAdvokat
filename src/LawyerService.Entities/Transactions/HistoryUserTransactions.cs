@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LawyerService.Entities.Identity;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LawyerService.Entities.Transactions
 {
@@ -21,13 +23,14 @@ namespace LawyerService.Entities.Transactions
         /// <summary>
         /// Пользователь
         /// </summary>
-        public long UserBalanceId { get; set; }
-        public UserBalance UserBalance { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Дата транзакции
         /// </summary>
-        public DateTimeOffset Date { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Предыдущее значение баланса

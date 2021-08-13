@@ -1,6 +1,7 @@
 ﻿using LawyerService.Entities.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace LawyerService.Entities.Order
@@ -49,7 +50,8 @@ namespace LawyerService.Entities.Order
         /// <summary>
         /// Дата начала исполнения заказа
         /// </summary>
-        public DateTimeOffset StartDate { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Дата исполнения заказа

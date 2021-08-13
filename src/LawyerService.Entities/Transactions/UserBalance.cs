@@ -1,4 +1,5 @@
 ﻿using LawyerService.Entities.Identity;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LawyerService.Entities.Transactions
 {
@@ -7,11 +8,6 @@ namespace LawyerService.Entities.Transactions
     /// </summary>
     public class UserBalance: BaseEntity
     {
-        /// <summary>
-        /// Пользователь
-        /// </summary>
-        public string UserId { get; set; }
-        public User User { get; set; }
         /// <summary>
         /// Значение баланса
         /// </summary>

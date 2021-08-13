@@ -31,6 +31,8 @@ using LawyerService.BL.Interfaces.Transactions;
 using LawyerService.BL.Transactions;
 using LawyerService.BL.Orders;
 using LawyerService.BL.Interfaces.Orders;
+using LawyerService.BL.Interfaces.Reports;
+using LawyerService.BL.Reports;
 
 namespace LawyerService.API
 {
@@ -67,6 +69,7 @@ namespace LawyerService.API
             
             services.AddScoped<IUserManager, BL.Account.UserManager>();
             services.AddScoped<ITransactionManager, TransactionManager>();
+            services.AddScoped<IReportManager, ReportManager>();
 
             #region Address managers
 
@@ -179,6 +182,7 @@ namespace LawyerService.API
                 });
             });
             services.AddSwaggerGenNewtonsoftSupport();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
         }
 
@@ -209,7 +213,7 @@ namespace LawyerService.API
             app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
-            {
+            { 
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "defaultArea",
@@ -218,6 +222,9 @@ namespace LawyerService.API
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseMvc();
+            app.UseFastReport();
         }
 
 

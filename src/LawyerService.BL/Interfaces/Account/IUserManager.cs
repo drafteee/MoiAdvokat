@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using LawyerService.ViewModel.Account;
+using LawyerService.ViewModel.Address;
 using LawyerService.ViewModel.Common;
 
 namespace LawyerService.BL.Interfaces.Account
