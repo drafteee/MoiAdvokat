@@ -12,8 +12,8 @@ const GlobalLoading = () => {
 	 * </div>
 	 */
 		<div className="global-loader-background">
-			<span class="loader">
-				<span class="loader-inner" />
+			<span className="loader">
+				<span className="loader-inner" />
 			</span>
 		</div>
 	)

@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Layout, Menu, Row, Col, Button, Badge } from "antd";
+import './style.css'
 const { Header } = Layout;
 
 const Navigation = memo(() => {
@@ -8,28 +9,13 @@ const Navigation = memo(() => {
   const isHome = location === null;
 
   return (
-    <Header
-      className={isHome ? "header" : ""}
-      style={{
-        padding: "0px",
-      }}
-    >
-      dsadsad11
-      <Row>
-        <Col span={7} className="logo-title">
-          <Link to="/">
-            {/* <img
-              decoding="async"
-              loading="lazy"
-              className="logo"
-              src={logo}
-              alt="fds"
-              // onLoad={() => setIsLoadedLogo(true)}
-            /> */}
-            <div>{"TEST LINK"}</div>
-          </Link>
-        </Col>
-      </Row>
+    <Header className="header">
+      <div className="logo" />
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+        <Menu.Item key="1"><Link to="/">Домой</Link></Menu.Item>
+        <Menu.Item key="2"><Link to="/account">Аккаунт</Link></Menu.Item>
+        <Menu.Item key="3"><Link to="/lawyers">Адвокаты</Link></Menu.Item>
+      </Menu>
     </Header>
   );
 });

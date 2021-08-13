@@ -3,6 +3,7 @@ using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities;
 using LawyerService.Entities.Address;
 using LawyerService.Entities.Lawyer;
+using LawyerService.Entities.Order;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace LawyerService.DataAccess
     {
         private IGenericRepository<Lawyer> _lawyerRepository;
         private IGenericRepository<Address> _addressRepository;
+        private IGenericRepository<Order> _orderRepository;
 
         public Uow(LawyerDbContext context) : base(context)
         {
@@ -44,5 +46,6 @@ namespace LawyerService.DataAccess
         public IGenericRepository<Lawyer> Lawyer => _lawyerRepository ??= new GenericRepository<Lawyer>(_context);
 
         public IGenericRepository<Address> Address => _addressRepository ??= new GenericRepository<Address>(_context);
+        public IGenericRepository<Order> Orders => _orderRepository ??= new GenericRepository<Order>(_context);
     }
 }

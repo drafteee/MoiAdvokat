@@ -35,5 +35,7 @@ namespace LawyerService.ViewModel.Lawyers
         /// Адрес
         /// </summary>
         public AddressVM Address { get; set; }
+        public long AddressId { get; set; }
+
     }
 }

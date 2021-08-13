@@ -5,7 +5,7 @@ import LazyComponent from "../../components/LazyComponent";
 import { homeLoadables } from "../../loadables";
 
 const Home = () => {
-  return <></>;
+  return <>Home</>;
 };
 
 export default Home;
