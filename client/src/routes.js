@@ -45,6 +45,13 @@ const Routes = () => {
 				component={ BLLoadables.LoadableOrder }
 				path="/order"
 			/>
+
+			<Route
+				exact
+				component={ BLLoadables.LoadableReport }
+				path="/report"
+			/>
+
 			<Route
 				exact
 				component={ NotFound }

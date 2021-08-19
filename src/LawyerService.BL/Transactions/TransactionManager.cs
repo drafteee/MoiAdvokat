@@ -9,7 +9,9 @@ using LawyerService.Resources;
 using LawyerService.ViewModel.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LawyerService.BL.Transactions
@@ -161,6 +163,172 @@ namespace LawyerService.BL.Transactions
                     request.Output = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "UnsuccessfulTransction");
                 }
             }
+            return request;
+        }
+
+        public async Task<RequestResult> PayOrder(long orderId, decimal amount)
+        {
+            var request = new RequestResult(false, string.Empty);
+            var order = await _context.Orders
+                .Include(o => o.User)
+                    .ThenInclude(u => u.Balance)
+                .Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                request.Output = _localizationManager.GetString(LocalisationSections.Orders, "NotFound");
+                request.ErrorCode = (int)HttpStatusCode.NotFound;
+                return request;
+            }
+            var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)TransactionReasonEnum.PayOrder).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
+            if (reasonId == 0)
+            {
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
+                return request;
+            }
+            if (order.User.Balance.Amount < amount)
+            {
+                request.Output = _localizationManager.GetString(LocalisationSections.Orders, "NotEnoughAmount");
+                request.ErrorCode = (int)HttpStatusCode.Forbidden;
+                return request;
+            }
+            var transaction = new HistoryUserTransactions()
+            {
+                UserId = order.UserId,
+                Amount = amount,
+                CreatedOn = DateTime.Now,
+                Date = DateTime.Now,
+                OrderId = orderId,
+                PreviousBalanceAmount = order.User.Balance.Amount,
+                CurrentBalanceAmount = order.User.Balance.Amount - amount,
+                TransactionReasonId = reasonId
+            };
+            _context.HistoryUserTransactions.Add(transaction);
+            order.Price = amount;
+            order.User.Balance.Amount -= amount;
+            request.Success = _context.SaveChanges() > 0;
+            return request;
+        }
+
+        public async Task<RequestResult> PaymentOrder(long orderId)
+        {
+            var request = new RequestResult(false, string.Empty);
+            var order = await _context.Orders
+                .Include(o => o.Lawyer)
+                    .ThenInclude(l => l.User)
+                        .ThenInclude(u => u.Balance)
+                .Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                request.Output = _localizationManager.GetString(LocalisationSections.Orders, "NotFound");
+                request.ErrorCode = (int)HttpStatusCode.NotFound;
+                return request;
+            }
+            var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)TransactionReasonEnum.SuccessOrder).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
+            if (reasonId == 0)
+            {
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
+                return request;
+            }
+            var transaction = new HistoryUserTransactions()
+            {
+                UserId = order.Lawyer.UserId,
+                Amount = order.Price,
+                CreatedOn = DateTime.Now,
+                Date = DateTime.Now,
+                OrderId = orderId,
+                PreviousBalanceAmount = order.Lawyer.User.Balance.Amount,
+                CurrentBalanceAmount = order.Lawyer.User.Balance.Amount + order.Price,
+                TransactionReasonId = reasonId
+            };
+            _context.HistoryUserTransactions.Add(transaction);
+            order.Lawyer.User.Balance.Amount += order.Price;
+            request.Success = _context.SaveChanges() > 0;
+            return request;
+        }
+
+        public async Task<RequestResult> RefundOrderFromClient(long orderId)
+        {
+            var request = new RequestResult(false, string.Empty);
+            var order = await _context.Orders
+                .Include(o => o.User)
+                    .ThenInclude(u => u.Balance)
+                .Include(o => o.Lawyer)
+                    .ThenInclude(l => l.User)
+                        .ThenInclude(u => u.Balance)
+                .Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                request.Output = _localizationManager.GetString(LocalisationSections.Orders, "NotFound");
+                request.ErrorCode = (int)HttpStatusCode.NotFound;
+                return request;
+            }
+            var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)TransactionReasonEnum.FailOrderByClient).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
+            if (reasonId == 0)
+            {
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
+                return request;
+            }
+            var transactions = new List<HistoryUserTransactions> { new HistoryUserTransactions
+            {
+                UserId = order.UserId,
+                Amount = order.Price * (100 - order.Procent)/100,
+                CreatedOn = DateTime.Now,
+                Date = DateTime.Now,
+                OrderId = orderId,
+                PreviousBalanceAmount = order.User.Balance.Amount,
+                CurrentBalanceAmount = order.User.Balance.Amount + (order.Price * (100 - order.Procent) / 100),
+                TransactionReasonId = reasonId
+            }, new HistoryUserTransactions
+            {
+                UserId = order.Lawyer.UserId,
+                Amount = order.Price * order.Procent / 100,
+                CreatedOn = DateTime.Now,
+                Date = DateTime.Now,
+                OrderId = orderId,
+                PreviousBalanceAmount = order.Lawyer.User.Balance.Amount,
+                CurrentBalanceAmount = order.Lawyer.User.Balance.Amount + (order.Price * order.Procent / 100),
+                TransactionReasonId = reasonId
+            }};
+            _context.HistoryUserTransactions.AddRange(transactions);
+            order.User.Balance.Amount += order.Price * (100 - order.Procent) / 100;
+            order.Lawyer.User.Balance.Amount += order.Price * order.Procent / 100;
+            request.Success = _context.SaveChanges() > 0;
+            return request;
+        }
+
+        public async Task<RequestResult> RefundOrderFromLawyer(long orderId)
+        {
+            var request = new RequestResult(false, string.Empty);
+            var order = await _context.Orders
+                .Include(o => o.User)
+                    .ThenInclude(u => u.Balance)
+                .Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                request.Output = _localizationManager.GetString(LocalisationSections.Orders, "NotFound");
+                request.ErrorCode = (int)HttpStatusCode.NotFound;
+                return request;
+            }
+            var reasonId = await _context.TransactionReasons.Where(s => s.Code == ((int)TransactionReasonEnum.FailOrder).ToString()).Select(s => s.Id).FirstOrDefaultAsync();
+            if (reasonId == 0)
+            {
+                request.Message = _localizationManager.GetString(LocalisationSections.HistoryTransactions, "NotFoundReason");
+                return request;
+            }
+            var transaction = new HistoryUserTransactions()
+            {
+                UserId = order.UserId,
+                Amount = order.Price,
+                CreatedOn = DateTime.Now,
+                Date = DateTime.Now,
+                OrderId = orderId,
+                PreviousBalanceAmount = order.User.Balance.Amount,
+                CurrentBalanceAmount = order.User.Balance.Amount + order.Price,
+                TransactionReasonId = reasonId
+            };
+            _context.HistoryUserTransactions.Add(transaction);
+            order.User.Balance.Amount += order.Price;
+            request.Success = _context.SaveChanges() > 0;
             return request;
         }
     }
