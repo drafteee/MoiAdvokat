@@ -24,11 +24,11 @@ const App = () => {
               padding: "24px 24px 0px 24px",
             }}
           >
-            		<Routes/>
+            <Routes />
 
           </Content>
         </Layout>
-        <Footer /> 
+        <Footer />
       </Layout>
     </Router>
   );

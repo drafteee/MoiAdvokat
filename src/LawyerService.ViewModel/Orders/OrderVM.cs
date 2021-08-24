@@ -2,6 +2,7 @@
 using LawyerService.ViewModel.Base;
 using LawyerService.ViewModel.Lawyers;
 using System;
+using System.Collections.Generic;
 
 namespace LawyerService.ViewModel.Orders
 {
@@ -46,7 +47,7 @@ namespace LawyerService.ViewModel.Orders
         /// <summary>
         /// Дата начала исполнения заказа
         /// </summary>
-        public DateTimeOffset StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Дата исполнения заказа
@@ -64,5 +65,7 @@ namespace LawyerService.ViewModel.Orders
         /// </summary>
         public string UserId { get; set; }
         public UserVM User { get; set; }
+
+        public List<long> SpecializationsIds { get; set; }
     }
 }

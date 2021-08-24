@@ -1,14 +1,11 @@
 ﻿using LawyerService.Entities.Lawyer;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LawyerService.Entities.Order
 {
     /// <summary>
     /// Специализация заказа
     /// </summary>
-    public class OrderSpecialization
+    public class OrderSpecialization : BaseEntity
     {
         /// <summary>
         /// FK on Order

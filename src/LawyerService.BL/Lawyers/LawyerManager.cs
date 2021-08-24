@@ -3,6 +3,7 @@ using FluentValidation;
 using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.BL.Interfaces.Addresses;
+using LawyerService.BL.Interfaces.Lawyers;
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Lawyer;
@@ -15,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LawyerService.BL
+namespace LawyerService.BL.Lawyers
 {
     public class LawyerManager : BaseManager<Lawyer, LawyerVM>, ILawyerManager
     {

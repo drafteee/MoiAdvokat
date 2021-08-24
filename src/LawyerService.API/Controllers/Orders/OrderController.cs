@@ -23,5 +23,19 @@ namespace LawyerService.API.Controllers.Orders
         {
             return await _manager.GetOrders();
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<bool> SubmitOrder([FromBody] OrderVM order)
+        {
+            return await _manager.SubmitOrder(order);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<OrderSubmitStarterInfoVM> GetStarterInfoForSubmit()
+        {
+            return await _manager.GetStarterInfoForSubmit();
+        }
     }
 }

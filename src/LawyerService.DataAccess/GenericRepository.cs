@@ -22,6 +22,11 @@ namespace LawyerService.DataAccess
             _dataSet = context.Set<T>();
         }
 
+        public virtual Task<List<T>> GetAll(bool withDeleted = false)
+        {
+            return _dataSet.Where(x => withDeleted || !x.IsDeleted).ToListAsync();
+        }
+
         public virtual T GetById(object id)
         {
             return _dataSet.Find(id);

@@ -11,6 +11,7 @@ namespace LawyerService.DataAccess.Interfaces
 {
     public interface IGenericRepository<T> where T : IEntity
     {
+        Task<List<T>> GetAll(bool withDeleted = false);
         T GetById(object id);
         IQueryable<T> GetQueryable();
         Task<IList<T>> GetAsync(Expression<Func<T, bool>> filter = null,
