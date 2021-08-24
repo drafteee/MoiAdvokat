@@ -17,9 +17,15 @@ const LoadableOrder = Loadable({
 	loading : () => <Loading />
 })
 
+const LoadableReport = Loadable({
+	loader  : () => import('../containers/Reports'),
+	loading : () => <Loading />
+})
+
 
 export const BLLoadables = {
 	LoadableLawyersList,
-  LoadableOrdersList,
-  LoadableOrder
+  	LoadableOrdersList,
+  	LoadableOrder,
+  	LoadableReport
 }

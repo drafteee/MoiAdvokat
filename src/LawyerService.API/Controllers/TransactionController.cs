@@ -36,7 +36,7 @@ namespace LawyerService.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<RequestResult> CreateRole(bool isSuccess, long transactionId)
+        public async Task<RequestResult> GetResultOfTransaction(bool isSuccess, long transactionId)
         {
             return await _transactionManager.GetResultOfTransaction(isSuccess, transactionId);
         }

@@ -43,6 +43,13 @@ const Routes = () => {
 
 			<Route
 				exact
+				component={ BLLoadables.LoadableReport }
+				path="/report"
+			/>
+
+
+			<Route
+				exact
 				component={OrdersLoadables.LoadableSubmitOrder}
 				path="/submitOrder"
 			/>
