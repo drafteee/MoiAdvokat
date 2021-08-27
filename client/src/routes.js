@@ -1,48 +1,43 @@
-import React, {
-	useEffect, useState
-}from "react"
+import React from "react"
 import {
 	Switch, Route
-}from "react-router-dom"
-import { homeLoadables, accountLoadables, BLLoadables }from "./loadables"
+} from "react-router-dom"
+import { homeLoadables, accountLoadables, BLLoadables } from "./loadables"
 import NotFound from "./components/NotFound"
-import {
-	useSelector, useDispatch
-}from "react-redux"
+import { OrdersLoadables } from "./loadables/orders"
 
 const Routes = () => {
 	return (
 		<Switch>
 			<Route
 				exact
-				component={ homeLoadables.LoadableHome }
+				component={homeLoadables.LoadableHome}
 				path="/"
 			/>
 			<Route
 				exact
-				component={ accountLoadables.LoadableLogin }
+				component={accountLoadables.LoadableLogin}
 				path="/login"
 			/>
 			<Route
 				exact
-				component={ accountLoadables.LoadableAccount }
+				component={accountLoadables.LoadableAccount}
 				path="/account"
 			/>
 
-			
 			<Route
 				exact
-				component={ BLLoadables.LoadableLawyersList }
+				component={BLLoadables.LoadableLawyersList}
 				path="/lawyers"
 			/>
 			<Route
 				exact
-				component={ BLLoadables.LoadableOrdersList }
+				component={BLLoadables.LoadableOrdersList}
 				path="/orders"
 			/>
 			<Route
 				exact
-				component={ BLLoadables.LoadableOrder }
+				component={BLLoadables.LoadableOrder}
 				path="/order"
 			/>
 
@@ -52,9 +47,16 @@ const Routes = () => {
 				path="/report"
 			/>
 
+
 			<Route
 				exact
-				component={ NotFound }
+				component={OrdersLoadables.LoadableSubmitOrder}
+				path="/submitOrder"
+			/>
+
+			<Route
+				exact
+				component={NotFound}
 				path="*"
 			/>
 		</Switch>

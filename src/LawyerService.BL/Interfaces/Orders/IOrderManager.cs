@@ -7,6 +7,8 @@ namespace LawyerService.BL.Interfaces.Orders
 {
     public interface IOrderManager : IBaseManager<Order, OrderVM>
     {
-        Task<List<Order>> GetOrders(); 
+        Task<List<Order>> GetOrders();
+        Task<bool> SubmitOrder(OrderVM order);
+        Task<OrderSubmitStarterInfoVM> GetStarterInfoForSubmit();
     }
 }

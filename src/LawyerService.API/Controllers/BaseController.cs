@@ -60,7 +60,14 @@ namespace LawyerService.API.Controllers
         [HttpPost]
         public Task<bool> CreateOrUpdateMany([FromBody] List<TVM> body)
         {
-            return _manager.CreateOrUpdateManyAsync(body);
+            try
+            {
+                return _manager.CreateOrUpdateManyAsync(body);
+            }
+            catch (System.Exception e)
+            {
+                throw;
+            }
         }
 
         [AllowAnonymous]
