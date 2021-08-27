@@ -13,6 +13,7 @@ using LawyerService.Test.Extensions;
 using LawyerService.Entities.Lawyer;
 using MockQueryable.Moq;
 using System.Threading;
+using LawyerService.BL.Interfaces.Lawyers;
 
 namespace LawyerService.Test
 {
