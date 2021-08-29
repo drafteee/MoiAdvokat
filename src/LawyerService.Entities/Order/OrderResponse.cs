@@ -15,6 +15,7 @@ namespace LawyerService.Entities.Order
         public long LawyerId { get; set; }
 
         public decimal Price { get; set; }
+        public bool IsChoosen{ get; set; }
 
         public DateTime[] Dates { get; set; }
     }
