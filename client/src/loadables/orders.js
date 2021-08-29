@@ -7,6 +7,12 @@ const LoadableSubmitOrder = Loadable({
 	loading : () => <Loading />
 })
 
+const LoadableListResponses = Loadable({
+	loader  : () => import('../containers/Orders/ListOrderResponse'),
+	loading : () => <Loading />
+})
+
 export const OrdersLoadables = {
-    LoadableSubmitOrder
+    LoadableSubmitOrder,
+		LoadableListResponses
 }

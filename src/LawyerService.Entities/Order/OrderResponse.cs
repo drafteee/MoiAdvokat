@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LawyerService.Entities.Order
 {
@@ -12,7 +8,9 @@ namespace LawyerService.Entities.Order
     public class OrderResponse : BaseEntity
     {
         public long OrderId { get; set; }
+        public Order Order { get; set; }
         public long LawyerId { get; set; }
+        public Lawyer.Lawyer Lawyer { get; set; }
 
         public decimal Price { get; set; }
 

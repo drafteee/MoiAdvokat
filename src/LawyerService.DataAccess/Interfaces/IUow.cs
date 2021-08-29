@@ -24,6 +24,7 @@ namespace LawyerService.DataAccess.Interfaces
         IGenericRepository<Order> Orders { get; }
         IGenericRepository<OrderSpecialization> OrderSpecializations { get; }
         IGenericRepository<OrderStatus> OrderStatuses { get; }
+        IGenericRepository<OrderResponse> OrderResponses { get; }
 
         #endregion
 

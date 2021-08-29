@@ -10,6 +10,8 @@ import 'antd/lib/layout/style/index.css'
 import 'antd/lib/form/style/index.css'
 import 'antd/lib/input/style/index.css'
 import 'antd/lib/select/style/index.css'
+import 'antd/lib/notification/style/index.css'
+import 'antd/lib/grid/style/index.css'
 
 ReactDOM.render(
   <Provider store={store}>

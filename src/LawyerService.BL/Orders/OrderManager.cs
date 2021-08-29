@@ -25,11 +25,20 @@ namespace LawyerService.BL.Orders
         {
         }
 
-        public async Task<List<Order>> GetOrders()
+        public async Task<List<OrderVM>> GetOrders()
         {
-            var set = _uow.Orders.GetQueryable().Include(x => x.User).ToList();
-
-            return set;
+            var set = _uow.Set<Order>()
+                .Include(x => x.User)
+                .Select(x=> new OrderVM
+                { 
+                    NameClient = x.NameClient,
+                    StartDate =  x.StartDate,
+                    EndDueDate = x.EndDueDate,
+                    Id = x.Id,
+                    IsResponse = x.OrderResponses.Where(y => y.Order.UserId == x.UserId).FirstOrDefault() != null
+                })
+                .ToList();
+            return _mapper.Map<List<OrderVM>>(set);
         }
 
         public async Task<bool> SubmitOrder(OrderVM orderVM)

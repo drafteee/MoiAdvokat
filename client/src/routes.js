@@ -37,6 +37,11 @@ const Routes = () => {
 			/>
 			<Route
 				exact
+				component={OrdersLoadables.LoadableListResponses}
+				path="/responses/:orderId"
+			/>
+			<Route
+				exact
 				component={BLLoadables.LoadableOrder}
 				path="/order"
 			/>

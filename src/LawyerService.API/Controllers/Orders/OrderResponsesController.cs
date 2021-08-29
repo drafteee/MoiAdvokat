@@ -1,6 +1,7 @@
 ﻿using LawyerService.BL.Interfaces.Orders;
 using LawyerService.Entities.Order;
 using LawyerService.ViewModel.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,27 @@ namespace LawyerService.API.Controllers.Orders
         public OrderResponsesController(IOrderResponseManager manager) : base(manager)
         {
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<bool> RespondOrder([FromBody] OrderResponseVM order)
+        {
+            try
+            {
+                return await _manager.RespondOrder(order);
+
+            }catch(Exception e)
+            {
+                throw;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<List<OrderResponseVM>> GetResponses([FromHeader] OrderResponseVM orderVM)
+        {
+            return await _manager.GetResponses(orderVM);
+        }
+        
     }
 }

@@ -19,7 +19,7 @@ namespace LawyerService.API.Controllers.Orders
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<List<Order>> GetOrders()
+        public async Task<List<OrderVM>> GetOrders()
         {
             return await _manager.GetOrders();
         }

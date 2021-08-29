@@ -6,9 +6,38 @@ import api from "./api";
 export const orderActions = {
   getOrders,
   submitOrder,
-  getStarterInfoForSubmit
+  respondOrder,
+  getStarterInfoForSubmit,
+  getOrderResponses
 };
 
+
+function getOrderResponses(params) {
+  console.log('action', params)
+
+  const dispatchObj = {
+    constants: orderConstants.GetOrderResponses,
+    service: {
+      func: api.getResponses,
+      params
+    }
+  };
+
+  return defAction(dispatchObj);
+}
+
+function respondOrder(respondObj) {
+  const dispatchObj = {
+    constants: orderConstants.RespondOrder,
+    service: {
+      func: api.orderRespond,
+      params: respondObj
+
+    }
+  };
+
+  return defAction(dispatchObj);
+}
 
 function getOrders() {
   const dispatchObj = {

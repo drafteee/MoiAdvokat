@@ -1,4 +1,5 @@
-﻿using LawyerService.ViewModel.Base;
+﻿using LawyerService.Entities.Lawyer;
+using LawyerService.ViewModel.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace LawyerService.ViewModel.Orders
     {
         public long OrderId { get; set; }
         public long LawyerId { get; set; }
+        public Lawyer Lawyer { get; set; }
 
         public decimal Price { get; set; }
 

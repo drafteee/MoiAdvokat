@@ -13,45 +13,39 @@ import 'antd/lib/notification/style/index.css'
 import 'antd/lib/modal/style/index.css'
 import 'antd/lib/form/style/index.css'
 import 'antd/lib/input-number/style/index.css'
-
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
+import 'antd/lib/date-picker/style/index.css'
+import RespondForm from "./RespondForm";
 
 const Orders = () => {
 
 const columns = [
   {
-    title: 'NameClient',
+    title: 'Имя',
     dataIndex: 'NameClient',
     key: 'nameClient',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'StartDate',
+    title: 'Дата поста',
     dataIndex: 'StartDate',
     key: 'startDate',
   },
   {
-    title: 'EndDueDate',
+    title: 'Дата окончания',
     dataIndex: 'EndDueDate',
     key: 'endDueDate',
   },
   {
-    title: 'Action',
+    title: 'Действия',
     key: 'action',
     render: (text, record) => (
       <Space size="middle">
-        <a>Invite {record.FirstName}</a>
-        <a>Delete</a>
-        <Button type="primary" onClick={showModal}>
+        {
+          !record.IsResponse && <Button type="primary" onClick={() => showModal(record)}>
           Отозваться
       </Button>
+        }
+        
       </Space>
     ),
   },
@@ -59,6 +53,7 @@ const columns = [
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
 
   const dispatch = useDispatch();
   const orderList =  useSelector(state => state.orderReducer.orders)
@@ -73,76 +68,19 @@ const columns = [
   }, [])
 
 
-  const showModal = () => {
+  const showModal = (record) => {
+    setCurrentId(record.Id)
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
-  const onFinish = (values) => {
-    console.log(values);
-  };
 
   return (
     <>
     <Table columns={columns} dataSource={orderList} />
-    
-      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-      <Form {...layout} name="nest-messages" onFinish={onFinish}>
-        <Form.Item
-          name={['user', 'name']}
-          label="Name"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name={['user', 'email']}
-          label="Email"
-          rules={[
-            {
-              type: 'email',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name={['user', 'age']}
-          label="Age"
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              max: 99,
-            },
-          ]}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item name={['user', 'website']} label="Website">
-          <Input />
-        </Form.Item>
-        <Form.Item name={['user', 'introduction']} label="Introduction">
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-      </Modal>
+    <RespondForm isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} currentId={currentId}/>
+      
     </>
   )
 }

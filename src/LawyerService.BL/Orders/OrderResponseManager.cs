@@ -6,8 +6,10 @@ using LawyerService.BL.Interfaces.Orders;
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Order;
+using LawyerService.ViewModel.Errors;
 using LawyerService.ViewModel.Orders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,36 @@ namespace LawyerService.BL.Orders
         public OrderResponseManager(IUow uow, IMapper mapper, IValidator<OrderResponseVM> validator, ILocalizationManager localizationManager, IUserAccessor userAccessor, UserManager<User> userManager, IServiceProvider serviceProvider)
             : base(uow, mapper, validator, localizationManager, userAccessor, userManager, serviceProvider)
         {
+        }
+
+        public async Task<List<OrderResponseVM>> GetResponses(OrderResponseVM orderResponse)
+        {
+            var responses = _uow.Set<OrderResponse>()
+                .Include(x=> x.Lawyer)
+                .Where(x => x.OrderId == orderResponse.OrderId).ToList();
+            return _mapper.Map<List<OrderResponseVM>>(responses);
+        }
+
+        public async Task<bool> RespondOrder(OrderResponseVM orderResponseVM)
+        {
+            var orderResponse = _mapper.Map<OrderResponse>(orderResponseVM);
+            User user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+
+            var lawyer = (await _uow.Lawyer.GetAsync(x => x.UserId == user.Id)).FirstOrDefault();
+
+            if(lawyer != null)
+            {
+                orderResponse.LawyerId = (await _uow.Lawyer.GetAsync(x => x.UserId == user.Id)).FirstOrDefault().Id;
+            }
+            else
+            {
+                throw new RestException(System.Net.HttpStatusCode.BadRequest, "Пользователь не подтвержден в качестве адвоката!");
+            }
+
+
+            _uow.OrderResponses.Add(orderResponse);
+
+            return await _uow.SaveAsync() > 0;
         }
     }
 }

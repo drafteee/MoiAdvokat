@@ -5,9 +5,11 @@ import {
 const initialState =
 {
   orders: [],
+  orderResponses: [],
   isLoading: false,
   error: null,
   submitOrderSuccess: null,
+  respondOrderSuccess: null,
   starterInfoForSubmit: {},
   getStarterInfoForSubmitSuccess: null
 }
@@ -32,7 +34,39 @@ export default function (state = initialState, action) {
         isLoading: false,
         error: action.payload
       }
-
+      case orderConstants.GetOrderResponses.REQUEST:
+        return {
+          ...state,
+          isLoading: true
+        }
+      case orderConstants.GetOrderResponses.SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          orderResponses: action.payload.result
+        }
+      case orderConstants.GetOrderResponses.FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          error: action.payload
+        }
+    case orderConstants.RespondOrder.REQUEST:
+      return {
+        ...state,
+        respondOrderSuccess: null
+      }
+    case orderConstants.RespondOrder.SUCCESS:
+      return {
+        ...state,
+        respondOrderSuccess: true
+      }
+    case orderConstants.RespondOrder.FAILURE:
+      return {
+        ...state,
+        respondOrderSuccess: false,
+        error: action.payload
+      }
     case orderConstants.SubmitOrder.REQUEST:
       return {
         ...state,
