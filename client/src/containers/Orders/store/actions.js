@@ -32,8 +32,8 @@ function respondOrder(respondObj) {
     service: {
       func: api.orderRespond,
       params: respondObj
-
-    }
+    },
+    sucParams: respondObj
   };
 
   return defAction(dispatchObj);

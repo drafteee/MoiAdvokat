@@ -59,7 +59,18 @@ export default function (state = initialState, action) {
     case orderConstants.RespondOrder.SUCCESS:
       return {
         ...state,
-        respondOrderSuccess: true
+        respondOrderSuccess: true,
+        orders: state.orders.map(item => {
+      console.log(item, action)
+
+          if(item.Id == action.payload.sucParams.OrderId){
+            return {
+              ...item,
+              IsResponse: true
+            }
+          }
+          return item
+        })
       }
     case orderConstants.RespondOrder.FAILURE:
       return {

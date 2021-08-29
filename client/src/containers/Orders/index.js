@@ -16,7 +16,7 @@ import 'antd/lib/input-number/style/index.css'
 import 'antd/lib/date-picker/style/index.css'
 import RespondForm from "./RespondForm";
 
-const Orders = () => {
+const Orders = ({history}) => {
 
 const columns = [
   {
@@ -78,7 +78,17 @@ const columns = [
 
   return (
     <>
-    <Table columns={columns} dataSource={orderList} />
+    <Table 
+      columns={columns} 
+      dataSource={orderList} 
+      onRow={ (record, rowIndex) => {
+        return {
+          onDoubleClick: event => {
+            console.log(record)
+            history.push(`/responses/${ record.Id }`)
+          }
+        }
+      } }/>
     <RespondForm isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} currentId={currentId}/>
       
     </>

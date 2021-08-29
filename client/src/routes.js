@@ -1,6 +1,6 @@
 import React from "react"
 import {
-	Switch, Route
+	Switch, Route, Redirect
 } from "react-router-dom"
 import { homeLoadables, accountLoadables, BLLoadables } from "./loadables"
 import NotFound from "./components/NotFound"
@@ -38,7 +38,7 @@ const Routes = () => {
 			<Route
 				exact
 				component={OrdersLoadables.LoadableListResponses}
-				path="/responses/:orderId"
+				path="/responses/:orderId(\d+)"
 			/>
 			<Route
 				exact
