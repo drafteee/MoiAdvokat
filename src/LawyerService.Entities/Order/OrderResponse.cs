@@ -13,6 +13,7 @@ namespace LawyerService.Entities.Order
         public Lawyer.Lawyer Lawyer { get; set; }
 
         public decimal Price { get; set; }
+        public bool IsChoosen{ get; set; }
 
         public DateTime[] Dates { get; set; }
     }

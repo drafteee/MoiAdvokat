@@ -68,6 +68,9 @@ namespace LawyerService.DataAccess
                 .WithMany(aur => aur.OrderSpecializations)
                 .HasForeignKey(aur => aur.SpecializationId);
 
+            modelBuilder.Entity<OrderResponse>()
+                .HasIndex(p => new { p.OrderId, p.LawyerId }).IsUnique();
+
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.BalanceId)
                 .IsUnique();
