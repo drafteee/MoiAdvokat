@@ -38,7 +38,7 @@ const Routes = () => {
 			<Route
 				exact
 				component={BLLoadables.LoadableOrder}
-				path="/order"
+				path="/order/:id"
 			/>
 
 			<Route

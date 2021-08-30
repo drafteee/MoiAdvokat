@@ -1,6 +1,6 @@
 ﻿using LawyerService.BL.Interfaces.Orders;
-using LawyerService.BL.Orders;
 using LawyerService.Entities.Order;
+using LawyerService.ViewModel.Base;
 using LawyerService.ViewModel.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +36,13 @@ namespace LawyerService.API.Controllers.Orders
         public async Task<OrderSubmitStarterInfoVM> GetStarterInfoForSubmit()
         {
             return await _manager.GetStarterInfoForSubmit();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<OrderVM> GetOne([FromHeader] BaseVM order)
+        {
+            return await _manager.GetByIdAsync(order.Id);
         }
     }
 }

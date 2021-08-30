@@ -6,7 +6,8 @@ import api from "./api";
 export const orderActions = {
   getOrders,
   submitOrder,
-  getStarterInfoForSubmit
+  getStarterInfoForSubmit,
+  getOrder
 };
 
 
@@ -38,6 +39,18 @@ function getStarterInfoForSubmit() {
     constants: orderConstants.GetStarterInfoForSubmit,
     service: {
       func: api.getStarterInfoForSubmit
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function getOrder(params) {
+  const dispatchObj = {
+    constants: orderConstants.GetOrder,
+    service: {
+      func: api.getOrder,
+      params
     }
   }
 

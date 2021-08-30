@@ -48,7 +48,7 @@ namespace LawyerService.DataAccess
         /// <returns></returns>
         public Task<T> GetById<T>(long id, bool withDeleted) where T : BaseEntity
         {
-            return _context.Set<T>().Where(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
+            return _context.Set<T>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted)).FirstOrDefaultAsync();
         }
 
         public Task<List<T>> GetAll<T>(bool withDeleted) where T : BaseEntity
