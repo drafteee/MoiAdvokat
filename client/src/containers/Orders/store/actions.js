@@ -5,7 +5,8 @@ import api from "./api";
 
 export const orderActions = {
   getOrders,
-  submitOrder,
+    submitOrder, 
+    getOrder,
   respondOrder,
   getStarterInfoForSubmit,
   getOrderResponses,
@@ -49,6 +50,8 @@ function respondOrder(respondObj) {
     sucParams: respondObj
   };
 
+};
+
   return defAction(dispatchObj);
 }
 
@@ -80,6 +83,18 @@ function getStarterInfoForSubmit() {
     constants: orderConstants.GetStarterInfoForSubmit,
     service: {
       func: api.getStarterInfoForSubmit
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function getOrder(params) {
+  const dispatchObj = {
+    constants: orderConstants.GetOrder,
+    service: {
+      func: api.getOrder,
+      params
     }
   }
 

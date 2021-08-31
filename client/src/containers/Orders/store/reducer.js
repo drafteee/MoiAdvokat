@@ -11,7 +11,9 @@ const initialState =
   submitOrderSuccess: null,
   respondOrderSuccess: null,
   starterInfoForSubmit: {},
-  getStarterInfoForSubmitSuccess: null
+  getStarterInfoForSubmitSuccess: null,
+  getOneOrderLoading: false,
+  oneOrder: null
 }
 
 export default function (state = initialState, action) {
@@ -136,6 +138,25 @@ export default function (state = initialState, action) {
         error: action.payload
       }
 
+    case orderConstants.GetOrder.REQUEST:
+      return {
+        ...state,
+        getOneOrderLoading: true,
+        oneOrder: null
+      }
+    case orderConstants.GetOrder.SUCCESS:
+      return {
+        ...state,
+        getOneOrderLoading: false,
+        oneOrder: action.payload.result
+      }
+    case orderConstants.GetOrder.FAILURE:
+      return {
+        ...state,
+        getOneOrderLoading: false,
+        error: action.payload
+      }
+    
     default:
       return state
   }

@@ -67,5 +67,10 @@ namespace LawyerService.BL.Orders
                 Specializations = specializations
             };
         }
+
+        public new async Task<OrderVM> GetByIdAsync(long id, bool withDeleted = false) => 
+            _mapper.Map<OrderVM>(await _uow.Set<Order>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted))
+                .Include(x => x.OrderSpecializations)
+                    .ThenInclude(x => x.Specialization).FirstOrDefaultAsync());
     }
 }

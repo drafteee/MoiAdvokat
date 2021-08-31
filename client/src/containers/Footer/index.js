@@ -34,7 +34,7 @@ export default () => {
 
         <Row justify="center">
           <a href="QuartetDangeonMaster" className="link-ipps">
-            QuartetDangeonMaster
+            QuartetDungeonMaster
           </a>
         </Row>
       </Footer>

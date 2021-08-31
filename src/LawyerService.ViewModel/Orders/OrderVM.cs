@@ -71,5 +71,10 @@ namespace LawyerService.ViewModel.Orders
         public UserVM User { get; set; }
 
         public List<long> SpecializationsIds { get; set; }
+
+        /// <summary>
+        /// Специализации через запятую
+        /// </summary>
+        public string SpecializationsStr { get; set; }
     }
 }
