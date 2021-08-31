@@ -14,6 +14,7 @@ const Routes = () => {
 				component={homeLoadables.LoadableHome}
 				path="/"
 			/>
+
 			<Route
 				exact
 				component={accountLoadables.LoadableLogin}
@@ -30,6 +31,7 @@ const Routes = () => {
 				component={BLLoadables.LoadableLawyersList}
 				path="/lawyers"
 			/>
+
 			<Route
 				exact
 				component={BLLoadables.LoadableOrdersList}
@@ -38,7 +40,12 @@ const Routes = () => {
 			<Route
 				exact
 				component={BLLoadables.LoadableOrder}
-				path="/order"
+				path="/order/:id"
+			/>
+			<Route
+				exact
+				component={BLLoadables.LoadableExecuteOrder}
+				path="/order/execute/:id"
 			/>
 
 			<Route

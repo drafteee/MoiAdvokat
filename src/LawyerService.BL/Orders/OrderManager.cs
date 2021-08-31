@@ -7,6 +7,7 @@ using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Enums;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Order;
+using LawyerService.ViewModel.Files;
 using LawyerService.ViewModel.Lawyers;
 using LawyerService.ViewModel.Orders;
 using Microsoft.AspNetCore.Identity;
@@ -56,6 +57,23 @@ namespace LawyerService.BL.Orders
             {
                 Specializations = specializations
             };
+        }
+
+        public new async Task<OrderVM> GetByIdAsync(long id, bool withDeleted = false) => 
+            _mapper.Map<OrderVM>(await _uow.Set<Order>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted))
+                .Include(x => x.OrderSpecializations)
+                    .ThenInclude(x => x.Specialization).FirstOrDefaultAsync());
+
+        public async Task<bool> ExecuteOrder(AttachFileVM vm)
+        {
+            var orderFiles = vm.FilesIds.ConvertAll(fileId => new OrderFiles()
+            {
+                OrderId = vm.EntityId,
+                FileId = fileId
+            });
+
+            _uow.Set<OrderFiles>().AddRange(orderFiles);
+            return await _uow.SaveAsync() > 0;
         }
     }
 }

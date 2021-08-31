@@ -9,7 +9,10 @@ const initialState =
   error: null,
   submitOrderSuccess: null,
   starterInfoForSubmit: {},
-  getStarterInfoForSubmitSuccess: null
+  getStarterInfoForSubmitSuccess: null,
+  getOneOrderLoading: false,
+  oneOrder: null,
+  executeOrderResult: null
 }
 
 export default function (state = initialState, action) {
@@ -20,7 +23,6 @@ export default function (state = initialState, action) {
         isLoading: true
       }
     case orderConstants.GetOrders.SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         isLoading: false,
@@ -69,6 +71,50 @@ export default function (state = initialState, action) {
         error: action.payload
       }
 
+    case orderConstants.GetOrder.REQUEST:
+      return {
+        ...state,
+        getOneOrderLoading: true,
+        oneOrder: null
+      }
+    case orderConstants.GetOrder.SUCCESS:
+      return {
+        ...state,
+        getOneOrderLoading: false,
+        oneOrder: action.payload.result
+      }
+    case orderConstants.GetOrder.FAILURE:
+      return {
+        ...state,
+        getOneOrderLoading: false,
+        error: action.payload
+      }
+      
+    case orderConstants.ExecuteOrder.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        executeOrderResult: null
+      }
+    case orderConstants.ExecuteOrder.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        executeOrderResult: true
+      }
+    case orderConstants.ExecuteOrder.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        executeOrderResult: false,
+        error: action.payload
+      }
+    case orderConstants.CLEAR_EXECUTE_ORDER_RESULT:
+      return {
+        ...state,
+        executeOrderResult: null
+      }
+    
     default:
       return state
   }

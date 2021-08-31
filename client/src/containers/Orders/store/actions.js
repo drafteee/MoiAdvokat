@@ -6,7 +6,10 @@ import api from "./api";
 export const orderActions = {
   getOrders,
   submitOrder,
-  getStarterInfoForSubmit
+  getStarterInfoForSubmit,
+  getOrder,
+  executeOrder,
+  clearExecuteOrderResult
 };
 
 
@@ -42,4 +45,35 @@ function getStarterInfoForSubmit() {
   }
 
   return defAction(dispatchObj)
+}
+
+function getOrder(params) {
+  const dispatchObj = {
+    constants: orderConstants.GetOrder,
+    service: {
+      func: api.getOrder,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function executeOrder(params) {
+  const dispatchObj = {
+    constants: orderConstants.ExecuteOrder,
+    service: {
+      func: api.executeOrder,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function clearExecuteOrderResult() {
+  return (dispatch) =>
+    dispatch({
+      type: orderConstants.CLEAR_EXECUTE_ORDER_RESULT
+    })
 }
