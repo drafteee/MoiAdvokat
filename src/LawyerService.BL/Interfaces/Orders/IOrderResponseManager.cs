@@ -11,6 +11,7 @@ namespace LawyerService.BL.Interfaces.Orders
     public interface IOrderResponseManager : IBaseManager<OrderResponse, OrderResponseVM>
     {
         Task<bool> RespondOrder(OrderResponseVM orderResponse);
+        Task<bool> ChooseLawyer(OrderResponseVM orderResponse);
         Task<List<OrderResponseVM>> GetResponses(OrderResponseVM orderResponse);
     }
 }

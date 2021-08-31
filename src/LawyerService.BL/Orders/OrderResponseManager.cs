@@ -25,6 +25,27 @@ namespace LawyerService.BL.Orders
         {
         }
 
+        public async Task<bool> ChooseLawyer(OrderResponseVM orderResponseVM)
+        {
+            var orderResponse = (await _uow.OrderResponses.GetAsync(x => x.Id == orderResponseVM.Id)).FirstOrDefault();
+            var order = (await _uow.Orders.GetAsync(x => x.Id == orderResponseVM.OrderId)).FirstOrDefault();
+            User user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+
+            orderResponse.IsChoosen = true;
+            order.LawyerId = orderResponseVM.LawyerId;
+            try
+            {
+                _uow.OrderResponses.Update(orderResponse);
+                _uow.Orders.Update(order);
+
+                return await _uow.SaveAsync() > 0;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<List<OrderResponseVM>> GetResponses(OrderResponseVM orderResponse)
         {
             var responses = _uow.Set<OrderResponse>()

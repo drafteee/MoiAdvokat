@@ -27,6 +27,7 @@ namespace LawyerService.BL.Orders
 
         public async Task<List<OrderVM>> GetOrders()
         {
+            User user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
             var set = _uow.Set<Order>()
                 .Include(x => x.User)
                 .Select(x=> new OrderVM
@@ -35,7 +36,7 @@ namespace LawyerService.BL.Orders
                     StartDate =  x.StartDate,
                     EndDueDate = x.EndDueDate,
                     Id = x.Id,
-                    IsResponse = x.OrderResponses.Where(y => y.Order.UserId == x.UserId).FirstOrDefault() != null
+                    IsResponse = x.OrderResponses.Where(y => y.Lawyer.UserId == user.Id).FirstOrDefault() != null
                 })
                 .ToList();
             return _mapper.Map<List<OrderVM>>(set);

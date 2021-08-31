@@ -15,6 +15,7 @@ namespace LawyerService.ViewModel.Orders
         public Lawyer Lawyer { get; set; }
 
         public decimal Price { get; set; }
+        public bool IsChoosen { get; set; }
 
         public DateTime[] Dates { get; set; }
     }

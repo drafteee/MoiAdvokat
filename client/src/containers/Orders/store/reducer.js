@@ -16,6 +16,29 @@ const initialState =
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case orderConstants.ChooseLawyer.REQUEST:
+      return {
+        ...state
+      }
+    case orderConstants.ChooseLawyer.SUCCESS:
+      return {
+        ...state,
+        orderResponses: state.orderResponses.map(item => {
+
+          if(item.LawyerId == action.payload.sucParams.LawyerId){
+            return {
+              ...item,
+              IsChoosen: true
+            }
+          }
+          return item
+        })
+      }
+    case orderConstants.ChooseLawyer.FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
     case orderConstants.GetOrders.REQUEST:
       return {
         ...state,
@@ -61,7 +84,6 @@ export default function (state = initialState, action) {
         ...state,
         respondOrderSuccess: true,
         orders: state.orders.map(item => {
-      console.log(item, action)
 
           if(item.Id == action.payload.sucParams.OrderId){
             return {

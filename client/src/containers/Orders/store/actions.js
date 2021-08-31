@@ -8,9 +8,22 @@ export const orderActions = {
   submitOrder,
   respondOrder,
   getStarterInfoForSubmit,
-  getOrderResponses
+  getOrderResponses,
+  chooseLawyer
 };
 
+function chooseLawyer(respondObj) {
+  const dispatchObj = {
+    constants: orderConstants.ChooseLawyer,
+    service: {
+      func: api.chooseLawyer,
+      params: respondObj
+    },
+    sucParams: respondObj
+  };
+
+  return defAction(dispatchObj);
+}
 
 function getOrderResponses(params) {
   console.log('action', params)

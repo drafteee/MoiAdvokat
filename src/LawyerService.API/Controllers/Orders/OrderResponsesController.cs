@@ -31,6 +31,22 @@ namespace LawyerService.API.Controllers.Orders
             }
         }
 
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<bool> ChooseLawyer([FromBody] OrderResponseVM order)
+        {
+            try
+            {
+                return await _manager.ChooseLawyer(order);
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<List<OrderResponseVM>> GetResponses([FromHeader] OrderResponseVM orderVM)
