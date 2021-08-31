@@ -7,6 +7,8 @@ using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Enums;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Order;
+using LawyerService.ViewModel.Errors;
+using LawyerService.ViewModel.Files;
 using LawyerService.ViewModel.Lawyers;
 using LawyerService.ViewModel.Orders;
 using Microsoft.AspNetCore.Identity;
@@ -68,9 +70,39 @@ namespace LawyerService.BL.Orders
             };
         }
 
-        public new async Task<OrderVM> GetByIdAsync(long id, bool withDeleted = false) => 
-            _mapper.Map<OrderVM>(await _uow.Set<Order>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted))
+        public async Task<OrderVM> GetVMByIdAsync(long id, bool withDeleted = false) =>
+            _mapper.Map<OrderVM>(await GetByIdAsync(id, withDeleted));
+
+        public new async Task<Order> GetByIdAsync(long id, bool withDeleted = false) => 
+            await _uow.Set<Order>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted))
                 .Include(x => x.OrderSpecializations)
-                    .ThenInclude(x => x.Specialization).FirstOrDefaultAsync());
+                    .ThenInclude(x => x.Specialization).FirstOrDefaultAsync();
+
+        public async Task<OrderVM> ExecuteOrder(AttachFileVM vm)
+        {
+            try
+            {
+                var orderFiles = vm.FilesIds.ConvertAll(fileId => new OrderFiles()
+                {
+                    OrderId = vm.EntityId,
+                    FileId = fileId
+                });
+
+                Order order = await GetByIdAsync(vm.EntityId);
+                order.FinishDate = DateTimeOffset.Now;
+
+                _uow.Orders.Update(order);
+
+                _uow.Set<OrderFiles>().AddRange(orderFiles);
+                if (await _uow.SaveAsync() > 0)
+                    return _mapper.Map<OrderVM>(order);
+
+                throw new RestException(System.Net.HttpStatusCode.InternalServerError);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

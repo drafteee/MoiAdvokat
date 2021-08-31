@@ -55,7 +55,7 @@ namespace LawyerService.Entities.Order
         /// <summary>
         /// Дата исполнения заказа
         /// </summary>
-        public DateTimeOffset FinishDate { get; set; }
+        public DateTimeOffset? FinishDate { get; set; }
 
         /// <summary>
         /// FK на Statuses(состояние заказа)

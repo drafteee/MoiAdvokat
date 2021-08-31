@@ -13,6 +13,7 @@ const Order = props => {
   const id = props.match.params.id
 
   const { getOneOrderLoading, oneOrder } = useSelector(state => state.orderReducer)
+  const { isRu } = useSelector(state => state.globalReducer)
 
   const dispatch = useDispatch()
 
@@ -40,7 +41,8 @@ const Order = props => {
           }}>
           <OrderCard
             order={oneOrder}
-            orderLoading={getOneOrderLoading} />
+            orderLoading={getOneOrderLoading}
+            isRu={isRu} />
         </Col>
       </Row>
     </>

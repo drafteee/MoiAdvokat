@@ -36,6 +36,8 @@ using LawyerService.BL.Reports;
 using LawyerService.API.Middleware;
 using LawyerService.BL.Interfaces.Lawyers;
 using LawyerService.BL.Lawyers;
+using LawyerService.BL.Interfaces.Files;
+using LawyerService.BL.Files;
 
 namespace LawyerService.API
 {
@@ -72,6 +74,8 @@ namespace LawyerService.API
             services.AddScoped<ITransactionManager, TransactionManager>();
             services.AddScoped<IReportManager, ReportManager>();
             services.AddScoped<IStatisticManager, StatisticManager>();
+
+            services.AddScoped<IFileManager, FileManager>();
 
             #region Lawyers managers
 

@@ -7,5 +7,6 @@ export default {
     orderRespond: params => requests.post('/OrderResponses/RespondOrder', params),
     chooseLawyer: params => requests.post('/OrderResponses/ChooseLawyer', params),
     getStarterInfoForSubmit: () => requests.get('/Order/GetStarterInfoForSubmit'),
-    getOrder: params => requests.getWithParams('/Order/GetOne', params)
+    getOrder: params => requests.getWithParams('/Order/GetOne', params),
+    executeOrder: params => requests.post('/Order/Execute', params)
 };

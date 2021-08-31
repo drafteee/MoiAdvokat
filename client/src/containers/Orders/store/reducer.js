@@ -13,7 +13,8 @@ const initialState =
   starterInfoForSubmit: {},
   getStarterInfoForSubmitSuccess: null,
   getOneOrderLoading: false,
-  oneOrder: null
+  oneOrder: null,
+  executeOrderResult: null
 }
 
 export default function (state = initialState, action) {
@@ -47,7 +48,6 @@ export default function (state = initialState, action) {
         isLoading: true
       }
     case orderConstants.GetOrders.SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         isLoading: false,
@@ -155,6 +155,32 @@ export default function (state = initialState, action) {
         ...state,
         getOneOrderLoading: false,
         error: action.payload
+      }
+      
+    case orderConstants.ExecuteOrder.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        executeOrderResult: null
+      }
+    case orderConstants.ExecuteOrder.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        executeOrderResult: true,
+        oneOrder: action.payload.result
+      }
+    case orderConstants.ExecuteOrder.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        executeOrderResult: false,
+        error: action.payload
+      }
+    case orderConstants.CLEAR_EXECUTE_ORDER_RESULT:
+      return {
+        ...state,
+        executeOrderResult: null
       }
     
     default:

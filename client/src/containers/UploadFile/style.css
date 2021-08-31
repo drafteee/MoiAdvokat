@@ -1,0 +1,20 @@
+.upload-user-custom .ant-upload-list-item{
+    overflow: auto;
+}
+
+.upload-user-custom .ant-upload-list-item-info{
+    width: fit-content;
+    max-width: 90%;
+}
+.upload-user-custom .custom-delete-uploaded-file-button{
+    margin-left:20%;
+    margin-top:-5px;
+}
+.no-cssall .upload-user-custom .ant-upload-list-item-info{
+    display: table;
+}
+@media (max-width: 870px) {
+    .upload-user-custom .ant-upload-list-item-info{
+        max-width: 80%;
+    }
+}
