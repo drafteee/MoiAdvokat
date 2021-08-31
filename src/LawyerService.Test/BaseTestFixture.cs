@@ -14,6 +14,8 @@ using LawyerService.Test.Mock;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using LawyerService.BL.Interfaces.Lawyers;
+using LawyerService.BL.Lawyers;
 
 namespace LawyerService.Test
 {

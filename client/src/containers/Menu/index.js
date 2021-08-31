@@ -4,14 +4,20 @@ import { Layout, Menu, Row, Col, Button, Badge } from "antd";
 import './style.css'
 const { Header } = Layout;
 
+const urls = {
+  null: ["1"],
+  "/account": ["2"],
+  "/lawyers": ["3"]
+}
+
 const Navigation = memo(() => {
   const location = useRouteMatch("/:slug");
   const isHome = location === null;
-
+  console.log(isHome, urls[location], location)
   return (
     <Header className="header">
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+      <Menu theme="dark" mode="horizontal" selectedKeys={!isHome ? urls[location.url] : ["1"]}>
         <Menu.Item key="1"><Link to="/">Домой</Link></Menu.Item>
         <Menu.Item key="2"><Link to="/account">Аккаунт</Link></Menu.Item>
         <Menu.Item key="3"><Link to="/lawyers">Адвокаты</Link></Menu.Item>

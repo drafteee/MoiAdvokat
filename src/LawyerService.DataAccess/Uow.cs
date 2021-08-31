@@ -27,7 +27,8 @@ namespace LawyerService.DataAccess
         private IGenericRepository<Order> _orderRepository;
         private IGenericRepository<OrderSpecialization> _orderSpecializationRepository;
         private IGenericRepository<OrderStatus> _orderStatusRepository;
-        
+        private IGenericRepository<OrderResponse> _orderResponseRepository;
+
         #endregion
 
         public Uow(LawyerDbContext context) : base(context)
@@ -70,6 +71,7 @@ namespace LawyerService.DataAccess
         public IGenericRepository<Order> Orders => _orderRepository ??= new GenericRepository<Order>(_context);
         public IGenericRepository<OrderSpecialization> OrderSpecializations => _orderSpecializationRepository ??= new GenericRepository<OrderSpecialization>(_context);
         public IGenericRepository<OrderStatus> OrderStatuses => _orderStatusRepository ??= new GenericRepository<OrderStatus>(_context);
+        public IGenericRepository<OrderResponse> OrderResponses => _orderResponseRepository ??= new GenericRepository<OrderResponse>(_context);
 
         #endregion
     }

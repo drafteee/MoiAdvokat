@@ -18,6 +18,12 @@ namespace LawyerService.ViewModel.Errors
             Errors = new { Exception = e.Message, InnerException = e.InnerException?.Message };
         }
 
+        public RestException(HttpStatusCode code, string message)
+        {
+            Code = code;
+            Errors = new { Exception = message };
+        }
+
         public HttpStatusCode Code { get; }
         public object Errors { get; }
         public object DataObject { get; set; }

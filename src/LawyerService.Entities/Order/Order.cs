@@ -75,6 +75,11 @@ namespace LawyerService.Entities.Order
         public ICollection<OrderSpecialization> OrderSpecializations { get; set; }
 
         /// <summary>
+        /// Отзывы на заказа
+        /// </summary>
+        public ICollection<OrderResponse> OrderResponses { get; set; }
+
+        /// <summary>
         /// Процент адвокату
         /// </summary>
         private sbyte _procent;

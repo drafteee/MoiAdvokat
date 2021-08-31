@@ -96,6 +96,7 @@ namespace LawyerService.API
 
             services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<IOrderStatusManager, OrderStatusManager>();
+            services.AddScoped<IOrderResponseManager, OrderResponseManager>();
 
             #endregion
 

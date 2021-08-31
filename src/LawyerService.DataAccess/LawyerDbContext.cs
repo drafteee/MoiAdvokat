@@ -34,6 +34,7 @@ namespace LawyerService.DataAccess
         
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
+        public virtual DbSet<OrderResponse> OrderRespenses { get; set; }
 
         #region Orders
 
@@ -73,6 +74,9 @@ namespace LawyerService.DataAccess
                 .HasOne(aur => aur.Specialization)
                 .WithMany(aur => aur.OrderSpecializations)
                 .HasForeignKey(aur => aur.SpecializationId);
+
+            modelBuilder.Entity<OrderResponse>()
+                .HasIndex(p => new { p.OrderId, p.LawyerId }).IsUnique();
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.BalanceId)

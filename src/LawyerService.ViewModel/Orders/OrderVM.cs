@@ -9,6 +9,10 @@ namespace LawyerService.ViewModel.Orders
     public class OrderVM : BaseVM
     {
         /// <summary>
+        /// Отозвался ли
+        /// </summary>
+        public bool IsResponse { get; set; }
+        /// <summary>
         /// Заголовок заказа
         /// </summary>
         public string Header { get; set; }
