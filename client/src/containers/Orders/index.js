@@ -15,6 +15,7 @@ import 'antd/lib/form/style/index.css'
 import 'antd/lib/input-number/style/index.css'
 import 'antd/lib/date-picker/style/index.css'
 import RespondForm from "./RespondForm";
+import { Link } from "react-router-dom";
 
 const Orders = ({history}) => {
 
@@ -78,6 +79,7 @@ const columns = [
 
   return (
     <>
+    <Link to="/submitOrder"><Button>Добавить заказ</Button></Link>
     <Table 
       columns={columns} 
       dataSource={orderList} 
@@ -85,7 +87,7 @@ const columns = [
         return {
           onDoubleClick: event => {
             console.log(record)
-            history.push(`/responses/${ record.Id }`)
+            history.push(`/order/${ record.Id }`)
           }
         }
       } }/>

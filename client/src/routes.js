@@ -1,69 +1,46 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {
 	Switch, Route, Redirect
 } from "react-router-dom"
-import { homeLoadables, accountLoadables, BLLoadables } from "./loadables"
-import NotFound from "./components/NotFound"
-import { OrdersLoadables } from "./loadables/orders"
+import { useSelector, useDispatch } from "react-redux";
+import {
+	userActions
+}from "./store/actions"
+import routes from './routesArray'
 
 const Routes = () => {
+	const user = useSelector(state => state.userReducer.user)
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log(user)
+		if (user === undefined)
+			dispatch(userActions.refreshUserData())
+	}, [])
+
+	const renderRoute = (path, component) => 
+		<Route
+			exact
+			component={component}
+			path={path}
+		/>
+
 	return (
 		<Switch>
-			<Route
-				exact
-				component={homeLoadables.LoadableHome}
-				path="/"
-			/>
-			<Route
-				exact
-				component={accountLoadables.LoadableLogin}
-				path="/login"
-			/>
-			<Route
-				exact
-				component={accountLoadables.LoadableAccount}
-				path="/account"
-			/>
+			{
+				routes.map((route)=>{
+					if(route.protect)
+					{
+						if(route.protect(user))
+							return renderRoute(route.path, route.component)
+						else if(route.redirectTo)
+							return renderRoute(route.path, route.redirectTo)
+					}
 
-			<Route
-				exact
-				component={BLLoadables.LoadableLawyersList}
-				path="/lawyers"
-			/>
-			<Route
-				exact
-				component={BLLoadables.LoadableOrdersList}
-				path="/orders"
-			/>
-			<Route
-				exact
-				component={OrdersLoadables.LoadableListResponses}
-				path="/responses/:orderId(\d+)"
-			/>
-			<Route
-				exact
-				component={BLLoadables.LoadableOrder}
-				path="/order/:id"
-			/>
-
-			<Route
-				exact
-				component={ BLLoadables.LoadableReport }
-				path="/report"
-			/>
-
-
-			<Route
-				exact
-				component={OrdersLoadables.LoadableSubmitOrder}
-				path="/submitOrder"
-			/>
-
-			<Route
-				exact
-				component={NotFound}
-				path="*"
-			/>
+					if(!route.protect){
+						return renderRoute(route.path, route.component)
+					}
+				})
+			}
 		</Switch>
 	)
 }

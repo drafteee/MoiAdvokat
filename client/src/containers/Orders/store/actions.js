@@ -49,9 +49,6 @@ function respondOrder(respondObj) {
     },
     sucParams: respondObj
   };
-
-};
-
   return defAction(dispatchObj);
 }
 

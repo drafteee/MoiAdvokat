@@ -9,6 +9,11 @@ import Navigation from "./containers/Menu";
 import Footer from "./containers/Footer";
 const { Content } = Layout
 const App = () => {
+
+  useEffect(()=>{
+    
+  }, [])
+
   return (
     <Router history={history}>
       <Layout

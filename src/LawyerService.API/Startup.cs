@@ -71,6 +71,7 @@ namespace LawyerService.API
             services.AddScoped<IUserManager, BL.Account.UserManager>();
             services.AddScoped<ITransactionManager, TransactionManager>();
             services.AddScoped<IReportManager, ReportManager>();
+            services.AddScoped<IStatisticManager, StatisticManager>();
 
             #region Lawyers managers
 
