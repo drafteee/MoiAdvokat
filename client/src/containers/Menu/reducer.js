@@ -1,5 +1,5 @@
 import {
-  globalConstants 
+  globalConstants
 } from './constants'
 
 const language = window.localStorage.getItem('language')
@@ -15,7 +15,7 @@ const initialState = {
   isGlobalLoadingVisible: false,
 }
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case globalConstants.CHANGE_LANGUAGE:
       window.localStorage.setItem('language', state.isRu === 1 ? 'be' : 'ru')

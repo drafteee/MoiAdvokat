@@ -29,12 +29,19 @@ namespace LawyerService.DataAccess
         public virtual DbSet<TransactionReason> TransactionReasons { get; set; }
         public virtual DbSet<HistoryTransactions> HistoryTransactions { get; set; }
         public virtual DbSet<HistoryUserTransactions> HistoryUserTransactions { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+        
         public virtual DbSet<Specialization> Specializations { get; set; }
-        public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
+
+        #region Orders
+
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+        public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

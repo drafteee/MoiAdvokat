@@ -7,7 +7,9 @@ export const orderActions = {
   getOrders,
   submitOrder,
   getStarterInfoForSubmit,
-  getOrder
+  getOrder,
+  executeOrder,
+  clearExecuteOrderResult
 };
 
 
@@ -55,4 +57,23 @@ function getOrder(params) {
   }
 
   return defAction(dispatchObj)
+}
+
+function executeOrder(params) {
+  const dispatchObj = {
+    constants: orderConstants.ExecuteOrder,
+    service: {
+      func: api.executeOrder,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function clearExecuteOrderResult() {
+  return (dispatch) =>
+    dispatch({
+      type: orderConstants.CLEAR_EXECUTE_ORDER_RESULT
+    })
 }
