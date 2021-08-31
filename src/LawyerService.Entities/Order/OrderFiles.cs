@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LawyerService.Entities.Order
+﻿namespace LawyerService.Entities.Order
 {
     /// <summary>
     /// Файлы заказа
     /// </summary>
-    public class OrderFiles
+    public class OrderFiles : BaseEntity
     {
         /// <summary>
         /// FK on Order

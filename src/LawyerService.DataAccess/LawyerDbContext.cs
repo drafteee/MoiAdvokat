@@ -41,6 +41,7 @@ namespace LawyerService.DataAccess
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        public virtual DbSet<OrderFiles> OrderFiles { get; set; }
 
         #endregion
 
