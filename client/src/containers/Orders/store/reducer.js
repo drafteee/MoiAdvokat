@@ -167,7 +167,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        executeOrderResult: true
+        executeOrderResult: true,
+        oneOrder: action.payload.result
       }
     case orderConstants.ExecuteOrder.FAILURE:
       return {

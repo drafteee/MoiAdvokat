@@ -59,19 +59,22 @@ const ExecuteOrder = props => {
         <>
             <OrderCard
                 order={oneOrder}
-                orderLoading={getOneOrderLoading} />
+                orderLoading={getOneOrderLoading}
+                isRu={isRu} />
 
-            <Form
-                onFinish={onFinish}>
-                <Form.Item name="files">
-                    <UploadFile />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        {i18nGlobal.send[isRu]}
-                    </Button>
-                </Form.Item>
-            </Form>
+            {oneOrder && !oneOrder.FinishDate ? (
+                <Form
+                    onFinish={onFinish}>
+                    <Form.Item name="files">
+                        <UploadFile />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            {i18nGlobal.send[isRu]}
+                        </Button>
+                    </Form.Item>
+                </Form>
+            ) : null}
         </>
     )
 }

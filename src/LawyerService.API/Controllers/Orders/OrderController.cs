@@ -43,12 +43,12 @@ namespace LawyerService.API.Controllers.Orders
         [HttpGet]
         public async Task<OrderVM> GetOne([FromHeader] BaseVM order)
         {
-            return await _manager.GetByIdAsync(order.Id);
+            return await _manager.GetVMByIdAsync(order.Id);
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<bool> Execute([FromBody] AttachFileVM vm)
+        public async Task<OrderVM> Execute([FromBody] AttachFileVM vm)
         {
             return await _manager.ExecuteOrder(vm);
         }

@@ -11,6 +11,7 @@ namespace LawyerService.BL.Interfaces.Orders
         Task<List<OrderVM>> GetOrders();
         Task<bool> SubmitOrder(OrderVM order);
         Task<OrderSubmitStarterInfoVM> GetStarterInfoForSubmit();
-        Task<bool> ExecuteOrder(AttachFileVM vm);
+        Task<OrderVM> ExecuteOrder(AttachFileVM vm);
+        Task<OrderVM> GetVMByIdAsync(long id, bool withDeleted = false);
     }
 }
