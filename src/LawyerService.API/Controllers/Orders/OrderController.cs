@@ -46,6 +46,8 @@ namespace LawyerService.API.Controllers.Orders
             return await _manager.GetByIdAsync(order.Id);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
         public async Task<bool> Execute([FromBody] AttachFileVM vm)
         {
             return await _manager.ExecuteOrder(vm);

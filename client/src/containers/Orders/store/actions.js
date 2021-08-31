@@ -5,12 +5,12 @@ import api from "./api";
 
 export const orderActions = {
   getOrders,
-    submitOrder, 
-    getOrder,
+  submitOrder,
+  getOrder,
   respondOrder,
   getStarterInfoForSubmit,
   executeOrder,
-  clearExecuteOrderResult
+  clearExecuteOrderResult,
   getOrderResponses,
   chooseLawyer
 };
@@ -51,8 +51,6 @@ function respondOrder(respondObj) {
     },
     sucParams: respondObj
   };
-
-};
 
   return defAction(dispatchObj);
 }
