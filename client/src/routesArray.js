@@ -51,5 +51,9 @@ export default [
   {
     path: "*",
     component: NotFound
+  },
+  {
+    path: "/order/execute/:id",
+    component: BLLoadables.LoadableExecuteOrder
   }
 ]
