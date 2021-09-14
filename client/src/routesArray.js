@@ -1,5 +1,5 @@
 
-import { homeLoadables, accountLoadables, BLLoadables, OrdersLoadables } from "./loadables"
+import { homeLoadables, accountLoadables, BLLoadables, OrdersLoadables, AdminLawyersLoadables } from "./loadables"
 import NotFound from "./components/NotFound"
 import { UnauthorizedAccess } from "./components/UnauthorizedAccess"
 
@@ -49,11 +49,15 @@ export default [
     protect: (user) => user
   },
   {
-    path: "*",
-    component: NotFound
-  },
-  {
     path: "/order/execute/:id",
     component: BLLoadables.LoadableExecuteOrder
+  },
+  {
+    path: "/admin/lawyers/listAll",
+    component: AdminLawyersLoadables.LoadableAdminListAllLawyers
+  },
+  {
+    path: "*",
+    component: NotFound
   }
 ]

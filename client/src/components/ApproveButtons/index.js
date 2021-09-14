@@ -10,7 +10,6 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 const ApproveButtons = ({
   isRu, isApproveSending, approveFunc, id, ecp
 }) => {
-  ////console.log(isApproveSending)
 
   return (
     <Button.Group

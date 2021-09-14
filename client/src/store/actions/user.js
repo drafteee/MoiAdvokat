@@ -25,7 +25,6 @@ export const userActions = {
 }
 
 function login(values) {
-  console.log(values)
   const dispatchObj = {
     constants: userConstants.Login,
     service: {

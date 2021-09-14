@@ -18,7 +18,6 @@ export default function (state = initialState, action) {
                 uploadedFileIds: []
             }
         case uploadFileConstants.UploadFiles.SUCCESS:
-            console.log(action)
             return {
                 ...state,
                 isSending: false,

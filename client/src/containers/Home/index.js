@@ -13,7 +13,6 @@ import OrderStatistic from "./OrderStatistic";
 const Home = () => {
   const dispatch = useDispatch();
   const statisticsObject = useSelector(state => state.homeReducer.statisticsObject)
-  console.log(statisticsObject)
   useEffect(() => {
     dispatch(homeActions.getStatistics())
   }, [])

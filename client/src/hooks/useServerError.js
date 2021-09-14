@@ -14,9 +14,7 @@ const useServerError = () => {
   const [ error, setError ] = useState(null)
   const [ errorView, setErrorView ] = useState(null)
 
-  useEffect(() => {
-    ////console.log(error)
-    
+  useEffect(() => {    
     if(error?.err){
       setErrorView( <Alert
         message={ `Произошла ошибка(${objErrors[error.err.status]})!` }

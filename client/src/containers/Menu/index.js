@@ -23,7 +23,6 @@ const Navigation = memo(() => {
   const user = useSelector(state=> state.userReducer.user)
   const location = useRouteMatch("/:slug");
   const isHome = location === null;
-  console.log(isHome, urls[location], location)
   return (
     <Header className="header">
       <div className="logo" onClick={()=> history.push(user ? 'account' : '/login')}>

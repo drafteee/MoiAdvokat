@@ -15,10 +15,8 @@ const LazyComponent = ({
 		root      : null
 	})
 
-	// //console.log('render')
 
 	const setRef = useCallback((node) => {
-		//console.log(node)
 		setElement(node)
 	}, [setElement])
 
@@ -27,13 +25,11 @@ const LazyComponent = ({
 			if (entry.isIntersecting){
 				const block = entry.target
 
-				// //console.log(block)
 				observer.unobserve(block)
 			}
 		})
 	}, [entries, observer])
 
-	// //console.log(entries)
 	const child = (
 		<div ref={ setRef }>
 			{ entries.length > 0

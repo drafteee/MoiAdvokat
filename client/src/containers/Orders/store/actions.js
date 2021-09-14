@@ -29,8 +29,6 @@ function chooseLawyer(respondObj) {
 }
 
 function getOrderResponses(params) {
-  console.log('action', params)
-
   const dispatchObj = {
     constants: orderConstants.GetOrderResponses,
     service: {

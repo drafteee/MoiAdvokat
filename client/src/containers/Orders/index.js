@@ -86,7 +86,6 @@ const columns = [
       onRow={ (record, rowIndex) => {
         return {
           onDoubleClick: event => {
-            console.log(record)
             history.push(`/order/${ record.Id }`)
           }
         }

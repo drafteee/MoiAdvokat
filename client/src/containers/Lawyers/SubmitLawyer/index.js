@@ -14,7 +14,6 @@ const SubmitLawyer = () => {
   const dispatch = useDispatch()
 
   function submitOrder(params) {
-      console.log(params)
       dispatch(orderActions.submitOrder(params))
   }
 
@@ -30,7 +29,6 @@ const SubmitLawyer = () => {
   }
 
   const onSpecializationsChange = value => {
-      console.log(value)
       form.setFieldsValue({
           SpecializationsIds: value
       })

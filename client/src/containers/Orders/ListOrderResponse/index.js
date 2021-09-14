@@ -10,7 +10,6 @@ import 'antd/lib/result/style/index.css'
 import './style.css'
 
 const ListOrderResponse = (params) => {
-  console.log(params)
   const dispatch = useDispatch();
   const responses =  useSelector(state => state.orderReducer.orderResponses)
   const chooseItem =  useSelector(state => state.orderReducer.orderResponses.find(x=> x.IsChoosen))
@@ -34,7 +33,7 @@ const ListOrderResponse = (params) => {
       OrderId: params.match.params.orderId
     }))
   }
-  console.log(chooseItem)
+
   return (
     <Row gutter={16}>
       {

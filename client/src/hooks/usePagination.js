@@ -138,7 +138,6 @@ const usePagination = (options) => {
 
     if(routeObject.isNeedSetURL)
     {
-      ////console.log('set', routeObject)
       const sortArray = Array.isArray(routeObject.sorter) ? [ ...routeObject.sorter ] : [ routeObject.sorter ]
       const sortObj = sortArray.reduce((accumulator, currentValue)=>{
         if(currentValue.order === 'descend'){

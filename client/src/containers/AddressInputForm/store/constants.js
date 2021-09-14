@@ -1,0 +1,13 @@
+export const addressConstants = {
+    GetAdministrativeTerritories: {
+        REQUEST: 'GET_ADMINISTRATIVE_TERRITORIES_REQUEST',
+        SUCCESS: 'GET_ADMINISTRATIVE_TERRITORIES_SUCCESS',
+        FAILURE: 'GET_ADMINISTRATIVE_TERRITORIES_FAILURE'
+    },
+
+    GetCountries: {
+        REQUEST: 'GET_COUNTRIES_REQUEST',
+        SUCCESS: 'GET_COUNTRIES_SUCCESS',
+        FAILURE: 'GET_COUNTRIES_FAILURE'
+    }
+}

@@ -17,7 +17,12 @@ namespace LawyerService.DataAccess.Interfaces
 
         #endregion
 
+        #region Address repositories
+
         IGenericRepository<Address> Address { get; }
+        IGenericRepository<AdministrativeTerritory> AdministrativeTerritory { get; }
+
+        #endregion
 
         #region Orders repositories
 

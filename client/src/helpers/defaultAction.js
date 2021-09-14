@@ -15,7 +15,6 @@ export const defAction = ({
 		dispatch(request(constants.REQUEST, reqParams))
 
 		if (service){
-			console.log('sertvice')
 			service
 				.func(service.params)
 				.then((res) => {

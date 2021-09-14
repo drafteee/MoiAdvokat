@@ -12,7 +12,6 @@ const Error = () => {
   const [ isClose, setClose ] = useState(true)
 
   useEffect(()=>{
-    //console.log(error)
     if(error)
       setClose(false)
   }, [ error ])

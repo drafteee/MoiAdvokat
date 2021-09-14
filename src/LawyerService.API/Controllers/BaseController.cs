@@ -23,7 +23,7 @@ namespace LawyerService.API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public Task<List<TVM>> GetAllCurrent()
+        public virtual Task<List<TVM>> GetAllCurrent()
         {
             return _manager.GetAllAsync();
         }

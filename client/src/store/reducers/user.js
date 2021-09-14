@@ -55,7 +55,6 @@ export default function(state = initialState, action) {
       };
     case userConstants.Login.SUCCESS:
     case userConstants.BelpochtaLogin.SUCCESS:
-      console.log(action.payload.result)
       let user = action.payload.result.Output;
       window.localStorage.setItem(
         "user",
@@ -256,7 +255,6 @@ export default function(state = initialState, action) {
         registerSuccess: action.payload.result,
       };
     case userConstants.Register.FAILURE:
-      ////console.log('actionReg', action.payload)
       notice("error", action.payload.err.data.errors);
       return {
         ...state,

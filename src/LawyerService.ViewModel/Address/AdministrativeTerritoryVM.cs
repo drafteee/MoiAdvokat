@@ -17,5 +17,6 @@ namespace LawyerService.ViewModel.Address
         /// Страна
         /// </summary>
         public CountryVM Country { get; set; }
+        public long CountryId { get; set; }
     }
 }

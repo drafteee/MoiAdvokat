@@ -17,8 +17,6 @@ history.listen((location) => {
 });
 
 // history.push = (pathname, state = {}) => {
-//   // //console.log(pathname, lastLocation, '1')
-//   // //console.log(lastLocation === null, pathname !==
 //   //     lastLocation.pathname + lastLocation.search + lastLocation.hash, JSON.stringify(state) !== JSON.stringify(lastLocation.state))
 //   if (
 //     lastLocation === null ||

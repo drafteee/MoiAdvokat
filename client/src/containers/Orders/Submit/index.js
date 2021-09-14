@@ -19,7 +19,6 @@ const SubmitOrder = props => {
     const dispatch = useDispatch()
 
     function submitOrder(params) {
-        console.log(params)
         dispatch(orderActions.submitOrder(params))
     }
 
@@ -35,7 +34,6 @@ const SubmitOrder = props => {
     }
 
     const onSpecializationsChange = value => {
-        console.log(value)
         form.setFieldsValue({
             SpecializationsIds: value
         })

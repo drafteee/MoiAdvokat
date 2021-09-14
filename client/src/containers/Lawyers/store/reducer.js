@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
         isLoading: true
       }
     case lawyerConstants.GetLawyers.SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         isLoading: false,

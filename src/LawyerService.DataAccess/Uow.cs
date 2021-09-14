@@ -21,9 +21,10 @@ namespace LawyerService.DataAccess
         #endregion
 
         private IGenericRepository<Address> _addressRepository;
+        private IGenericRepository<AdministrativeTerritory> _administrativeTerritoryRepository;
 
         #region Orders repositories
-        
+
         private IGenericRepository<Order> _orderRepository;
         private IGenericRepository<OrderSpecialization> _orderSpecializationRepository;
         private IGenericRepository<OrderStatus> _orderStatusRepository;
@@ -65,6 +66,7 @@ namespace LawyerService.DataAccess
         #endregion
 
         public IGenericRepository<Address> Address => _addressRepository ??= new GenericRepository<Address>(_context);
+        public IGenericRepository<AdministrativeTerritory> AdministrativeTerritory => _administrativeTerritoryRepository ??= new GenericRepository<AdministrativeTerritory>(_context);
 
         #region Orders repositories
 

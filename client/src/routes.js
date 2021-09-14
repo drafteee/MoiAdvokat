@@ -12,7 +12,6 @@ const Routes = () => {
 	const user = useSelector(state => state.userReducer.user)
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log(user)
 		if (user === undefined)
 			dispatch(userActions.refreshUserData())
 	}, [])
