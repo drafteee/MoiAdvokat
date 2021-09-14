@@ -8,6 +8,6 @@ namespace LawyerService.BL.Interfaces
     {
         string GetCountryCode();
         string GetLanguageCode();
-        string GetString(string sectionName, string itemName, string assignmentType = null, string defaultValue = null);
+        string GetString(string sectionName, string itemName, string defaultValue = null);
     }
 }

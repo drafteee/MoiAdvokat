@@ -1,5 +1,6 @@
 ﻿using LawyerService.Entities;
 using LawyerService.Entities.Address;
+using LawyerService.Entities.Chat;
 using LawyerService.Entities.Lawyer;
 using LawyerService.Entities.Order;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ namespace LawyerService.DataAccess.Interfaces
         #region Orders repositories
 
         IGenericRepository<Order> Orders { get; }
+
+        IGenericRepository<Message> Messages { get; }
         IGenericRepository<OrderSpecialization> OrderSpecializations { get; }
         IGenericRepository<OrderStatus> OrderStatuses { get; }
         IGenericRepository<OrderResponse> OrderResponses { get; }

@@ -23,6 +23,9 @@ const initialState = {
   registerLoading: false,
   registerSuccess: null,
   registerError: null,
+  preCheckRegisterLoading: false,
+  preCheckRegisterSuccess: null,
+  preCheckRegisterError: null,
   //getUserTypes
   userTypes: [],
   getUserTypesError: null,
@@ -39,7 +42,8 @@ const initialState = {
   registerByExternalAdminSuccess: null,
   registerByExternalAdminError: null,
   //getRolesDto
-  rolesDto: [],
+  rolesVM: [],
+  functionsVM: [],
   getRolesError: null,
 };
 
@@ -66,7 +70,7 @@ export default function(state = initialState, action) {
         })
       );
       // window.location.href = '/account'
-      const {RefreshToken, Token, SessionId, ...otherUserProps} = user
+      const { RefreshToken, Token, SessionId, ...otherUserProps } = user;
       return {
         ...state,
         isLoginLoading: false,
@@ -160,9 +164,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        user: user,
-        roles: user ? user.roles : [],
-        userTypeName: user && user.userType ? user.userType.name : undefined,
+        user: user.Output,
+        roles: user.Output ? user.Output.roles : [],
+        userTypeName:
+          user.Output && user.Output.userType
+            ? user.Output.userType.name
+            : undefined,
       };
     case userConstants.RefreshUserData.FAILURE:
       return {
@@ -258,8 +265,30 @@ export default function(state = initialState, action) {
       notice("error", action.payload.err.data.errors);
       return {
         ...state,
-        registerLoading: false,
+        pre: false,
         registerError: action.payload.err,
+      };
+
+    case userConstants.PreCheckRegister.REQUEST:
+      return {
+        ...state,
+        preCheckRegisterLoading: true,
+        preCheckRegisterSuccess: null,
+        registerError: null,
+      };
+    case userConstants.PreCheckRegister.SUCCESS:
+      return {
+        ...state,
+        preCheckRegisterLoading: false,
+        preCheckRegisterSuccess: action.payload.result,
+      };
+    case userConstants.PreCheckRegister.FAILURE:
+      ////console.log('actionReg', action.payload)
+      notice("error", action.payload.err.data.errors);
+      return {
+        ...state,
+        preCheckRegisterLoading: false,
+        preCheckRegisterError: action.payload.err,
       };
     //getUserTypes
     case userConstants.GetUserTypes.REQUEST:
@@ -346,19 +375,46 @@ export default function(state = initialState, action) {
     case userConstants.GetRoles.REQUEST:
       return {
         ...state,
-        getRolesError: null,
-        rolesDto: [],
+        rolesVM: [],
       };
     case userConstants.GetRoles.SUCCESS:
       return {
         ...state,
-        rolesDto: action.payload.result,
+        rolesVM: action.payload.result.Output,
       };
     case userConstants.GetRoles.FAILURE:
       notice("error", action.payload.err.data.errors);
       return {
         ...state,
         getRolesError: action.payload.err,
+      };
+    case userConstants.GetFunctions.REQUEST:
+      return {
+        ...state,
+        functionsVM: [],
+      };
+    case userConstants.GetFunctions.SUCCESS:
+      return {
+        ...state,
+        functionsVM: action.payload.result.Output,
+      };
+    case userConstants.GetFunctions.FAILURE:
+      notice("error", action.payload.err.data.errors);
+      return {
+        ...state,
+      };
+    case userConstants.UpdateRoleFunctions.REQUEST:
+      return {
+        ...state,
+      };
+    case userConstants.UpdateRoleFunctions.SUCCESS:
+      return {
+        ...state,
+      };
+    case userConstants.UpdateRoleFunctions.FAILURE:
+      notice("error", action.payload.err.data.errors);
+      return {
+        ...state,
       };
     default:
       return state;

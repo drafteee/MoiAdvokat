@@ -31,6 +31,9 @@ using LawyerService.BL.Interfaces.Transactions;
 using LawyerService.BL.Transactions;
 using LawyerService.BL.Orders;
 using LawyerService.BL.Interfaces.Orders;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.Routing;
+
 using LawyerService.BL.Interfaces.Reports;
 using LawyerService.BL.Reports;
 using LawyerService.API.Middleware;
@@ -69,7 +72,9 @@ namespace LawyerService.API
             services.AddSingleton<IMemoryCacheManager, MemoryCacheManager>();
             services.AddScoped<ILocalizationManager, LocalizationManager>();
             services.AddScoped<IUserAccessor, UserAccessor>();
-            
+
+            services.AddScoped<IChatManager, ChatManager>();
+
             services.AddScoped<IUserManager, BL.Account.UserManager>();
             services.AddScoped<ITransactionManager, TransactionManager>();
             services.AddScoped<IReportManager, ReportManager>();
@@ -89,6 +94,7 @@ namespace LawyerService.API
             services.AddScoped<IAddressManager, AddressManager>();
             services.AddScoped<IAdministrativeTerritoryManager, AdministrativeTerritoryManager>();
             services.AddScoped<IAdministrativeTerritoryTypeManager, AdministrativeTerritoryTypeManager>();
+            services.AddScoped<IUserConnectionManager, UserConnectionManager>();
             services.AddScoped<ICountryManager, CountryManager>();
 
             #endregion
@@ -145,6 +151,12 @@ namespace LawyerService.API
             {
                 options.AddPolicy("RegisterByUser", policy =>
                     policy.Requirements.Add(new RegisterByUserRequirement()));
+            });
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(10);
+                hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(10);
             });
             services.AddScoped<IAuthorizationHandler, RegisterByUserHandler>();
             services.AddScoped<JwtGenerator>();
@@ -229,7 +241,11 @@ namespace LawyerService.API
             app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
-            { 
+            {
+                endpoints.MapHub<SignalR>("/signalR", options =>
+                {
+                    options.Transports = HttpTransportType.WebSockets;
+                });
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "defaultArea",

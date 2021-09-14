@@ -12,5 +12,6 @@ namespace LawyerService.Entities.Identity
         public string Description { get; set; }
 
         public virtual IEnumerable<User> Users { get; set; }
+        public virtual IEnumerable<RoleFunction> RoleFunctions { get; set; }
     }
 }

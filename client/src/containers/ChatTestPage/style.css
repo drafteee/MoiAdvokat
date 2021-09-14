@@ -1,0 +1,19 @@
+.userMessage {
+    text-align: right;
+} 
+.container-home{
+    background: #fff;
+    padding: 24px;
+    /* margin: 10px 0px!important; */
+    min-height: 280px;
+    border-radius: 4px; 
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
+}
+
+.infinite-container {
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    overflow: auto;
+    padding: 8px 24px;
+    height: 500px;
+  }
