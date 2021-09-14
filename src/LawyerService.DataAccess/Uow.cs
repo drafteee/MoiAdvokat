@@ -14,10 +14,26 @@ namespace LawyerService.DataAccess
 {
     public class Uow : BaseUow<LawyerDbContext>, IUow
     {
+        #region Lawyers repositories
+
         private IGenericRepository<Lawyer> _lawyerRepository;
+        private IGenericRepository<Specialization> _specializationRepository;
+
+        #endregion
+
         private IGenericRepository<Address> _addressRepository;
+
+        #region Orders repositories
+        
         private IGenericRepository<Order> _orderRepository;
+
         private IGenericRepository<Message> _messageRepository;
+
+        private IGenericRepository<OrderSpecialization> _orderSpecializationRepository;
+        private IGenericRepository<OrderStatus> _orderStatusRepository;
+        private IGenericRepository<OrderResponse> _orderResponseRepository;
+
+        #endregion
 
         public Uow(LawyerDbContext context) : base(context)
         {
@@ -37,7 +53,7 @@ namespace LawyerService.DataAccess
         /// <returns></returns>
         public Task<T> GetById<T>(long id, bool withDeleted) where T : BaseEntity
         {
-            return _context.Set<T>().Where(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
+            return _context.Set<T>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted)).FirstOrDefaultAsync();
         }
 
         public Task<List<T>> GetAll<T>(bool withDeleted) where T : BaseEntity
@@ -45,11 +61,24 @@ namespace LawyerService.DataAccess
             return _context.Set<T>().Where(x => withDeleted || !x.IsDeleted).ToListAsync();
         }
 
+        #region Lawyers repositories
+
         public IGenericRepository<Lawyer> Lawyer => _lawyerRepository ??= new GenericRepository<Lawyer>(_context);
+        public IGenericRepository<Specialization> Specializations => _specializationRepository ??= new GenericRepository<Specialization>(_context);
+
+        #endregion
 
         public IGenericRepository<Address> Address => _addressRepository ??= new GenericRepository<Address>(_context);
+
+        #region Orders repositories
+
         public IGenericRepository<Order> Orders => _orderRepository ??= new GenericRepository<Order>(_context);
 
         public IGenericRepository<Message> Messages => _messageRepository ??= new GenericRepository<Message>(_context);
+        public IGenericRepository<OrderSpecialization> OrderSpecializations => _orderSpecializationRepository ??= new GenericRepository<OrderSpecialization>(_context);
+        public IGenericRepository<OrderStatus> OrderStatuses => _orderStatusRepository ??= new GenericRepository<OrderStatus>(_context);
+        public IGenericRepository<OrderResponse> OrderResponses => _orderResponseRepository ??= new GenericRepository<OrderResponse>(_context);
+
+        #endregion
     }
 }

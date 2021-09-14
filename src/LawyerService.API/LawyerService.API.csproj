@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="FastReport.Core" Version="2020.1.12" />
+    <PackageReference Include="FastReport.Web" Version="2020.1.12" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
@@ -38,6 +40,10 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <Content Remove="appsettings.Development.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Frx\Admin\" />
   </ItemGroup>
 
 </Project>

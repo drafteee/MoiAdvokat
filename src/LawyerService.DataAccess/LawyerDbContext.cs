@@ -30,15 +30,24 @@ namespace LawyerService.DataAccess
         public virtual DbSet<TransactionReason> TransactionReasons { get; set; }
         public virtual DbSet<HistoryTransactions> HistoryTransactions { get; set; }
         public virtual DbSet<HistoryUserTransactions> HistoryUserTransactions { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+        
         public virtual DbSet<Specialization> Specializations { get; set; }
-        public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
         public virtual DbSet<RoleFunction> RoleFunctions { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
 
+        public virtual DbSet<OrderResponse> OrderRespenses { get; set; }
+
+        #region Orders
+
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+        public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
+        public virtual DbSet<OrderFiles> OrderFiles { get; set; }
+
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -71,10 +80,12 @@ namespace LawyerService.DataAccess
                 .WithMany(aur => aur.OrderSpecializations)
                 .HasForeignKey(aur => aur.SpecializationId);
 
-            modelBuilder.Entity<UserBalance>()
-                .HasIndex(ub => ub.UserId)
-                .IsUnique();
+            modelBuilder.Entity<OrderResponse>()
+                .HasIndex(p => new { p.OrderId, p.LawyerId }).IsUnique();
 
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.BalanceId)
+                .IsUnique();
 
             SpecifyUniqueIndicesForLawyers(modelBuilder);
         }

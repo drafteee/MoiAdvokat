@@ -1,5 +1,6 @@
 ﻿using LawyerService.Entities.Identity;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LawyerService.Entities.Transactions
 {
@@ -20,7 +21,8 @@ namespace LawyerService.Entities.Transactions
         /// <summary>
         /// Дата транзакции
         /// </summary>
-        public DateTimeOffset Date { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime Date { get; set; }
         /// <summary>
         /// Транзакция в/из сервиса
         /// </summary>

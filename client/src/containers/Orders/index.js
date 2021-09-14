@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag, Space, Modal, Button, Form, Input, InputNumber } from 'antd';
 import { orderActions } from "./store/actions";
+
 import 'antd/lib/table/style/index.css'
 import 'antd/lib/dropdown/style/index.css'
 import 'antd/lib/radio/style/index.css'
@@ -9,38 +10,52 @@ import 'antd/lib/tooltip/style/index.css'
 import 'antd/lib/tag/style/index.css'
 import 'antd/lib/pagination/style/index.css'
 import 'antd/lib/notification/style/index.css'
+import 'antd/lib/modal/style/index.css'
+import 'antd/lib/form/style/index.css'
+import 'antd/lib/input-number/style/index.css'
+import 'antd/lib/date-picker/style/index.css'
+import RespondForm from "./RespondForm";
+import { Link } from "react-router-dom";
+
+const Orders = ({history}) => {
 
 const columns = [
   {
-    title: 'NameClient',
+    title: 'Имя',
     dataIndex: 'NameClient',
     key: 'nameClient',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'StartDate',
+    title: 'Дата поста',
     dataIndex: 'StartDate',
     key: 'startDate',
   },
   {
-    title: 'EndDueDate',
+    title: 'Дата окончания',
     dataIndex: 'EndDueDate',
     key: 'endDueDate',
   },
   {
-    title: 'Action',
+    title: 'Действия',
     key: 'action',
     render: (text, record) => (
       <Space size="middle">
-        <a>Invite {record.FirstName}</a>
-        <a>Delete</a>
+        {
+          !record.IsResponse && <Button type="primary" onClick={() => showModal(record)}>
+          Отозваться
+      </Button>
+        }
+        
       </Space>
     ),
   },
 ];
 
 
-const Orders = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
+
   const dispatch = useDispatch();
   const orderList =  useSelector(state => state.orderReducer.orders)
   const getAll = useCallback(
@@ -53,8 +68,32 @@ const Orders = () => {
     getAll()
   }, [])
 
+
+  const showModal = (record) => {
+    setCurrentId(record.Id)
+    setIsModalVisible(true);
+  };
+
+
+
+
   return (
-    <Table columns={columns} dataSource={orderList} />
+    <>
+    <Link to="/submitOrder"><Button>Добавить заказ</Button></Link>
+    <Table 
+      columns={columns} 
+      dataSource={orderList} 
+      onRow={ (record, rowIndex) => {
+        return {
+          onDoubleClick: event => {
+            console.log(record)
+            history.push(`/order/${ record.Id }`)
+          }
+        }
+      } }/>
+    <RespondForm isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} currentId={currentId}/>
+      
+    </>
   )
 }
 

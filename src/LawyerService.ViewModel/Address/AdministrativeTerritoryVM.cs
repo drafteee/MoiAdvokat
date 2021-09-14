@@ -13,5 +13,9 @@ namespace LawyerService.ViewModel.Address
         /// </summary>
         public AdministrativeTerritoryTypeVM Type { get; set; }
         public long AdministrativeTerritoryTypeId { get; set; }
+        /// <summary>
+        /// Страна
+        /// </summary>
+        public CountryVM Country { get; set; }
     }
 }

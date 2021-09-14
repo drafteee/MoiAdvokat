@@ -3,9 +3,11 @@ using FluentValidation;
 using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.BL.Interfaces.Addresses;
+using LawyerService.BL.Interfaces.Lawyers;
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Lawyer;
+using LawyerService.ViewModel.Errors;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LawyerService.BL
+namespace LawyerService.BL.Lawyers
 {
     public class LawyerManager : BaseManager<Lawyer, LawyerVM>, ILawyerManager
     {
@@ -41,18 +43,25 @@ namespace LawyerService.BL
 
         public override async Task<bool> CreateOrUpdateManyAsync(List<LawyerVM> lawyerVMs)
         {
-            var lawyers = _mapper.Map<List<Lawyer>>(lawyerVMs);
-            IdentifyAddress(lawyers);
+            try
+            {
+                var lawyers = _mapper.Map<List<Lawyer>>(lawyerVMs);
+                IdentifyAddress(lawyers);
 
-            var toCreate = lawyers.Where(x => x.Id == 0).ToList();
-            var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
+                var toCreate = lawyers.Where(x => x.Id == 0).ToList();
+                var toUpdate = lawyers.Where(x => x.Id != 0).ToList();
 
-            PopulateEntities(toUpdate);
+                PopulateEntities(toUpdate);
 
-            _uow.Lawyer.AddRange(toCreate);
-            _uow.Lawyer.UpdateRange(toUpdate);
+                _uow.Lawyer.AddRange(toCreate);
+                _uow.Lawyer.UpdateRange(toUpdate);
 
-            return await _uow.SaveAsync() > 0;
+                return await _uow.SaveAsync() > 0;
+            }
+            catch (Exception e)
+            {
+                throw new RestException(System.Net.HttpStatusCode.BadRequest, new { e.Message, e.InnerException });
+            }
         }
 
         #region Private methods
@@ -67,7 +76,7 @@ namespace LawyerService.BL
             lawyers.ForEach(a =>
             {
                 var address = newAddresses.Where(x => a.Address.AdministrativeTerritoryId == x.AdministrativeTerritoryId
-                    && a.Address.CountryId == x.CountryId
+                    //&& a.Address.CountryId == x.CountryId
                     && a.Address.Street == x.Street
                     && a.Address.House == x.House
                     && a.Address.Office == x.Office).FirstOrDefault();

@@ -5,10 +5,12 @@ using LawyerService.BL.Helpers;
 using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.DataAccess;
+using LawyerService.Entities.Address;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Transactions;
 using LawyerService.Resources;
 using LawyerService.ViewModel.Account;
+using LawyerService.ViewModel.Address;
 using LawyerService.ViewModel.Common;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
@@ -80,17 +82,17 @@ namespace LawyerService.BL.Account
             {
                 User user = _mapper.Map<User>(userVM);
                 user.PasswordHash = _passwordHasher.HashPassword(user, password);
-                
-                var res = await _userManager.CreateAsync(user);
-
                 var userBalance = new UserBalance()
                 {
                     Amount = 0,
-                    User = user,
                     ProcentIn = 0,
-                    ProcentOut = 0
+                    ProcentOut = 0,
+                    CreatedOn = DateTime.Now
                 };
-                _context.UserBalances.Add(userBalance);
+                user.Balance = userBalance;
+                user.CreateDate = DateTime.Now;
+
+                var res = await _userManager.CreateAsync(user);
                 await _context.SaveChangesAsync();
                 result.Output = res;
                 result.Success = true;

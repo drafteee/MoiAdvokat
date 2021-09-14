@@ -1,7 +1,7 @@
 ﻿using LawyerService.Entities.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LawyerService.Entities.Order
 {
@@ -49,12 +49,13 @@ namespace LawyerService.Entities.Order
         /// <summary>
         /// Дата начала исполнения заказа
         /// </summary>
-        public DateTimeOffset StartDate { get; set; }
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Дата исполнения заказа
         /// </summary>
-        public DateTimeOffset FinishDate { get; set; }
+        public DateTimeOffset? FinishDate { get; set; }
 
         /// <summary>
         /// FK на Statuses(состояние заказа)
@@ -72,6 +73,11 @@ namespace LawyerService.Entities.Order
         /// Специализации заказа
         /// </summary>
         public ICollection<OrderSpecialization> OrderSpecializations { get; set; }
+
+        /// <summary>
+        /// Отзывы на заказа
+        /// </summary>
+        public ICollection<OrderResponse> OrderResponses { get; set; }
 
         /// <summary>
         /// Процент адвокату

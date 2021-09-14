@@ -27,7 +27,7 @@ namespace LawyerService.BL.Addresses
 
             List<Address> existingAddresses = set.AsEnumerable().Where(x => addresses.Any(a => !a.IsDeleted
                 && a.AdministrativeTerritoryId == x.AdministrativeTerritoryId
-                && a.CountryId == x.CountryId
+                //&& a.CountryId == x.CountryId
                 && a.Street == x.Street
                 && a.House == x.House
                 && a.Office == x.Office)).ToList();
@@ -36,7 +36,7 @@ namespace LawyerService.BL.Addresses
             newAddresses.ForEach(a =>
             {
                 a.Id = existingAddresses.Where(x => a.AdministrativeTerritoryId == x.AdministrativeTerritoryId
-                    && a.CountryId == x.CountryId
+                    //&& a.CountryId == x.CountryId
                     && a.Street == x.Street
                     && a.House == x.House
                     && a.Office == x.Office).Select(x => x.Id).FirstOrDefault();

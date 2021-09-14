@@ -12,23 +12,23 @@ import 'antd/lib/notification/style/index.css'
 
 const columns = [
   {
-    title: 'FirstName',
+    title: 'Имя',
     dataIndex: 'FirstName',
     key: 'firstName',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'LicenseNumber',
+    title: 'Номер лицензии',
     dataIndex: 'LicenseNumber',
     key: 'licenseNumber',
   },
   {
-    title: 'DateOfIssue',
+    title: 'Дада получения лицензии',
     dataIndex: 'DateOfIssue',
     key: 'dateOfIssue',
   },
   {
-    title: 'Action',
+    title: 'Действия',
     key: 'action',
     render: (text, record) => (
       <Space size="middle">

@@ -164,6 +164,7 @@ const User = {
   getFunctions: (data) => requests.get("/user/getFunctions"),
   updateRoleFunctions: (data) =>
     requests.post("/user/updateRoleFunctions", data),
+
   //register;
   preChecking: (user) => requests.post("/user/RegistrationPreCheking", user),
   registration: (user) => requests.post("/user/Registration", user),

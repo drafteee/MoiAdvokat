@@ -1,51 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, {useEffect} from "react"
 import {
-  homeLoadables,
-  accountLoadables,
-  BLLoadables,
-  chatLoadables,
-} from "./loadables";
-import NotFound from "./components/NotFound";
+	Switch, Route, Redirect
+} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { userActions } from "./store/actions";
+import {
+	userActions
+}from "./store/actions"
+import routes from './routesArray'
 
 const Routes = () => {
-  const dispatch = useDispatch();
-  const { user, isLoading, roles, userTypeName } = useSelector(
-    (state) => state.userReducer
-  );
-    
-  useEffect(() => {
-    if (user === undefined) dispatch(userActions.refreshUserData());
-  }, []);
+	const user = useSelector(state => state.userReducer.user)
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log(user)
+		if (user === undefined)
+			dispatch(userActions.refreshUserData())
+	}, [])
 
-  return (
-    <Switch>
-      <Route exact component={homeLoadables.LoadableHome} path="/" />
-      <Route exact component={accountLoadables.LoadableLogin} path="/login" />
-      <Route exact component={accountLoadables.LoadableRegistration} path="/registration" />
-      <Route
-        exact
-        component={accountLoadables.LoadableAccount}
-        path="/account"
-      />
-      <Route
-        exact
-        component={accountLoadables.LoadableRoleFunctionList}
-        path="/roleFunction"
-      />
-      <Route
-        exact
-        component={BLLoadables.LoadableLawyersList}
-        path="/lawyers"
-      />
-      <Route exact component={BLLoadables.LoadableOrdersList} path="/orders" />
-      <Route exact component={BLLoadables.LoadableOrder} path="/order" />
+	const renderRoute = (path, component) => 
+		<Route
+			exact
+			component={component}
+			path={path}
+		/>
 
-      <Route exact component={chatLoadables.LoadableChatTest} path="/chat/:orderId?" />
-      <Route exact component={NotFound} path="*" />
-    </Switch>
-  );
-};
-export default Routes;
+	return (
+		<Switch>
+			{
+				routes.map((route)=>{
+					if(route.protect)
+					{
+						if(route.protect(user))
+							return renderRoute(route.path, route.component)
+						else if(route.redirectTo)
+							return renderRoute(route.path, route.redirectTo)
+					}
+
+					if(!route.protect){
+						return renderRoute(route.path, route.component)
+					}
+				})
+			}
+		</Switch>
+	)
+}
+export default Routes

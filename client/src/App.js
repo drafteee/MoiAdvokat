@@ -9,6 +9,11 @@ import Navigation from "./containers/Menu";
 import Footer from "./containers/Footer";
 const { Content } = Layout
 const App = () => {
+
+  useEffect(()=>{
+    
+  }, [])
+
   return (
     <Router history={history}>
       <Layout
@@ -24,11 +29,11 @@ const App = () => {
               padding: "24px 24px 0px 24px",
             }}
           >
-            		<Routes/>
+            <Routes />
 
           </Content>
         </Layout>
-        <Footer /> 
+        <Footer />
       </Layout>
     </Router>
   );

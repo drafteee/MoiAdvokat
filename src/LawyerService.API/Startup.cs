@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+п»їusing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +34,13 @@ using LawyerService.BL.Interfaces.Orders;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Routing;
 
+using LawyerService.BL.Interfaces.Reports;
+using LawyerService.BL.Reports;
+using LawyerService.API.Middleware;
+using LawyerService.BL.Interfaces.Lawyers;
+using LawyerService.BL.Lawyers;
+using LawyerService.BL.Interfaces.Files;
+using LawyerService.BL.Files;
 
 namespace LawyerService.API
 {
@@ -58,7 +65,7 @@ namespace LawyerService.API
 
             services.AddDbContext<LawyerDbContext>(opt =>
             {
-                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("LawyerService.API")).EnableSensitiveDataLogging(); //логи в output убрать потом
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("LawyerService.API")).EnableSensitiveDataLogging(); //пїЅпїЅпїЅпїЅ пїЅ output пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             });
 
             services.AddScoped<IUow, Uow>();
@@ -66,11 +73,21 @@ namespace LawyerService.API
             services.AddScoped<ILocalizationManager, LocalizationManager>();
             services.AddScoped<IUserAccessor, UserAccessor>();
 
-            services.AddScoped<ILawyerManager, LawyerManager>();
             services.AddScoped<IChatManager, ChatManager>();
 
             services.AddScoped<IUserManager, BL.Account.UserManager>();
             services.AddScoped<ITransactionManager, TransactionManager>();
+            services.AddScoped<IReportManager, ReportManager>();
+            services.AddScoped<IStatisticManager, StatisticManager>();
+
+            services.AddScoped<IFileManager, FileManager>();
+
+            #region Lawyers managers
+
+            services.AddScoped<ILawyerManager, LawyerManager>();
+            services.AddScoped<ISpecializationManager, SpecializationManager>();
+
+            #endregion
 
             #region Address managers
 
@@ -86,6 +103,7 @@ namespace LawyerService.API
 
             services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<IOrderStatusManager, OrderStatusManager>();
+            services.AddScoped<IOrderResponseManager, OrderResponseManager>();
 
             #endregion
 
@@ -190,12 +208,15 @@ namespace LawyerService.API
                 });
             });
             services.AddSwaggerGenNewtonsoftSupport();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCacheManager memoryCacheManager)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             memoryCacheManager.Put("LOCALIZATION", typeof(Resources.Resources).Assembly);
             if (env.IsDevelopment())
             {
@@ -233,6 +254,9 @@ namespace LawyerService.API
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseMvc();
+            app.UseFastReport();
         }
 
 

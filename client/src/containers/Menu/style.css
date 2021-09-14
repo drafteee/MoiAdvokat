@@ -1,5 +1,8 @@
 .logo {
+  display: flex;
   float: left;
+  align-items: center;
+  justify-content: space-around;
   width: 120px;
   height: 31px;
   margin: 16px 24px 16px 0;
@@ -13,4 +16,21 @@
 
 .site-layout-background {
   background: #fff;
+}
+
+.logo > span{
+  color: white;
+  font-size: 20px;
+}
+
+.logo > span:not(.anticon){
+  line-height: 30px;
+}
+
+.logo:hover{
+  cursor: pointer;
+}
+
+.logo .anticon:hover{
+  color: burlywood;
 }

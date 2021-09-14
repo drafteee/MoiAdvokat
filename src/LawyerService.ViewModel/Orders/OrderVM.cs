@@ -2,11 +2,16 @@
 using LawyerService.ViewModel.Base;
 using LawyerService.ViewModel.Lawyers;
 using System;
+using System.Collections.Generic;
 
 namespace LawyerService.ViewModel.Orders
 {
     public class OrderVM : BaseVM
     {
+        /// <summary>
+        /// Отозвался ли
+        /// </summary>
+        public bool IsResponse { get; set; }
         /// <summary>
         /// Заголовок заказа
         /// </summary>
@@ -46,12 +51,12 @@ namespace LawyerService.ViewModel.Orders
         /// <summary>
         /// Дата начала исполнения заказа
         /// </summary>
-        public DateTimeOffset StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// Дата исполнения заказа
         /// </summary>
-        public DateTimeOffset FinishDate { get; set; }
+        public DateTimeOffset? FinishDate { get; set; }
 
         /// <summary>
         /// FK на Statuses(состояние заказа)
@@ -64,5 +69,12 @@ namespace LawyerService.ViewModel.Orders
         /// </summary>
         public string UserId { get; set; }
         public UserVM User { get; set; }
+
+        public List<long> SpecializationsIds { get; set; }
+
+        /// <summary>
+        /// Специализации через запятую
+        /// </summary>
+        public string SpecializationsStr { get; set; }
     }
 }
