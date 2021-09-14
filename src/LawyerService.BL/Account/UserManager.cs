@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Helpers;
 using LawyerService.BL.Helpers;
 using LawyerService.BL.Interfaces;
 using LawyerService.BL.Interfaces.Account;
@@ -12,6 +13,7 @@ using LawyerService.ViewModel.Common;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,18 +31,20 @@ namespace LawyerService.BL.Account
         private readonly UserManager<User> _userManager;
         private readonly PasswordHasher<User> _passwordHasher;
         private readonly JwtGenerator _jwtGenerator;
+        private readonly IConfiguration _config;
         private readonly RoleManager<Role> _roleManager;
 
-        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localizationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator, RoleManager<Role> roleManager)
+        public UserManager(LawyerDbContext context, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, PasswordHasher<User> passwordHasher, JwtGenerator jwtGenerator, IConfiguration config, RoleManager<Role> roleManager)
         {
             _context = context;
             _mapper = mapper;
             _validator = validator;
-            _localisationManager = localizationManager;
+            _localisationManager = localisationManager;
             _userAccessor = userAccessor;
             _userManager = userManager;
             _passwordHasher = passwordHasher;
             _jwtGenerator = jwtGenerator;
+            _config = config;
             _roleManager = roleManager;
         }
 
@@ -345,9 +349,128 @@ namespace LawyerService.BL.Account
                 Output = userRoles
             };
         }
+        public async Task<RequestResult> GetRolesAsync()
+        {
+            var roles = await _context.Roles
+                .Include(x=>x.RoleFunctions)
+                    .ThenInclude(x=>x.Function)
+                .AsNoTracking()
+                .ToListAsync();
+            var result = _mapper.Map<List<Role>, List<RoleVM>>(roles);
+            return new RequestResult()
+            {
+                Success = true,
+                Output = result
+            };
+        }
+
+        public async Task<RequestResult> GetFunctionsAsync()
+        {
+            var functions = await _context.Functions.AsNoTracking().ToListAsync();
+            return new RequestResult()
+            {
+                Success = true,
+                Output = functions
+            };
+        }
+
+        public async Task<RequestResult> UpdateRoleFunctionsAsync(IEnumerable<RoleVM> roles)
+        {
+            var updatedRoles = _mapper.Map<IEnumerable<RoleVM>, IEnumerable<Role>>(roles);
+            var rf = await _context.RoleFunctions.ToListAsync();
+            _context.RoleFunctions.RemoveRange(rf);
+            var roleFunc = new List<RoleFunction>();
+            foreach(var role in roles)
+            {
+                foreach(var func in role.Functions)
+                {
+                    roleFunc.Add(new RoleFunction()
+                    {
+                        RoleId = role.Id,
+                        FunctionId = func.Id,
+                        CreatedOn = DateTime.Now
+                    });
+                }
+            }
+           await  _context.RoleFunctions.AddRangeAsync(roleFunc);
+            await _context.SaveChangesAsync();
+            return new RequestResult()
+            {
+                Success = true,
+            };
+        }
+        public async Task<RequestResult> AddFunction(Function function)
+        {
+            await _context.Functions.AddAsync(function);
+            await _context.SaveChangesAsync();
+            return new RequestResult()
+            {
+                Success = true,
+            };
+        }
+
+        public async Task<bool> RegistrationPreCheking(RegisteredUserDataVM userVM)
+        {
+            try
+            {
+                if ( await _context.Users.Where(x => x.UserName.ToUpper() == userVM.UserName.ToUpper()).AnyAsync())
+                    throw new Exception();
+
+                if (!string.IsNullOrEmpty(userVM.Email) && await _context.Users.Where(x => x.Email.ToUpper() == userVM.Email.ToUpper()).AnyAsync())
+                    throw new Exception();
+
+                AccountSupport.CheckUserName(userVM.UserName,"IncorrectUserName");
+                if (!string.IsNullOrEmpty(userVM.Password))
+                    AccountSupport.CheckPassword(userVM.Password, "IncorrectPassword");
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<bool> Register(RegisteredUserDataVM userDataVM)
+        {
+            try
+            {
+                User user = _mapper.Map<RegisteredUserDataVM, User>(userDataVM);
+
+                user.PasswordHash = _passwordHasher.HashPassword(user, userDataVM.Password);
+
+                await _userManager.CreateAsync(user);
+
+                if (!string.IsNullOrEmpty(user.Email))
+                    await SendEmailConfirmMessageAsync(user);
+
+                try { 
+                    await _userManager.AddToRolesAsync(user,new List<string>() { "user"}) ;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         #region Private Methods
+        private async Task<bool> SendEmailConfirmMessageAsync(User user)
+        {
+            if (string.IsNullOrEmpty(user.Email))
+                return true;
 
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var href = _config.GetSection("ClientPath").Value;
+            var message = string.Format(_localisationManager.GetString("User", "CONFIRMATION_MESSAGE"), href, user.Id, code);
+            var subject = _localisationManager.GetString("User", "MESSAGE_SUBJECT");
+            return await MailService.SendAsync(_config, message, subject, user.Email);
+        }
 
         #endregion
     }

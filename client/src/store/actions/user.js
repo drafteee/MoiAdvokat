@@ -22,6 +22,9 @@ export const userActions = {
   getRoles,
   registerByAdmin,
   registerByExternalAdmin,
+  getFunctions,
+  updateRoleFunctions,
+  preCheckRegister,
 }
 
 function login(values) {
@@ -128,11 +131,22 @@ function confirmPhone(values) {
   return defAction(dispatchObj)
 }
 
+function preCheckRegister(values) {
+  const dispatchObj = {
+    constants: userConstants.PreCheckRegister,
+    service: {
+      func: agent.User.preChecking,
+      params: values,
+    },
+  }
+  return defAction(dispatchObj)
+}
+
 function register(values) {
   const dispatchObj = {
     constants: userConstants.Register,
     service: {
-      func: getAgentUserFunction(values.userType.name, 'Register'),
+      func: agent.User.registration,
       params: values,
     },
     sucFunction: () => history.push('/login'),
@@ -164,23 +178,6 @@ function registerByExternalAdmin(values) {
   return defAction(dispatchObj)
 }
 
-function getAgentUserFunction(userTypeName, type) {
-  switch (userTypeName) {
-    case 'foreign':
-      return agent.User[userTypeName + type]
-    case 'citizen':
-      return agent.User[userTypeName + type]
-    case 'stateless':
-      return agent.User[userTypeName + type]
-    case 'juridical':
-      return agent.User[userTypeName + type]
-    case 'individual':
-      return agent.User[userTypeName + type]
-    case 'foreignCompany':
-      return agent.User[userTypeName + type]
-  }
-}
-
 function getUserTypes(values) {
   const dispatchObj = {
     constants: userConstants.GetUserTypes,
@@ -208,6 +205,28 @@ function getRoles(values) {
     constants: userConstants.GetRoles,
     service: {
       func: agent.User.getRoles,
+      params: values,
+    },
+  }
+  return defAction(dispatchObj)
+}
+
+function getFunctions(values) {
+  const dispatchObj = {
+    constants: userConstants.GetFunctions,
+    service: {
+      func: agent.User.getFunctions,
+      params: values,
+    },
+  }
+  return defAction(dispatchObj)
+}
+
+function updateRoleFunctions(values) {
+  const dispatchObj = {
+    constants: userConstants.UpdateRoleFunctions,
+    service: {
+      func: agent.User.updateRoleFunctions,
       params: values,
     },
   }

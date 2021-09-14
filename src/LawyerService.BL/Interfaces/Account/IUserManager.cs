@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LawyerService.Entities.Identity;
 using LawyerService.ViewModel.Account;
 using LawyerService.ViewModel.Common;
 
@@ -17,5 +19,11 @@ namespace LawyerService.BL.Interfaces.Account
         Task<RequestResult> RemoveSessionAsync(long sessionId);
         Task<RequestResult> GetUserFunctionsAsync(string id);
         Task<RequestResult> GetUserRolesAsync(string id);
+        Task<RequestResult> GetRolesAsync();
+        Task<RequestResult> GetFunctionsAsync();
+        Task<RequestResult> UpdateRoleFunctionsAsync(IEnumerable<RoleVM> roles);
+        Task<RequestResult> AddFunction(Function function);
+        Task<bool> RegistrationPreCheking(RegisteredUserDataVM userVM);
+        Task<bool> Register(RegisteredUserDataVM userDataVM);
     }
 }

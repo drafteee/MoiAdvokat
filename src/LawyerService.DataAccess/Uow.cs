@@ -2,6 +2,7 @@
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities;
 using LawyerService.Entities.Address;
+using LawyerService.Entities.Chat;
 using LawyerService.Entities.Lawyer;
 using LawyerService.Entities.Order;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace LawyerService.DataAccess
         private IGenericRepository<Lawyer> _lawyerRepository;
         private IGenericRepository<Address> _addressRepository;
         private IGenericRepository<Order> _orderRepository;
+        private IGenericRepository<Message> _messageRepository;
 
         public Uow(LawyerDbContext context) : base(context)
         {
@@ -47,5 +49,7 @@ namespace LawyerService.DataAccess
 
         public IGenericRepository<Address> Address => _addressRepository ??= new GenericRepository<Address>(_context);
         public IGenericRepository<Order> Orders => _orderRepository ??= new GenericRepository<Order>(_context);
+
+        public IGenericRepository<Message> Messages => _messageRepository ??= new GenericRepository<Message>(_context);
     }
 }

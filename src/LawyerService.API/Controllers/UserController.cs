@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using LawyerService.BL.Interfaces;
-using LawyerService.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using LawyerService.BL.Interfaces.Account;
 using LawyerService.ViewModel.Common;
 using LawyerService.ViewModel.Account;
+using LawyerService.Entities.Identity;
 
 namespace LawyerService.API.Controllers
 {
@@ -95,6 +94,42 @@ namespace LawyerService.API.Controllers
         public async Task<RequestResult> GetUserRoles(string userId)
         {
             return await _userManager.GetUserRolesAsync(userId);
+        }
+
+        [HttpGet]
+        public async Task<RequestResult> GetRoles()
+        {
+            return await _userManager.GetRolesAsync();
+        }
+
+        [HttpGet]
+        public async Task<RequestResult> GetFunctions()
+        {
+            return await _userManager.GetFunctionsAsync();
+        }
+
+        [HttpPost]
+        public async Task<RequestResult> UpdateRoleFunctions(IEnumerable<RoleVM> roles)
+        {
+            return await _userManager.UpdateRoleFunctionsAsync(roles);
+        }
+
+        [HttpPost]
+        public async Task<RequestResult> AddFunction(Function function)
+        {
+            return await _userManager.AddFunction(function);
+        }
+
+        [HttpPost]
+        public async Task<bool> RegistrationPreCheking(RegisteredUserDataVM userVM)
+        {
+            return await _userManager.RegistrationPreCheking(userVM);
+        }
+
+        [HttpPost]
+        public async Task<bool> Registration(RegisteredUserDataVM userVM)
+        {
+            return await _userManager.Register(userVM);
         }
     }
 }

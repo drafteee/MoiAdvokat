@@ -78,13 +78,13 @@ namespace LawyerService.BL
         }
     }
 
-    public string GetString(string sectionName, string itemName, string assignmentType = null, string defaultValue = null)
+    public string GetString(string sectionName, string itemName, string defaultValue = null)
     {
         string result = null;
 
         try
         {
-            result = GetValue(_countryCode, _languageCode, sectionName, itemName, assignmentType);
+            result = GetValue(_countryCode, _languageCode, sectionName, itemName);
         }
         catch
         {
@@ -95,7 +95,7 @@ namespace LawyerService.BL
         {
             if (string.IsNullOrEmpty(result) && $"{_countryCode}-{_languageCode}" != $"{_defaultCountryCode}-{_defaultLanguageCode}")
             {
-                result = GetValue(_defaultCountryCode, _defaultLanguageCode, sectionName, itemName, assignmentType);
+                result = GetValue(_defaultCountryCode, _defaultLanguageCode, sectionName, itemName);
             }
         }
         catch
@@ -116,35 +116,26 @@ namespace LawyerService.BL
         return result;
     }
 
-    private string GetValue(string countryCode, string languageCode, string sectionName, string itemName, string assignmentType = null)
+    private string GetValue(string countryCode, string languageCode, string sectionName, string itemName)
     {
         var fileName = string.Format(_fileNameFormat, countryCode, languageCode);
         var cachedObject = GetOrAddJsonObject(fileName);
 
-        return GetFromJsonObject(cachedObject, sectionName, itemName, assignmentType);
+        return GetFromJsonObject(cachedObject, sectionName, itemName);
     }
 
-    private JObject GetOrAddJsonObject(string fileName)
-    {
+        private JObject GetOrAddJsonObject(string fileName)
+        {
 
-        return _memoryCacheManager.GetOrAdd(_memoryCacheManager.GetCacheKey(nameof(LocalizationManager), fileName),
-         () =>
-         {
-             string assemblyName;
-             if (_memoryCacheManager.TryGet("LOCALIZATION", out assemblyName))
+            return _memoryCacheManager.GetOrAdd(_memoryCacheManager.GetCacheKey(nameof(LocalizationManager), fileName),
+             () =>
              {
-                 var resource = ResourceHelper.ReadManifestDataFromAssembly(assemblyName, fileName);
+                 var resource = ResourceHelper.ReadManifestDataFromAssembly(typeof(Resources.Resources).Assembly.FullName, fileName);
                  return JObject.Parse(resource);
-             }
-             else
-             {
-                 var resource = ResourceHelper.ReadManifestData(fileName);
-                 return JObject.Parse(resource);
-             }
-         });
-    }
+             });
+        }
 
-    private string GetFromJsonObject(JObject jObject, string sectionName, string itemName, string assignmentType)
+    private string GetFromJsonObject(JObject jObject, string sectionName, string itemName)
     {
         if (string.IsNullOrEmpty(sectionName) || string.IsNullOrEmpty(itemName))
         {
@@ -152,15 +143,6 @@ namespace LawyerService.BL
         }
 
         JToken token;
-
-        if (!string.IsNullOrEmpty(assignmentType))
-        {
-            token = jObject?.SelectToken($"$.{sectionName}.{itemName}.{assignmentType}");
-            if (token != null)
-            {
-                return (string)token;
-            }
-        }
 
         token = jObject?.SelectToken($"$.{sectionName}.{itemName}._");
         if (token != null)

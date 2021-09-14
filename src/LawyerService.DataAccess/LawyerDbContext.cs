@@ -8,6 +8,7 @@ using LawyerService.Entities.Order;
 using System;
 using LawyerService.Entities;
 using System.Linq;
+using LawyerService.Entities.Chat;
 
 namespace LawyerService.DataAccess
 {
@@ -35,6 +36,9 @@ namespace LawyerService.DataAccess
         public virtual DbSet<OrderSpecialization> OrderSpecializations { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
+        public virtual DbSet<RoleFunction> RoleFunctions { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
