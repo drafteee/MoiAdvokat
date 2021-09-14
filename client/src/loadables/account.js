@@ -7,12 +7,27 @@ const LoadableLogin = Loadable({
 	loading : () => <Loading />
 })
 
+const LoadableRegistration = Loadable({
+	loader  : () => import('../containers/Account/Registration'),
+	loading : () => <Loading />
+})
+
 const LoadableAccount = Loadable({
 	loader  : () => import('../containers/Account'),
 	loading : () => <Loading />
 })
 
+const LoadableRoleFunctionList = Loadable({
+	loader  : () => import('../containers/Account/RoleFunctionList'),
+	loading : () => <Loading />
+})
+
+
+
+
 export const accountLoadables = {
 	LoadableLogin,
-	LoadableAccount
+	LoadableAccount,
+	LoadableRoleFunctionList,
+	LoadableRegistration,
 }

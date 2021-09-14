@@ -2,6 +2,7 @@
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities;
 using LawyerService.Entities.Address;
+using LawyerService.Entities.Chat;
 using LawyerService.Entities.Lawyer;
 using LawyerService.Entities.Order;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,9 @@ namespace LawyerService.DataAccess
         #region Orders repositories
         
         private IGenericRepository<Order> _orderRepository;
+
+        private IGenericRepository<Message> _messageRepository;
+
         private IGenericRepository<OrderSpecialization> _orderSpecializationRepository;
         private IGenericRepository<OrderStatus> _orderStatusRepository;
         private IGenericRepository<OrderResponse> _orderResponseRepository;
@@ -69,6 +73,8 @@ namespace LawyerService.DataAccess
         #region Orders repositories
 
         public IGenericRepository<Order> Orders => _orderRepository ??= new GenericRepository<Order>(_context);
+
+        public IGenericRepository<Message> Messages => _messageRepository ??= new GenericRepository<Message>(_context);
         public IGenericRepository<OrderSpecialization> OrderSpecializations => _orderSpecializationRepository ??= new GenericRepository<OrderSpecialization>(_context);
         public IGenericRepository<OrderStatus> OrderStatuses => _orderStatusRepository ??= new GenericRepository<OrderStatus>(_context);
         public IGenericRepository<OrderResponse> OrderResponses => _orderResponseRepository ??= new GenericRepository<OrderResponse>(_context);

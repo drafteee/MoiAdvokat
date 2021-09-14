@@ -1,0 +1,69 @@
+/* .user-type-select {
+    min-width: 400px;
+} */
+
+.register-tail .ant-form-item-control {
+    flex: none !important;
+}
+@media (min-width: 1600px) {
+  .tail-check-register-button .ant-form-item-control{
+    margin-left: 33.33%;
+    flex: none !important;
+  }
+  .register-width .ant-form-item-label {
+    flex: 0 0 30.33333333%;
+  }
+  .register-width {
+    width: 40%;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1599px) {
+  .tail-check-register-button .ant-form-item-control{
+    margin-left: 33.33%;
+    flex: none !important;
+  }
+  .register-width .ant-form-item-label {
+    flex: 0 0 33.33333333%;
+  }
+  .register-width {
+    width: 50%;
+  }
+}
+@media (min-width: 900px) and (max-width: 1200px) {
+  .tail-check-register-button .ant-form-item-control{
+    margin-left: 40.33%;
+    flex: none !important;
+    width: auto !important;
+  }
+  .register-width .ant-form-item-label {
+    flex: 0 0 40.33333333%;
+  }
+  .register-width {
+    width: 60%;
+  }
+}
+@media (max-width: 899px) {
+  .tail-check-register-button .ant-form-item-control{
+    margin-left: 5.33%;
+    flex: none !important;
+  }
+    .register-width {
+        width: 70%;
+      }
+  .register-width .ant-form-item-label {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 auto !important;
+    max-width: 100%;
+  }
+  .register-width .ant-form-item-control {
+    display: block;
+    -webkit-box-flex:0;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+.no-cssall .register-width .ant-form-item-control{
+  flex: 1;
+}

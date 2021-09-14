@@ -14,6 +14,8 @@ namespace LawyerService.Bootstrapper.MapperProfiles
                 .ForMember(x => x.Functions, y => y.MapFrom(z => z.Functions != null ? z.Functions.Select(x => x.Name):null))
                 .ReverseMap();
             CreateMap<RefreshToken, ActiveSessionVM>();
+            CreateMap<User, RegisteredUserDataVM>().ReverseMap();
+
         }
     }
 }

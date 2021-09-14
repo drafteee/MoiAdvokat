@@ -9,5 +9,6 @@ namespace LawyerService.Entities.Identity
     /// </summary>
     public class Role : IdentityRole
     {
+        public virtual IEnumerable<RoleFunction> RoleFunctions { get; set; }
     }
 }
