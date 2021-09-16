@@ -4,11 +4,13 @@ import {
 
 const initialState =
 {
+  lawyer: null,
   lawyers: [],
   isLoading: false,
   error: null,
   uploadCertificateSuccess: null,
-  certificateCheckResult: null
+  certificateCheckResult: null,
+  lawyerConfirmationSuccess: null
 }
 
 export default function (state = initialState, action) {
@@ -62,6 +64,42 @@ export default function (state = initialState, action) {
     case lawyerConstants.CheckIfCertificateExists.FAILURE:
       return {
         ...state,
+        error: action.payload
+      }
+
+    case lawyerConstants.GetById.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        lawyer: null
+      }
+    case lawyerConstants.GetById.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        lawyer: action.payload.result
+      }
+    case lawyerConstants.GetById.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      }
+
+    case lawyerConstants.ConfirmLawyer.REQUEST:
+      return {
+        ...state,
+        lawyerConfirmationSuccess: null
+      }
+    case lawyerConstants.ConfirmLawyer.SUCCESS:
+      return {
+        ...state,
+        lawyerConfirmationSuccess: true
+      }
+    case lawyerConstants.ConfirmLawyer.FAILURE:
+      return {
+        ...state,
+        lawyerConfirmationSuccess: false,
         error: action.payload
       }
 

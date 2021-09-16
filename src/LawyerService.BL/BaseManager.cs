@@ -40,7 +40,7 @@ namespace LawyerService.BL
 
         public virtual async Task<List<TVM>> GetAllAsync(bool withDeleted = false) => _mapper.Map<List<TVM>>(await _uow.GetAll<T>(withDeleted));
 
-        public async Task<TVM> GetByIdAsync(long id, bool withDeleted = false) => _mapper.Map<TVM>(await _uow.GetById<T>(id, withDeleted));
+        public virtual async Task<TVM> GetByIdAsync(long id, bool withDeleted = false) => _mapper.Map<TVM>(await _uow.GetById<T>(id, withDeleted));
 
         public virtual async Task<bool> CreateOrUpdateAsync(TVM viewModel)
         {

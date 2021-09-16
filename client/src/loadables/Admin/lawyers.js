@@ -7,6 +7,12 @@ const LoadableAdminListAllLawyers = Loadable({
 	loading : () => <Loading />
 })
 
+const LoadableAdminConfirmLawyer = Loadable({
+	loader  : () => import('../../containers/Admin/Lawyers/Confirm'),
+	loading : () => <Loading />
+})
+
 export const AdminLawyersLoadables = {
-    LoadableAdminListAllLawyers
+    LoadableAdminListAllLawyers,
+	LoadableAdminConfirmLawyer
 }

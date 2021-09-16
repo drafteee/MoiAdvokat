@@ -12,6 +12,7 @@ using LawyerService.ViewModel.Files;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,44 @@ namespace LawyerService.BL.Lawyers
 {
     public class LawyerManager : BaseManager<Lawyer, LawyerVM>, ILawyerManager
     {
-        public LawyerManager(IUow uow, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, IServiceProvider serviceProvider)
+        private readonly IConfiguration _configuration;
+
+        public LawyerManager(IUow uow,
+            IMapper mapper,
+            IValidator<LawyerVM> validator,
+            ILocalizationManager localisationManager,
+            IUserAccessor userAccessor,
+            UserManager<User> userManager,
+            IServiceProvider serviceProvider,
+            IConfiguration configuration)
             : base(uow, mapper, validator, localisationManager, userAccessor, userManager, serviceProvider)
         {
+            _configuration = configuration;
         }
 
         public async Task<bool> CheckIfCertificateExists(LawyerVM vm)
         {
             return (await _uow.Set<Lawyer>().Where(x => x.Id == vm.Id).Select(x => x.FileCopyId).FirstOrDefaultAsync()).HasValue;
+        }
+
+        public async Task<bool> ConfirmLawyer(LawyerConfirmationVM vm)
+        {
+            var lawyer = await _uow.Set<Lawyer>().Where(x => x.Id == vm.Id)
+                .Include(x => x.User)
+                .FirstOrDefaultAsync();
+
+            lawyer.IsVerified = vm.IsVerified;
+
+            _uow.Lawyer.Update(lawyer);
+            var result = await _uow.SaveAsync() > 0;
+
+            //string mailBody = vm.IsVerified
+            //    ? "Ваша заявка была рассмотрена и подтверждена."
+            //    : "Ваша заявка была рассмотрена модераторами. К сожалению, ваша заявка не была принята."; // TODO добавить перевод на казахский
+
+            //await MailService.SendAsync(_configuration, mailBody, "Рассмотрение заявки на \"Мой адвокат\"", lawyer.User.Email);
+
+            return result;
         }
 
         public override async Task<bool> CreateOrUpdateAsync(LawyerVM lawyerVM)
@@ -69,6 +100,32 @@ namespace LawyerService.BL.Lawyers
             {
                 throw new RestException(System.Net.HttpStatusCode.BadRequest, new { e.Message, e.InnerException });
             }
+        }
+
+        public override async Task<LawyerVM> GetByIdAsync(long id, bool withDeleted = false)
+        {
+            var lawyer = await _uow.Set<Lawyer>().Where(x => x.Id == id && (withDeleted || !x.IsDeleted))
+                .Include(x => x.FileCopy)
+                .Select(x => new Lawyer()
+                {
+                    Id = x.Id,
+                    CreatedOn = x.CreatedOn,
+                    DateOfIssue = x.DateOfIssue,
+                    DeletedOn = x.DeletedOn,
+                    FileCopyId = x.FileCopyId,
+                    IsDeleted = x.IsDeleted,
+                    IsVerified = x.IsVerified,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    MiddleName = x.MiddleName,
+                    LicenseNumber = x.LicenseNumber,
+                    FileCopy = new Entities.File()
+                    {
+                        FileName = x.FileCopy.FileName
+                    }
+                }).FirstOrDefaultAsync();
+
+            return _mapper.Map<LawyerVM>(lawyer);
         }
 
         public async Task<bool> UploadCertificate(AttachFileVM vm)

@@ -1,7 +1,6 @@
 ﻿using LawyerService.Entities.Lawyer;
 using LawyerService.ViewModel.Files;
 using LawyerService.ViewModel.Lawyers;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LawyerService.BL.Interfaces.Lawyers
@@ -10,5 +9,6 @@ namespace LawyerService.BL.Interfaces.Lawyers
     {
         Task<bool> UploadCertificate(AttachFileVM vm);
         Task<bool> CheckIfCertificateExists(LawyerVM vm);
+        Task<bool> ConfirmLawyer(LawyerConfirmationVM vm);
     }
 }

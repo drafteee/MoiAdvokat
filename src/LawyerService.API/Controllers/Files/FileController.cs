@@ -32,11 +32,12 @@ namespace LawyerService.API.Controllers.Files
             return await _fileManager.UploadFiles(vm);
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<bool> DeleteFiles([FromBody] )
-        //{
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<FileStreamResult> DownloadFile([FromHeader] DownloadFileVM vm)
+        {
+            return await _fileManager.DownloadFile(vm.Id);
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

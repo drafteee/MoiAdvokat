@@ -37,5 +37,14 @@ namespace LawyerService.ViewModel.Lawyers
         public AddressVM Address { get; set; }
         public long AddressId { get; set; }
 
+        /// <summary>
+        /// Название файла с удостоверением
+        /// </summary>
+        public string FileName { get; set; }
+        /// <summary>
+        /// Id файла с удостоверением
+        /// </summary>
+        public long FileId { get; set; }
+
     }
 }

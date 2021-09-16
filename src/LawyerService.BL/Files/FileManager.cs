@@ -2,6 +2,9 @@
 using LawyerService.DataAccess.Interfaces;
 using LawyerService.ViewModel.Errors;
 using LawyerService.ViewModel.Files;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,13 +14,30 @@ using System.Threading.Tasks;
 
 namespace LawyerService.BL.Files
 {
-    public class FileManager : IFileManager
+    public class FileManager : ControllerBase, IFileManager
     {
         private readonly IUow _uow;
 
         public FileManager(IUow uow)
         {
             _uow = uow;
+        }
+
+        public async Task<FileStreamResult> DownloadFile(long id)
+        {
+            var file = await _uow.Set<Entities.File>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (file == null)
+            {
+                throw new RestException(System.Net.HttpStatusCode.NotFound, "Файл не найден.");
+            }
+
+            MemoryStream ms = new MemoryStream();
+            ms.Write(file.Content, 0, (int)file.FileLength);
+            ms.Position = 0;
+
+            new FileExtensionContentTypeProvider().TryGetContentType(file.FileName + file.FileExtension, out string contentType);
+
+            return File(ms, contentType, file.FileName + file.FileExtension);
         }
 
         public async Task<List<long>> UploadFiles(UploadFileVM vm)

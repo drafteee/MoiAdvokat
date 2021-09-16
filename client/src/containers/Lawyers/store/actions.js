@@ -7,7 +7,9 @@ export const lawyerActions = {
   getAll,
   getAllCurrent,
   uploadCertificate,
-  checkIfCertificateExists
+  checkIfCertificateExists,
+  getById,
+  confirmLawyer
 };
 
 
@@ -50,6 +52,30 @@ function checkIfCertificateExists(params) {
     constants: lawyerConstants.CheckIfCertificateExists,
     service: {
       func: api.checkIfCertificateExists,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function getById(params) {
+  const dispatchObj = {
+    constants: lawyerConstants.GetById,
+    service: {
+      func: api.getById,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function confirmLawyer(params) {
+  const dispatchObj = {
+    constants: lawyerConstants.ConfirmLawyer,
+    service: {
+      func: api.confirmLawyer,
       params
     }
   }
