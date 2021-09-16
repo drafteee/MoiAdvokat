@@ -5,7 +5,9 @@ import api from "./api";
 
 export const lawyerActions = {
   getAll,
-  getAllCurrent
+  getAllCurrent,
+  uploadCertificate,
+  checkIfCertificateExists
 };
 
 
@@ -29,4 +31,28 @@ function getAllCurrent() {
   };
 
   return defAction(dispatchObj);
+}
+
+function uploadCertificate(params) {
+  const dispatchObj = {
+    constants: lawyerConstants.UploadCertificate,
+    service: {
+      func: api.uploadCertificate,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function checkIfCertificateExists(params) {
+  const dispatchObj = {
+    constants: lawyerConstants.CheckIfCertificateExists,
+    service: {
+      func: api.checkIfCertificateExists,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
 }

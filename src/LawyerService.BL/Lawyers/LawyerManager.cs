@@ -8,8 +8,10 @@ using LawyerService.DataAccess.Interfaces;
 using LawyerService.Entities.Identity;
 using LawyerService.Entities.Lawyer;
 using LawyerService.ViewModel.Errors;
+using LawyerService.ViewModel.Files;
 using LawyerService.ViewModel.Lawyers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,11 @@ namespace LawyerService.BL.Lawyers
         public LawyerManager(IUow uow, IMapper mapper, IValidator<LawyerVM> validator, ILocalizationManager localisationManager, IUserAccessor userAccessor, UserManager<User> userManager, IServiceProvider serviceProvider)
             : base(uow, mapper, validator, localisationManager, userAccessor, userManager, serviceProvider)
         {
+        }
+
+        public async Task<bool> CheckIfCertificateExists(LawyerVM vm)
+        {
+            return (await _uow.Set<Lawyer>().Where(x => x.Id == vm.Id).Select(x => x.FileCopyId).FirstOrDefaultAsync()).HasValue;
         }
 
         public override async Task<bool> CreateOrUpdateAsync(LawyerVM lawyerVM)
@@ -62,6 +69,19 @@ namespace LawyerService.BL.Lawyers
             {
                 throw new RestException(System.Net.HttpStatusCode.BadRequest, new { e.Message, e.InnerException });
             }
+        }
+
+        public async Task<bool> UploadCertificate(AttachFileVM vm)
+        {
+            var lawyer = _uow.Lawyer.GetById(vm.EntityId);
+
+            if (lawyer.FileCopyId.HasValue)
+                throw new RestException(System.Net.HttpStatusCode.BadRequest); // TODO сообщение о том, что сертификат уже загружен
+
+            lawyer.FileCopyId = vm.FilesIds[0];
+
+            _uow.Lawyer.Update(lawyer);
+            return await _uow.SaveAsync() > 0;
         }
 
         #region Private methods

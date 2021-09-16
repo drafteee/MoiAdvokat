@@ -61,6 +61,10 @@ export default [
     path: "/admin/orders/listAll",
     component: AdminOrdersLoadables.LoadableAdminListAllOrders
   },
+  { // TODO: сверять id пользователя, чтобы понимать, что адвокат сам загружает файл, а не кто-то другой
+    path: "/uploadLawyerCertificate/:id",
+    component: BLLoadables.LoadableUploadLawyerCertificate
+  },
   {
     path: "*",
     component: NotFound

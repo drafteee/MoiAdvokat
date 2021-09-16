@@ -27,10 +27,16 @@ const LoadableReport = Loadable({
 	loading : () => <Loading />
 })
 
+const LoadableUploadLawyerCertificate = Loadable({
+	loader  : () => import('../containers/Lawyers/UploadCertificate'),
+	loading : () => <Loading />
+})
+
 export const BLLoadables = {
 	LoadableLawyersList,
   	LoadableOrdersList,
   	LoadableOrder,
   	LoadableReport,
-	LoadableExecuteOrder
+	LoadableExecuteOrder,
+	LoadableUploadLawyerCertificate
 }

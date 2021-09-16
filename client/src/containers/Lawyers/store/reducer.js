@@ -6,7 +6,9 @@ const initialState =
 {
   lawyers: [],
   isLoading: false,
-  error: null
+  error: null,
+  uploadCertificateSuccess: null,
+  certificateCheckResult: null
 }
 
 export default function (state = initialState, action) {
@@ -28,6 +30,41 @@ export default function (state = initialState, action) {
         isLoading: false,
         error: action.payload
       }
+
+    case lawyerConstants.UploadCertificate.REQUEST:
+      return {
+        ...state,
+        uploadCertificateSuccess: null
+      }
+    case lawyerConstants.UploadCertificate.SUCCESS:
+      return {
+        ...state,
+        uploadCertificateSuccess: true,
+        certificateCheckResult: true
+      }
+    case lawyerConstants.UploadCertificate.FAILURE:
+      return {
+        ...state,
+        uploadCertificateSuccess: false,
+        error: action.payload
+      }
+
+    case lawyerConstants.CheckIfCertificateExists.REQUEST:
+      return {
+        ...state,
+        certificateCheckResult: null
+      }
+    case lawyerConstants.CheckIfCertificateExists.SUCCESS:
+      return {
+        ...state,
+        certificateCheckResult: action.payload.result
+      }
+    case lawyerConstants.CheckIfCertificateExists.FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
+
     default:
       return state
   }
