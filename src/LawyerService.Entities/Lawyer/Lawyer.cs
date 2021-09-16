@@ -54,6 +54,6 @@ namespace LawyerService.Entities.Lawyer
         /// <summary>
         /// Верифицирован ли адвокат в системе
         /// </summary>
-        public bool IsVerified { get; set; }
+        public bool? IsVerified { get; set; }
     }
 }
