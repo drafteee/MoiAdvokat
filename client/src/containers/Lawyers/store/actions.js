@@ -4,7 +4,8 @@ import api from "./api";
 
 
 export const lawyerActions = {
-  getAll
+  getAll,
+  getAllCurrent
 };
 
 
@@ -13,6 +14,17 @@ function getAll() {
     constants: lawyerConstants.GetLawyers,
     service: {
       func: api.getAll
+    }
+  };
+
+  return defAction(dispatchObj);
+}
+
+function getAllCurrent() {
+  const dispatchObj = {
+    constants: lawyerConstants.GetLawyers,
+    service: {
+      func: api.getAllCurrent
     }
   };
 

@@ -111,11 +111,7 @@ const AddressInputForm = ({ form }) => {
             </Form.Item>
             <Form.Item
                 name="Notice"
-                label={i18n.notice[isRu]}
-                rules={[{
-                    required: true,
-                    message: validationMessage(i18n.notice, isRu)
-                }]}>
+                label={i18n.notice[isRu]}>
                 <Input />
             </Form.Item>
         </>

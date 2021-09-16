@@ -8,7 +8,8 @@ const initialState =
     currentList: null,
     currentObject: null,
     createOrUpdateSuccess: null,
-    error: null
+    error: null,
+    updateTrigger: 0
 }
 
 export default function (state = initialState, action) {
@@ -46,7 +47,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                createOrUpdateSuccess: true
+                createOrUpdateSuccess: true,
+                updateTrigger: state.updateTrigger + 1
             }
         }
         case baseConstants.CreateOrUpdate.FAILURE: {
@@ -65,7 +67,8 @@ export default function (state = initialState, action) {
         }
         case baseConstants.SoftDelete.SUCCESS: {
             return {
-                ...state
+                ...state,
+                updateTrigger: state.updateTrigger + 1
             }
         }
         case baseConstants.SoftDelete.FAILURE: {
@@ -81,7 +84,8 @@ export default function (state = initialState, action) {
         }
         case baseConstants.Restore.SUCCESS: {
             return {
-                ...state
+                ...state,
+                updateTrigger: state.updateTrigger + 1
             }
         }
         case baseConstants.Restore.FAILURE: {

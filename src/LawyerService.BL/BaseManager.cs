@@ -38,7 +38,7 @@ namespace LawyerService.BL
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<List<TVM>> GetAllAsync(bool withDeleted = false) => _mapper.Map<List<TVM>>(await _uow.GetAll<T>(withDeleted));
+        public virtual async Task<List<TVM>> GetAllAsync(bool withDeleted = false) => _mapper.Map<List<TVM>>(await _uow.GetAll<T>(withDeleted));
 
         public async Task<TVM> GetByIdAsync(long id, bool withDeleted = false) => _mapper.Map<TVM>(await _uow.GetById<T>(id, withDeleted));
 

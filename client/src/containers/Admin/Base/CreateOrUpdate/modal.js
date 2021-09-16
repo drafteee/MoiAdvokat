@@ -9,7 +9,7 @@ import i18nGlobal from '../../../../localization'
 import 'antd/lib/button/style/css'
 import 'antd/lib/modal/style/css'
 
-const CreateOrUpdateOneModal = ({ withAddress, onFinish, setUpdateTrigger, children }) => {
+const CreateOrUpdateOneModal = ({ form, withAddress, onFinish, children }) => {
     const { isRu } = useSelector(state => state.globalReducer)
 
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -31,7 +31,7 @@ const CreateOrUpdateOneModal = ({ withAddress, onFinish, setUpdateTrigger, child
                     withAddress={withAddress}
                     onFinish={onFinish}
                     setIsModalVisible={setIsModalVisible}
-                    setUpdateTrigger={setUpdateTrigger}>
+                    form={form}>
                     {children}
                 </CreateOrUpdateOneForm>
             </Modal>

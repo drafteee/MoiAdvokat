@@ -7,11 +7,7 @@ import ListAllBase from '../../Base/ListAll'
 import i18n from './localization'
 
 const ListAllLawyers = props => {
-    const [updateTrigger, setUpdateTrigger] = useState(0)
-
     const { isRu } = useSelector(state => state.globalReducer)
-
-    const trigger = () => setUpdateTrigger(updateTrigger + 1)
 
     const columns = [
         {
@@ -35,8 +31,8 @@ const ListAllLawyers = props => {
 
     return (
         <>
-            <CreateOrUpdate setUpdateTrigger={trigger} />
-            <ListAllBase updateTrigger={updateTrigger} controller="Lawyer" columns={columns} />
+            <CreateOrUpdate />
+            <ListAllBase controller="Lawyer" columns={columns} />
         </>
     )
 }

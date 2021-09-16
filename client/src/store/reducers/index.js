@@ -15,6 +15,8 @@ import fileReducer from "../../containers/UploadFile/store/reducer"
 import chatReducer from "./chatReducer";
 import baseReducer from '../../containers/Admin/Base/store/reducer'
 import addressReducer from '../../containers/AddressInputForm/store/reducer'
+import orderStatusesReducer from '../../containers/Orders/Status/store/reducer'
+import specializationsReducer from '../../containers/Lawyers/Specialization/store/reducer'
 
 export default combineReducers({
 	router: routerReducer,
@@ -27,5 +29,7 @@ export default combineReducers({
 	fileReducer,
 	chatReducer,
 	baseReducer,
-	addressReducer
+	addressReducer,
+	orderStatusesReducer,
+	specializationsReducer
 })

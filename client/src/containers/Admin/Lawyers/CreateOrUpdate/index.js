@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DatePicker, Form, Input } from 'antd'
 
-import CreateOrUpdateOneModal from '../../Base/CreateOrUpdateOne/modal'
+import CreateOrUpdateOneModal from '../../Base/CreateOrUpdate/modal'
 
 import { baseActions } from '../../Base/store/actions'
 import validationMessage from '../../../../helpers/validationMessage'
@@ -11,6 +11,8 @@ import i18n from './localization'
 
 const CreateOrUpdate = ({ setUpdateTrigger }) => {
     const { isRu } = useSelector(state => state.globalReducer)
+
+    const [form] = Form.useForm()
 
     const dispatch = useDispatch()
 
@@ -109,7 +111,8 @@ const CreateOrUpdate = ({ setUpdateTrigger }) => {
         <CreateOrUpdateOneModal
             withAddress
             onFinish={onFinish}
-            setUpdateTrigger={setUpdateTrigger}>
+            setUpdateTrigger={setUpdateTrigger}
+            form={form}>
             {formChildren()}
         </CreateOrUpdateOneModal>
     )

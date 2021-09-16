@@ -2,6 +2,7 @@
 import { homeLoadables, accountLoadables, BLLoadables, OrdersLoadables, AdminLawyersLoadables } from "./loadables"
 import NotFound from "./components/NotFound"
 import { UnauthorizedAccess } from "./components/UnauthorizedAccess"
+import { AdminOrdersLoadables } from "./loadables/Admin/orders"
 
 
 export default [
@@ -55,6 +56,10 @@ export default [
   {
     path: "/admin/lawyers/listAll",
     component: AdminLawyersLoadables.LoadableAdminListAllLawyers
+  },
+  {
+    path: "/admin/orders/listAll",
+    component: AdminOrdersLoadables.LoadableAdminListAllOrders
   },
   {
     path: "*",

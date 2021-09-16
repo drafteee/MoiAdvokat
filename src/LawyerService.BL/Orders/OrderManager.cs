@@ -46,9 +46,9 @@ namespace LawyerService.BL.Orders
 
         public async Task<bool> SubmitOrder(OrderVM orderVM)
         {
-            var order = _mapper.Map<Order>(orderVM);
-            order.StatusId = (await _uow.OrderStatuses.GetAsync(x => x.Code == ((int)OrderStatusEnum.Filed).ToString())).Select(x => x.Id).FirstOrDefault();
-            order.CreatedOn = DateTime.Now;
+            var order = await FormOrder(orderVM);
+            User user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+            order.UserId = user.Id;
 
             var orderSpecializations = orderVM.SpecializationsIds.ConvertAll(specializationId => new OrderSpecialization()
             {
@@ -103,6 +103,41 @@ namespace LawyerService.BL.Orders
             {
                 throw;
             }
+        }
+
+        public override async Task<List<OrderVM>> GetAllAsync(bool withDeleted = false)
+        {
+            var orders = await _uow.Set<Order>().Where(x => withDeleted || !x.IsDeleted)
+                .Include(x => x.OrderSpecializations)
+                    .ThenInclude(x => x.Specialization)
+                .Include(x => x.Lawyer)
+                .Include(x => x.Status)
+                .Include(x => x.User).ToListAsync();
+
+            return _mapper.Map<List<OrderVM>>(orders);
+        }
+
+        public override async Task<bool> CreateOrUpdateAsync(OrderVM viewModel)
+        {
+            var order = await FormOrder(viewModel);
+
+            var orderSpecializations = viewModel.SpecializationsIds.ConvertAll(specializationId => new OrderSpecialization()
+            {
+                Order = order,
+                SpecializationId = specializationId
+            });
+
+            _uow.OrderSpecializations.AddRange(orderSpecializations);
+            return await _uow.SaveAsync() > 0;
+        }
+
+        private async Task<Order> FormOrder(OrderVM vm)
+        {
+            var order = _mapper.Map<Order>(vm);
+            order.StatusId = (await _uow.OrderStatuses.GetAsync(x => x.Code == ((int)OrderStatusEnum.Filed).ToString())).Select(x => x.Id).FirstOrDefault();
+            order.CreatedOn = DateTime.Now;
+
+            return order;
         }
     }
 }

@@ -9,11 +9,13 @@ import {
 import { baseActions } from '../store/actions'
 
 import 'antd/lib/table/style/css'
+import 'antd/lib/tooltip/style/css'
+import 'antd/lib/popconfirm/style/css'
 
 import i18nGlobal from '../../../../localization'
 
-const ListAll = ({ controller, updateTrigger, columns }) => {
-    const { currentList } = useSelector(state => state.baseReducer)
+const ListAll = ({ controller, columns }) => {
+    const { currentList, updateTrigger } = useSelector(state => state.baseReducer)
     const { isRu } = useSelector(state => state.globalReducer)
 
     const dispatch = useDispatch()
@@ -40,49 +42,48 @@ const ListAll = ({ controller, updateTrigger, columns }) => {
         }
     }
 
-    // const baseColumns = {}
-
-    // Object.assign(baseColumns, columns)
-
-    // baseColumns[Object.keys(baseColumns).length] = {
-    //     title: i18nGlobal.actions[isRu],
-    //     key: 'action',
-    //     render: (_, record) => (
-    //         <>
-    //             {record.IsDeleted ? (
-    //                 <Tooltip title={i18nGlobal.restore[isRu]}>
-    //                     <Popconfirm
-    //                         title={i18nGlobal.areYouSureMessage[isRu]}
-    //                         onConfirm={() => restore(record.id)}
-    //                         okText={i18nGlobal.yes[isRu]}
-    //                         cancelText={i18nGlobal.no[isRu]}
-    //                     >
-    //                         <Button>
-    //                             <UndoOutlined />
-    //                         </Button>
-    //                     </Popconfirm>
-    //                 </Tooltip>
-    //             ) : (
-    //                 <Tooltip title={i18nGlobal.delete[isRu]}>
-    //                     <Popconfirm
-    //                         title={i18nGlobal.areYouSureMessage[isRu]}
-    //                         onConfirm={() => softDelete(record.id)}
-    //                         okText={i18nGlobal.yes[isRu]}
-    //                         cancelText={i18nGlobal.no[isRu]}
-    //                     >
-    //                         <Button>
-    //                             <DeleteOutlined />
-    //                         </Button>
-    //                     </Popconfirm>
-    //                 </Tooltip>
-    //             )}
-    //         </>
-    //     )
-    // }
+    const baseColumns = [
+        ...columns,
+        {
+            title: i18nGlobal.actions[isRu],
+            key: 'action',
+            render: (_, record) => (
+                <>
+                    {record.IsDeleted ? (
+                        <Tooltip title={i18nGlobal.restore[isRu]}>
+                            <Popconfirm
+                                title={i18nGlobal.areYouSureMessage[isRu]}
+                                onConfirm={() => restore(record.Id)}
+                                okText={i18nGlobal.yes[isRu]}
+                                cancelText={i18nGlobal.no[isRu]}
+                            >
+                                <Button>
+                                    <UndoOutlined />
+                                </Button>
+                            </Popconfirm>
+                        </Tooltip>
+                    ) : (
+                        <Tooltip title={i18nGlobal.delete[isRu]}>
+                            <Popconfirm
+                                title={i18nGlobal.areYouSureMessage[isRu]}
+                                onConfirm={() => softDelete(record.Id)}
+                                okText={i18nGlobal.yes[isRu]}
+                                cancelText={i18nGlobal.no[isRu]}
+                            >
+                                <Button>
+                                    <DeleteOutlined />
+                                </Button>
+                            </Popconfirm>
+                        </Tooltip>
+                    )}
+                </>
+            )
+        }
+    ]
 
     return (
         <>
-            <Table columns={columns} dataSource={currentList} />
+            <Table columns={baseColumns} dataSource={currentList} />
         </>
     )
 }
