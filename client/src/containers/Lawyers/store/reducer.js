@@ -10,7 +10,8 @@ const initialState =
   error: null,
   uploadCertificateSuccess: null,
   certificateCheckResult: null,
-  lawyerConfirmationSuccess: null
+  lawyerConfirmationSuccess: null,
+  canLawyerBeConfirmed: null
 }
 
 export default function (state = initialState, action) {
@@ -94,12 +95,29 @@ export default function (state = initialState, action) {
     case lawyerConstants.ConfirmLawyer.SUCCESS:
       return {
         ...state,
-        lawyerConfirmationSuccess: true
+        lawyerConfirmationSuccess: true,
+        canLawyerBeConfirmed: false
       }
     case lawyerConstants.ConfirmLawyer.FAILURE:
       return {
         ...state,
         lawyerConfirmationSuccess: false,
+        error: action.payload
+      }
+
+    case lawyerConstants.CheckIfLawyerCanBeConfirmed.REQUEST:
+      return {
+        ...state,
+        canLawyerBeConfirmed: null
+      }
+    case lawyerConstants.CheckIfLawyerCanBeConfirmed.SUCCESS:
+      return {
+        ...state,
+        canLawyerBeConfirmed: action.payload.result
+      }
+    case lawyerConstants.CheckIfLawyerCanBeConfirmed.FAILURE:
+      return {
+        ...state,
         error: action.payload
       }
 

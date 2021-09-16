@@ -43,6 +43,13 @@ namespace LawyerService.BL.Lawyers
             return (await _uow.Set<Lawyer>().Where(x => x.Id == vm.Id).Select(x => x.FileCopyId).FirstOrDefaultAsync()).HasValue;
         }
 
+        public async Task<bool> CheckIfLawyerCanBeConfirmed(long id)
+        {
+            var lawyer = await _uow.Set<Lawyer>().Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            return lawyer.FileCopyId.HasValue && !lawyer.IsVerified.HasValue;
+        }
+
         public async Task<bool> ConfirmLawyer(LawyerConfirmationVM vm)
         {
             var lawyer = await _uow.Set<Lawyer>().Where(x => x.Id == vm.Id)
@@ -50,6 +57,9 @@ namespace LawyerService.BL.Lawyers
                 .FirstOrDefaultAsync();
 
             lawyer.IsVerified = vm.IsVerified;
+
+            if (!vm.IsVerified)
+                lawyer.FileCopyId = null;
 
             _uow.Lawyer.Update(lawyer);
             var result = await _uow.SaveAsync() > 0;
@@ -136,6 +146,7 @@ namespace LawyerService.BL.Lawyers
                 throw new RestException(System.Net.HttpStatusCode.BadRequest); // TODO сообщение о том, что сертификат уже загружен
 
             lawyer.FileCopyId = vm.FilesIds[0];
+            lawyer.IsVerified = null;
 
             _uow.Lawyer.Update(lawyer);
             return await _uow.SaveAsync() > 0;

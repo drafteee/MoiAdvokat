@@ -10,5 +10,6 @@ namespace LawyerService.BL.Interfaces.Lawyers
         Task<bool> UploadCertificate(AttachFileVM vm);
         Task<bool> CheckIfCertificateExists(LawyerVM vm);
         Task<bool> ConfirmLawyer(LawyerConfirmationVM vm);
+        Task<bool> CheckIfLawyerCanBeConfirmed(long id);
     }
 }

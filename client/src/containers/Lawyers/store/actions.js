@@ -9,7 +9,8 @@ export const lawyerActions = {
   uploadCertificate,
   checkIfCertificateExists,
   getById,
-  confirmLawyer
+  confirmLawyer,
+  checkIfLawyerCanBeConfirmed
 };
 
 
@@ -76,6 +77,18 @@ function confirmLawyer(params) {
     constants: lawyerConstants.ConfirmLawyer,
     service: {
       func: api.confirmLawyer,
+      params
+    }
+  }
+
+  return defAction(dispatchObj)
+}
+
+function checkIfLawyerCanBeConfirmed(params) {
+  const dispatchObj = {
+    constants: lawyerConstants.CheckIfLawyerCanBeConfirmed,
+    service: {
+      func: api.checkIfLawyerCanBeConfirmed,
       params
     }
   }

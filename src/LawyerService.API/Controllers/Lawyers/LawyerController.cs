@@ -21,7 +21,7 @@ namespace LawyerService.API.Controllers.Lawyers
         {
             return await _manager.UploadCertificate(vm);
         }
-        
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<bool> CheckIfCertificateExists([FromHeader] LawyerVM vm)
@@ -34,6 +34,13 @@ namespace LawyerService.API.Controllers.Lawyers
         public async Task<bool> ConfirmLawyer([FromBody] LawyerConfirmationVM vm)
         {
             return await _manager.ConfirmLawyer(vm);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<bool> CheckIfLawyerCanBeConfirmed([FromHeader] LawyerVM vm)
+        {
+            return await _manager.CheckIfLawyerCanBeConfirmed(vm.Id);
         }
     }
 }

@@ -6,5 +6,6 @@ export default {
     uploadCertificate: params => requests.post('/Lawyer/UploadCertificate', params),
     checkIfCertificateExists: params => requests.getWithParams('/Lawyer/CheckIfCertificateExists', params),
     getById: params => requests.getWithParams('/Lawyer/GetByIdCurrent', params),
-    confirmLawyer: params => requests.post('/Lawyer/ConfirmLawyer', params)
+    confirmLawyer: params => requests.post('/Lawyer/ConfirmLawyer', params),
+    checkIfLawyerCanBeConfirmed: params => requests.getWithParams('/Lawyer/CheckIfLawyerCanBeConfirmed', params)
 };
